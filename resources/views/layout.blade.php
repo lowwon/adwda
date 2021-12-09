@@ -21,14 +21,26 @@
             *{
                 
             }
+            .tieude{
+                margin-top: -35px;
+                position: absolute;
+                margin-left: 15%;
+            }
+            .post{
+                padding: 0px;
+                margin: 0px;
+                margin-top: -44px;
+                margin-right: 18.3%;
+                float: right;
+            }
             body {
                 font-family: 'Nunito', sans-serif;
                 background-color : #f3f4f6;
             }
             .contents{
                 margin: 50px;
-                padding-left: 19%;
-                padding-right: 20%;
+                padding-left: 15%;
+                padding-right: 15%;
                 margin-left: 0px;
 
             }
@@ -134,7 +146,7 @@
                                         </x-slot>
                                     </x-jet-dropdown>
                                 </div>
-                            @endif
+                                @endif
             
                             <!-- Settings Dropdown -->
                             <div class="ml-3 relative">
