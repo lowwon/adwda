@@ -23,3 +23,6 @@ Route::get('/', function () {
 Route::get('dashboard',function(){
     return redirect()->route('dashboard');
  });
+Route::get('/dangbai', function(){
+    return view('dangbai');
+})->name('dangbai');

@@ -8,7 +8,7 @@
             <!-- Settings Dropdown -->
             @if (Route::has('login'))
                 @auth
-                <input type="button" class="btn btn-primary" value="Đăng bài" id="db" nam="db">                  
+                <a href="{{route('dangbai')}}"><input type="button" class="btn btn-primary" value="Đăng bài" id="db" nam="db"> </a>                 
             @else
                 <a href="{{ route('login') }}" ><input type="button" class="btn btn-primary" value="Đăng bài"></a>
                 @endauth

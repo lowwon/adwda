@@ -65,6 +65,26 @@
                 border:2px solid black;
                 border-collapse: collapse
             }
+            .dangbai0{
+                position: absolute;
+                margin-top: 50px;
+                padding-left: 20%;
+                margin-right: 0px;
+            }
+            .dangbai1{
+                display: inline-block;
+            }
+            .dangban2{
+                position: absolute
+                display: block;
+            }
+            .dangban3{
+                position: absolute
+            }
+            .dangbai4{
+                padding-top: 10px;
+
+            }
         </style>
     </head>
     <body >
