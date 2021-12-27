@@ -5,7 +5,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>Laravel</title>
-
+        <script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script>
+        <script type="text/javascript">
+        bkLib.onDomLoaded(function() {
+                new nicEditor().panelInstance('areapost');
+                
+        });
+        </script>
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -35,7 +41,7 @@
             }
             body {
                 font-family: 'Nunito', sans-serif;
-                background-color : #f3f4f6;
+                background-color : white;
             }
             .contents{
                 margin: 50px;
@@ -65,25 +71,21 @@
                 border:2px solid black;
                 border-collapse: collapse
             }
-            .dangbai0{
-                position: absolute;
-                margin-top: 50px;
-                padding-left: 20%;
-                margin-right: 0px;
+            textarea{
+                resize: none;
+                width: 908px;
             }
             .dangbai1{
                 display: inline-block;
             }
-            .dangban2{
-                position: absolute
-                display: block;
-            }
-            .dangban3{
-                position: absolute
-            }
-            .dangbai4{
+            .dangbai2{
                 padding-top: 10px;
-
+                margin-left:14%
+            }
+            .ss{
+                margin-left:14%;
+                margin-right:10%;
+                margin-top:50px
             }
         </style>
     </head>
