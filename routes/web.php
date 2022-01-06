@@ -1,7 +1,10 @@
 <?php
-
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Http\Request;
+use App\Models\Post;
+use App\Models\Topic;
+use Illuminate\Support\Facades\DB;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,7 +17,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $post = Post::all();
+    return view('trangchu', compact('post'));
 })->name('dashboard');
 
 //Route::middleware(['auth:sanctum', 'verified'])->get('/trangchu', function () {
@@ -23,6 +27,5 @@ Route::get('/', function () {
 Route::get('dashboard',function(){
     return redirect()->route('dashboard');
  });
-Route::get('/dangbai', function(){
-    return view('dangbai');
-})->name('dangbai');
+ Route::get('/dangbai',['as'=>'dangbai','uses'=>'App\Http\Controllers\TopicController@addPost']);
+ Route::post('',['as'=>'insert','uses'=>'App\Http\Controllers\PostController@insertPost']);

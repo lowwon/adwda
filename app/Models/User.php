@@ -17,7 +17,8 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
-
+    protected $table = "Users";
+    public $timestamps = false;
     /**
      * The attributes that are mass assignable.
      *
@@ -28,7 +29,9 @@ class User extends Authenticatable
         'email',
         'password',
     ];
-
+    public function Post(){
+    	return $this->hasMany(Post::class,"id","id");
+    }
     /**
      * The attributes that should be hidden for serialization.
      *
