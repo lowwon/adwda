@@ -29,3 +29,7 @@ Route::get('dashboard',function(){
  });
  Route::get('/dangbai',['as'=>'dangbai','uses'=>'App\Http\Controllers\TopicController@addPost']);
  Route::post('',['as'=>'insert','uses'=>'App\Http\Controllers\PostController@insertPost']);
+ Route::get('/tintuc',['as'=>'tintuc','uses'=>'App\Http\Controllers\NewsController@index']);
+ Route::get('/dangtin',['as'=>'dangtin','uses'=>'App\Http\Controllers\NewsController@addNews']);
+ Route::post('', ['as'=>'insertnew', 'uses'=>'App\Http\Controllers\NewsController@insertNews']);
+//  Route::post('/uploads-ckeditor',['as'=>'insert','uses'=>'App\Http\Controllers\AddnewsController@addNews']);
