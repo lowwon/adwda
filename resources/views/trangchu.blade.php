@@ -4,8 +4,6 @@
     <div class="container-fluid">
         <h1 class="tieude">Cac bai viet moi</h1>
         <div  class="post hidden sm:flex sm:items-center sm:ml-6 ">
-            <!-- Teams Dropdown -->
-            <!-- Settings Dropdown -->
             @if (Route::has('login'))
                 @auth
                 <a href="{{route('dangbai')}}"><input type="button" class="btn btn-primary" value="Đăng bài" id="db" nam="db"> </a>                 
@@ -17,16 +15,35 @@
         <div class="contents">          
             <table class="table table-success table-dark">
                 <thead>
-                    <th class="col-1"><a >Chủ để</a></th>
+                    <th class="col-2"><a >Chủ để</a></th>
                     <th class="col-3">Tiêu đề</th>
-                    <th class="col-6">Nội dung</th>
+                    <th class="col-3">Ngày đăng</th>
                     <th class="col-2">Người đăng</th>
+                    <th class="col-2">Trả lời</th>
                 </thead>
                 <tbody>
                     @foreach ($post as $a)
                     <tr>
-                        <td class="col-1"><a href="#">{{$a->TopicId}}</a></td>
-                        <td class="col-2"><a href="#">
+                        <td class="col-2"><a
+                            @if ($a->TopicId == 1) 
+                                href="{{route('thaoluan')}}"
+                            @else 
+                            {
+                                @if ($a->TopicId == 2)
+                                    href="{{route('hoidap')}}"
+                                @else
+                                    href="{{route('chiase')}}"
+                                @endif
+                            }
+                            @endif
+                            >
+                            @foreach ($topic as $t)
+                                @if($t->TopicId == $a->TopicId)
+                                     {{$t->Name}}
+                                @endif
+                            @endforeach
+                        </a></td>
+                        <td class="col-3"><a href="#">
                             <a href="#"><?php
                                 if (strlen($a->Name)>40)
                                 {
@@ -38,20 +55,26 @@
                                 }
                             ?></a>
                         </a></td>
-                        <td style="" class="col-5">
-                            <a href="#"><?php
-                                if (strlen($a->Content)>50)
+                        <td style="" class="col-3">
+                            <?php
+                                if (strlen($a->Date)>50)
                                 {
-                                    $str = substr($a->Content,0,50);
-                                    echo $str;
+                                    echo $a->Date;
                                 }                                
                                 else{
-                                    echo $a->Content;
+                                    echo $a->Date;
                                 }
-                            ?></a>
+                            ?>
+                        </td>
+                        <td class="col-2"> 
+                             @foreach ($user as $u)
+                                @if($u->id == $a->UserID)
+                                    {{$u->name}}
+                                @endif
+                            @endforeach
                             
-                            </td>
-                        <td class="col-2">{{$a->UserID}}</td>
+                        </td>
+                        <td class="col-2">1</td>
                     </tr>
                     @endforeach   
                 </tbody>

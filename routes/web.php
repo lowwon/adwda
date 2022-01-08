@@ -18,7 +18,9 @@ use Illuminate\Support\Facades\DB;
 
 Route::get('/', function () {
     $post = Post::all();
-    return view('trangchu', compact('post'));
+    $topic = Topic::all();
+    $user = DB::table('users')->get();
+    return view('trangchu', compact('post','topic','user'));
 })->name('dashboard');
 
 //Route::middleware(['auth:sanctum', 'verified'])->get('/trangchu', function () {
@@ -27,5 +29,8 @@ Route::get('/', function () {
 Route::get('dashboard',function(){
     return redirect()->route('dashboard');
  });
+ Route::get('/thaoluan',['as'=>'thaoluan','uses'=>'App\Http\Controllers\PostController@getThaoLuan']);
+ Route::get('/chiase',['as'=>'chiase','uses'=>'App\Http\Controllers\PostController@getChiaSe']);
+ Route::get('/hoidap',['as'=>'hoidap','uses'=>'App\Http\Controllers\PostController@getHoiDap']);
  Route::get('/dangbai',['as'=>'dangbai','uses'=>'App\Http\Controllers\TopicController@addPost']);
  Route::post('',['as'=>'insert','uses'=>'App\Http\Controllers\PostController@insertPost']);

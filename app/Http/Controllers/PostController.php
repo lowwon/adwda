@@ -14,6 +14,24 @@ class PostController extends Controller
         $post = Post::all();
         return view('trangchu', compact('post'));
     }
+    public function getThaoLuan(){
+        $post = Post::where('TopicId',1)->get();
+        $topic = Topic::all();
+        $user = DB::table('users')->get();
+        return view('thaoluan', compact('post','topic','user'));
+    }
+    public function getChiaSe(){
+        $post = Post::where('TopicId',3)->get();
+        $topic = Topic::all();
+        $user = DB::table('users')->get();
+        return view('thaoluan', compact('post','topic','user'));
+    }
+    public function getHoiDap(){
+        $post = Post::where('TopicId',2)->get();
+        $topic = Topic::all();
+        $user = DB::table('users')->get();
+        return view('thaoluan', compact('post','topic','user'));
+    }
     public function insertPost(Request $rq)
     {
         $saa = Post::all();

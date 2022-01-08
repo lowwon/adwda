@@ -5,12 +5,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>Laravel</title>
-        <script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script>
         <script type="text/javascript">
-        bkLib.onDomLoaded(function() {
-                new nicEditor().panelInstance('areapost');
-                
-        });
+        <script src="https://cdn.ckeditor.com/ckeditor5/30.0.0/decoupled-document/ckeditor.js"></script>
+
         </script>
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -21,6 +18,8 @@
         </style>
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
         <base href="{{asset('')}}">
+        <link href="{{ ('ckeditor/ckeditor.js') }}">
+
         <!-- Scripts -->
         <script src="{{ mix('js/app.js') }}" defer></script>
         <style>
@@ -80,7 +79,8 @@
             }
             .dangbai2{
                 padding-top: 10px;
-                margin-left:14%
+                margin-left:14%;
+                margin-right: 16%;
             }
             .ss{
                 margin-left:14%;
@@ -106,12 +106,19 @@
                             <x-jet-nav-link class="nav1" href="{{ route('dashboard') }}">
                                 {{'Diễn đàn'}}
                             </x-jet-nav-link>
+                            <x-jet-nav-link class="nav1" href="{{route('thaoluan')}}">
+                                {{'Thảo luận'}}
+                            </x-jet-nav-link>
+                            <x-jet-nav-link class="nav1" href="{{route('chiase')}}">
+                                {{'Chia sẻ'}}
+                            </x-jet-nav-link>
+                            <x-jet-nav-link class="nav1" href="{{route('hoidap')}}">
+                                {{'Hỏi thắc mắc'}}
+                            </x-jet-nav-link>
                             <x-jet-nav-link class="nav1" href="{{ route('dashboard') }}">
                                 {{'Tin tức'}}
                             </x-jet-nav-link>
-                            <x-jet-nav-link class="nav1" href="{{ route('dashboard') }}">
-                                {{'Phầm mềm'}}
-                            </x-jet-nav-link>
+
                         </div>
                     </div>
         
@@ -241,3 +248,4 @@
 
     </body>
 </html>
+
