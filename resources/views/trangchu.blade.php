@@ -13,13 +13,15 @@
             @endif
         </div>
         <div class="contents">          
-            <table class="table table-success table-dark">
+            <table class="table table-hover">
                 <thead>
+                    <tr>
                     <th class="col-2"><a >Chủ để</a></th>
                     <th class="col-3">Tiêu đề</th>
                     <th class="col-3">Ngày đăng</th>
                     <th class="col-2">Người đăng</th>
                     <th class="col-2">Trả lời</th>
+                    </tr>
                 </thead>
                 <tbody>
                     @foreach ($post as $a)

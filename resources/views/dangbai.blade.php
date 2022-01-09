@@ -16,12 +16,12 @@
                 <div style="padding-bottom:5px" class="dangbai1 col-3">
                     <select class="form-control" name="txttopic" id="txttopic">
                         @foreach($topic as $c)
-                        <option value ="{{$c->TopicId}}">{{$c->Name}}</option>
+                        <option  value ="{{$c->TopicId}}">{{$c->Name}}</option>
                         @endforeach
                     </select>              
                 </div>
                 <div class="dangbai1 col-8 form-group">
-                    <input type = "text" name="titlepost" id = "titlepost" class="form-control" placeholder ="Tiêu đề">   
+                    <input style="border-radius: 5px 5px 5px 5px" type = "text" name="titlepost" id = "titlepost" class="form-control" placeholder ="Tiêu đề">   
                 </div> 
             </div>
             <div class="dangbai2 form-group">
