@@ -6,11 +6,17 @@
         <div  class="post hidden sm:flex sm:items-center sm:ml-6 ">
             @if (Route::has('login'))
                 @auth
-                <a href="{{route('dangbai')}}"><input type="button" class="btn btn-primary" value="Đăng bài" id="db" nam="db"> </a>                 
+                @if (Auth::user()->role_id > 1)
+                    <a href="{{route('dangbai')}}"><input type="button" class="btn btn-primary" value="Đăng bài" id="db" nam="db"> </a>    
+                @else
+                    <button class="btn btn-primary" type="button" onclick="alert('User thường không có quyền đăng bài')">Đăng bài</button>
+                @endif
+                             
             @else
                 <a href="{{ route('login') }}" ><input type="button" class="btn btn-primary" value="Đăng bài"></a>
                 @endauth
             @endif
+
         </div>
         <div class="contents">          
             <table class="table table-hover">
@@ -27,11 +33,11 @@
                     @foreach ($post as $a)
                     <tr>
                         <td class="col-2"><a
-                            @if ($a->TopicId == 1) 
+                            @if ($a->topic_id == 1) 
                                 href="{{route('thaoluan')}}"
                             @else 
                             {
-                                @if ($a->TopicId == 2)
+                                @if ($a->topic_id == 2)
                                     href="{{route('hoidap')}}"
                                 @else
                                     href="{{route('chiase')}}"
@@ -40,13 +46,14 @@
                             @endif
                             >
                             @foreach ($topic as $t)
-                                @if($t->TopicId == $a->TopicId)
+                            @if($t->id == $a->topic_id)
+
                                      {{$t->Name}}
                                 @endif
                             @endforeach
                         </a></td>
                         <td class="col-3"><a href="#">
-                            <a href="#"><?php
+                            <a href="{{route('viewPost',['id'=>$a->id])}}"><?php
                                 if (strlen($a->Name)>40)
                                 {
                                     $str = substr($a->Name,0,40);
@@ -70,7 +77,7 @@
                         </td>
                         <td class="col-2"> 
                              @foreach ($user as $u)
-                                @if($u->id == $a->UserID)
+                                @if($u->id == $a->user_id)
                                     {{$u->name}}
                                 @endif
                             @endforeach

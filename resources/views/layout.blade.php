@@ -100,6 +100,9 @@
             thead:first-child tr:first-child th:first-child, tbody:first-child tr:first-child td:first-child {
                 border-radius: 7px 0 0 0;
             }
+            thead:first-child tr:first-child th:last-child, tbody:first-child tr:first-child td:last-child {
+                border-radius: 0 7px 0 0;
+            }
             thead:last-child tr:last-child th:first-child, tbody:last-child tr:last-child td:first-child {
                 border-radius: 0 0 0 7px;
             }
@@ -119,6 +122,32 @@
                 margin-left:14%;
                 margin-right:10%;
                 margin-top:50px
+            }
+            .quantri1{
+                margin-left:14%;
+                margin-top:30px;
+            }
+            .quantri2{
+                font-size: 20px;
+                line-height: 50px;
+                display: inline-block;
+                text-align: center; 
+                background-color: rgb(194, 101, 194);
+                height: 50px;
+                margin-bottom: 10px;
+                border-radius: 5px 5px 5px 5px;
+            }
+            .quantri3{
+                font-size: 15px;
+                display: inline-block;
+                text-align: center; 
+                background-color: rgb(112, 167, 240);
+                height: 50px;
+                border-bottom: 2px solid white;
+                border-radius: 5px 5px 5px 5px;
+            }
+            .quantri4{
+                margin-left:14%;
             }
         </style>
     </head>
@@ -240,13 +269,22 @@
                                         <x-jet-dropdown-link href="{{ route('profile.show') }}">
                                             {{ __('Profile') }}
                                         </x-jet-dropdown-link>
-            
+                                        
                                         @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                                             <x-jet-dropdown-link href="{{ route('api-tokens.index') }}">
                                                 {{ __('API Tokens') }}
                                             </x-jet-dropdown-link>
                                         @endif
-            
+                                        <div class="border-t border-gray-100"></div>
+                                        @if(Auth::user()->role_id > 2)
+                                            <form method="POST" action="">
+                                                @csrf
+                                                <x-jet-dropdown-link href="{{route('viewQT')}}">
+                                                    {{'Manager' }}
+                                                </x-jet-dropdown-link>
+                                            </form>
+                                        
+                                        @endif
                                         <div class="border-t border-gray-100"></div>
             
                                         <!-- Authentication -->

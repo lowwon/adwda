@@ -10,11 +10,11 @@ class Post extends Model
     use HasFactory;
     protected $table = "Post";
     public $timestamps = false;
-    protected $fillable = ["PostId","UserID","Name","Content","Date","TopicId"];
+    protected $fillable = ["id","user_id","Name","Content","Date","topic_id"];
     public function User(){
-    	return $this->beLongsto(User::class,"UserID","id");
+    	return $this->belongsto(User::class);
     }
     public function Topic(){
-    	return $this->beLongsto(Topic::class,"TopicId","TopicId");
+    	return $this->belongsto(Topic::class);
     }
 }

@@ -25,12 +25,17 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
+        'id',
         'name',
         'email',
         'password',
+        'role_id',
     ];
     public function Post(){
-    	return $this->hasMany(Post::class,"id","id");
+    	return $this->hasMany(Post::class);
+    }
+    public function Role(){
+    	return $this->hasMany(Role::class);
     }
     /**
      * The attributes that should be hidden for serialization.

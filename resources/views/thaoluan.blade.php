@@ -28,13 +28,15 @@
                     <tr>
                         <td class="col-2"><a href="{{route('thaoluan')}}">
                             @foreach ($topic as $t)
-                                @if($t->TopicId == $a->TopicId)
+                            @if($t->id == $a->topic_id)
+
                                      {{$t->Name}}
                                 @endif
                             @endforeach
                         </a></td>
                         <td class="col-3"><a href="#">
-                            <a href="#"><?php
+                            <a href="{{route('viewPost',['id'=>$a->id])}}">
+                            <?php
                                 if (strlen($a->Name)>40)
                                 {
                                     $str = substr($a->Name,0,40);
@@ -43,7 +45,8 @@
                                 else{
                                     echo $a->Name;
                                 }
-                            ?></a>
+                            ?>
+                            </a>
                         </a></td>
                         <td style="" class="col-3">
                             <?php
@@ -58,7 +61,7 @@
                         </td>
                         <td class="col-2"> 
                              @foreach ($user as $u)
-                                @if($u->id == $a->UserID)
+                                @if($u->id == $a->user_id)
                                     {{$u->name}}
                                 @endif
                             @endforeach

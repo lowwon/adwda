@@ -16,7 +16,7 @@
                 <div style="padding-bottom:5px" class="dangbai1 col-3">
                     <select class="form-control" name="txttopic" id="txttopic">
                         @foreach($topic as $c)
-                        <option  value ="{{$c->TopicId}}">{{$c->Name}}</option>
+                        <option  value ="{{$c->id}}">{{$c->Name}}</option>
                         @endforeach
                     </select>              
                 </div>

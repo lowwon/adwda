@@ -1,46 +1,75 @@
 @extends('layout')
 @section('content')
-    <div class="container">
-        @if($errors->any())
-        <div class ="alert alert-danger">
-            <ul>
-                @foreach($errors-> all() as $error)
-                <li>{{$error}}</li>
-                @endforeach
-            </ul>
+
+    <div class="container-fluid">
+        <h1 class="tieude">Cac bai viet moi</h1>
+        <div  class="post hidden sm:flex sm:items-center sm:ml-6 ">
+            @if (Route::has('login'))
+                @auth
+                <a href="{{route('dangbai')}}"><input type="button" class="btn btn-primary" value="Đăng bài" id="db" nam="db"> </a>                 
+            @else
+                <a href="{{ route('login') }}" ><input type="button" class="btn btn-primary" value="Đăng bài"></a>
+                @endauth
+            @endif
         </div>
-        @endif
-        <form method = "POST" action = "{{ route('insert') }}" enctype="multipart/form-data">
-            {{csrf_field()}}
-            <div class="ss form-group">
-                <div style="padding-bottom:5px" class="dangbai1 col-3">
-                    <select class="form-control" name="txttopic" id="txttopic">
-                        @foreach($topic as $c)
-                        <option  value ="{{$c->TopicId}}">{{$c->Name}}</option>
-                        @endforeach
-                    </select>              
-                </div>
-                <div class="dangbai1 col-8 form-group">
-                    <input style="border-radius: 5px 5px 5px 5px" type = "text" name="titlepost" id = "titlepost" class="form-control" placeholder ="Tiêu đề">   
-                </div> 
-            </div>
-            <div class="dangbai2 form-group">
-                <textarea name="areapost" id="areapost" placeholder ="Tiêu đề" ></textarea>
-            </div>
-            <div class="dangbai2 form-group"> 
-                <input type="submit" class="btn btn-info" value="Đăng bài">
-            </div>
-        </form>
-        <script src="//cdn.ckeditor.com/4.17.1/basic/ckeditor.js"></script>
-        <script type="text/javascript">
-            CKEDITOR.replace( 'areapost',{
-                toolbar: [
-                { name: 'basicstyles', items: ['Bold', 'Italic'] },
-                { name: 'links', items: ['Link', 'Unlink'] },
-                { name: 'paragraph', items: ['NumberedList', 'BulletedList'] }
-                ], uiColor: '#d1f0fb'
-                , width: ['100%'], height: ['800px']
-            });
-        </script>
-    </div>
+        <div class="contents">          
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                    <th class="col-2"><a >Chủ để</a></th>
+                    <th class="col-3">Tiêu đề</th>
+                    <th class="col-3">Ngày đăng</th>
+                    <th class="col-2">Người đăng</th>
+                    <th class="col-2">Trả lời</th>
+                    <tr>
+                </thead>
+                <tbody>
+                    @foreach ($post as $a)
+                    <tr>
+                        <td class="col-2"><a href="{{route('hoidap')}}">
+                            @foreach ($topic as $t)
+                            @if($t->id == $a->topic_id)
+
+                                     {{$t->Name}}
+                                @endif
+                            @endforeach
+                        </a></td>
+                        <td class="col-3"><a href="#">
+                            <a href="{{route('viewPost',['id'=>$a->id])}}><?php
+                                if (strlen($a->Name)>40)
+                                {
+                                    $str = substr($a->Name,0,40);
+                                    echo $str;
+                                }                                
+                                else{
+                                    echo $a->Name;
+                                }
+                            ?></a>
+                        </a></td>
+                        <td style="" class="col-3">
+                            <?php
+                                if (strlen($a->Date)>50)
+                                {
+                                    echo $a->Date;
+                                }                                
+                                else{
+                                    echo $a->Date;
+                                }
+                            ?>
+                        </td>
+                        <td class="col-2"> 
+                             @foreach ($user as $u)
+                                @if($u->id == $a->user_id)
+                                    {{$u->name}}
+                                @endif
+                            @endforeach
+                            
+                        </td>
+                        <td class="col-2">1</td>
+                    </tr>
+                    @endforeach   
+                </tbody>
+            </table>
+        </div>
+    </div
 @stop

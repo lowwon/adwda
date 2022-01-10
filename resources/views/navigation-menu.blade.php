@@ -118,7 +118,16 @@
                                     {{ __('API Tokens') }}
                                 </x-jet-dropdown-link>
                             @endif
-
+                            <div class="border-t border-gray-100"></div>
+                            @if(Auth::user()->role_id > 2)
+                                <form method="POST" action="">
+                                    @csrf
+                                    <x-jet-dropdown-link href="">
+                                        {{'Manager' }}
+                                    </x-jet-dropdown-link>
+                                </form>
+                            
+                            @endif
                             <div class="border-t border-gray-100"></div>
 
                             <!-- Authentication -->
