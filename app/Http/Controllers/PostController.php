@@ -5,7 +5,8 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Topic;
 use App\Models\User;
-
+use App\Models\Comment;
+use App\Models\comment_user;
 use Illuminate\Support\Facades\DB;
 use DateTime;
 use Auth;
@@ -66,7 +67,11 @@ class PostController extends Controller
     }
     public function viewPost($id){
         $post = Post::where('id',$id)->first();
-        return view('baidang',compact('post'));
+        $user_post = User::where('id',$post->user_id)->first();
+        $user = User::all();
+        $allpost = Post::where('topic_id',$post->topic_id)->get();
+        $comment = Comment::where('post_id',$id)->get();
+        return view('baidang',compact('post','allpost','comment','user_post','user'));
     }
     public function delete($id){
         $post = Post::where('id',$id)->first();

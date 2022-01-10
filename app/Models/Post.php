@@ -17,4 +17,7 @@ class Post extends Model
     public function Topic(){
     	return $this->belongsto(Topic::class);
     }
+    public function Comment(){
+        return $this->hasMany(Comment::class);
+    }
 }
