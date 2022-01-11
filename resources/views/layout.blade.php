@@ -318,6 +318,27 @@
             </div>  
         </nav>
         @yield('content')
-
+        <div style="font-size: 20px; margin-top: 50px;margin-left:6%; position:absolute; bottom : auto " class="container body-content">
+            <hr style="margin-bottom:10px"/>
+            <div style="margin-bottom:10px">
+                <strong style="display: inline-block;padding-top: -10px">Contact</strong>
+                <a target="_blank" style="display: inline-block; margin-left: 30px; margin-top: 10px" href="https://www.facebook.com/mr.united02/">
+                    <img style="border-radius: 5px 5px 5px 5px" src="images/f1.png" width="30px" height="30px">
+                </a>
+                <a target="_blank" style="display: inline-block; margin-left: 30px; margin-top: 10px" href="https://www.facebook.com/heo.boo.752">
+                    <img style="border-radius: 5px 5px 5px 5px" src="images/f2.png" width="30px" height="30px">
+                </a>
+                <a target="_blank" style="display: inline-block; margin-left: 30px; margin-top: 10px" href="https://www.facebook.com/mon.2k1">
+                    <img style="border-radius: 5px 5px 5px 5px" src="images/f3.png" width="30px" height="30px">
+                </a>
+                <a target="_blank" style="display: inline-block; margin-left: 30px; margin-top: 10px" href="https://www.facebook.com/profile.php?id=100008289520377">
+                    <img style="border-radius: 5px 5px 5px 5px" src="images/f4.png" width="30px" height="30px">
+                </a>
+            </div>
+            <hr style="margin-bottom:20px"/>
+            <footer>
+                <p style="margin-bottom:10px" >&copy; Sản phẩm của nhóm 14 - Thiết kế Website Diễn đàn công nghệ</p>
+            </footer>
+        </div>
     </body>
 </html>

@@ -20,4 +20,5 @@ class Post extends Model
     public function Comment(){
         return $this->hasMany(Comment::class);
     }
+    
 }

@@ -22,7 +22,7 @@ use Illuminate\Auth\Middleware\Authorize;
 */
 
 Route::get('/', function () {
-    $post = Post::all();
+    $post = Post::all()->sortByDesc('Date');
     $topic = Topic::all();
     $user = User::all();
     return view('trangchu', compact('post','topic','user'));
@@ -43,10 +43,14 @@ Route::get('dashboard',function(){
  Route::post('',['as'=>'insert','uses'=>'App\Http\Controllers\PostController@insertPost']);
  Route::get('/baidang/{id}',['as' => 'viewPost','uses'=>'App\Http\Controllers\PostController@viewPost']);
  Route::delete('delete/{id}',['as' => 'delete','uses'=>'App\Http\Controllers\PostController@delete']);
+ Route::get('delete/comment/{id}',['as'=>'deleteComment','uses'=>'App\Http\Controllers\CommentController@delete']);
+ Route::get('delete/subcomment/{id}',['as' =>'deleteSubComment','uses'=>'App\Http\Controllers\SubCommentController@deleteSubComment']);
  route::get('quantri',function(){
      $user = User::all();
      $role = Role::all();
      return view('quantri',compact('user','role'));
  })->name('viewQT')->middleware('roleAdmin');
- Route::post('{id}',['as' => 'saveRole','uses' => 'App\Http\Controllers\UserController@setRole'])->middleware('roleAdmin');
+ Route::post('save/role/{id}',['as' => 'saveRole','uses' => 'App\Http\Controllers\UserController@setRole'])->middleware('roleAdmin');
  Route::get('delete/user/{id}',['as' => 'deleteUser','uses'=>'App\Http\Controllers\UserController@deleteUser'])->middleware('roleSuperAdmin');
+ Route::post('comment/{id}',['as' => 'comment','uses'=> 'App\Http\Controllers\CommentController@createComment'])->middleware('auth');
+ Route::post('subcomment/{id}',['as' => 'subcomment','uses'=> 'App\Http\Controllers\SubCommentController@createSubComment'])->middleware('auth');

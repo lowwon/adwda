@@ -1,6 +1,5 @@
 @extends('layout')
 @section('content')
-
     <div class="container-fluid">
         <h1 class="tieude">Cac bai viet moi</h1>
         <div  class="post hidden sm:flex sm:items-center sm:ml-6 ">
@@ -89,5 +88,5 @@
                 </tbody>
             </table>
         </div>
-    </div
+    </div>
 @stop

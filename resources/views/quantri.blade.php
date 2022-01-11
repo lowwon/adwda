@@ -9,7 +9,7 @@
         </div>     
         @foreach ($user as $u)
             <div class="quantri4">
-                <form method="post"  action="{{ route('saveRole',['id'=>$u->id]) }}">
+                <form method="POST" action="{{route('saveRole',['id'=>$u->id]) }}">
                     @csrf
                     <div class="col-1 quantri3"> <p style="margin-top: 15px" id="userid" name="userid" >{{$u->id}} </p></div>
                     <div class="col-3 quantri3"> <p style="margin-top: 15px" >{{$u->name}} </p></div>

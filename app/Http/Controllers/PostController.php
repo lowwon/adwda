@@ -6,7 +6,7 @@ use App\Models\Post;
 use App\Models\Topic;
 use App\Models\User;
 use App\Models\Comment;
-use App\Models\comment_user;
+use App\Models\SubComment;
 use Illuminate\Support\Facades\DB;
 use DateTime;
 use Auth;
@@ -14,23 +14,23 @@ class PostController extends Controller
 {
     public function index()
     {
-        $post = Post::all();
+        $post = Post::all()->sortByDesc('Date');
         return view('trangchu', compact('post'));
     }
     public function getThaoLuan(){
-        $post = Post::where('topic_id',1)->get();
+        $post = Post::where('topic_id',1)->orderBy('Date','desc')->get();
         $topic = Topic::all();
         $user = DB::table('users')->get();
         return view('thaoluan', compact('post','topic','user'));
     }
     public function getChiaSe(){
-        $post = Post::where('topic_id',3)->get();
+        $post = Post::where('topic_id',3)->orderBy('Date','desc')->get();
         $topic = Topic::all();
         $user = DB::table('users')->get();
         return view('chiase', compact('post','topic','user'));
     }
     public function getHoiDap(){
-        $post = Post::where('topic_id',2)->get();
+        $post = Post::where('topic_id',2)->orderBy('Date','desc')->get();
         $topic = Topic::all();
         $user = DB::table('users')->get();
         return view('hoidap', compact('post','topic','user'));
@@ -70,8 +70,9 @@ class PostController extends Controller
         $user_post = User::where('id',$post->user_id)->first();
         $user = User::all();
         $allpost = Post::where('topic_id',$post->topic_id)->get();
-        $comment = Comment::where('post_id',$id)->get();
-        return view('baidang',compact('post','allpost','comment','user_post','user'));
+        $comment = Comment::where('post_id',$id)->orderBy('date','desc')->get();
+        $subcomment = SubComment::all();
+        return view('baidang',compact('post','allpost','comment','user_post','user','subcomment'));
     }
     public function delete($id){
         $post = Post::where('id',$id)->first();

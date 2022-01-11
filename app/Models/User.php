@@ -40,6 +40,9 @@ class User extends Authenticatable
     public function Comment(){
         return $this->hasMany(Comment::class);
     }
+    public function SubComment(){
+        return $this->hasMany(SubComment::class);
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

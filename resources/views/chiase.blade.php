@@ -70,5 +70,5 @@
                 </tbody>
             </table>
         </div>
-    </div
+    </div>
 @stop
