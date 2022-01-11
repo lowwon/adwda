@@ -1,6 +1,6 @@
 @extends('layout')
 @section('content')
-    <div class="container-fluid">
+    <div class="container-fluid" style="min-height:700px">
         <div class="quantri1">
             <div class="col-1 quantri2">ID</div>
             <div class="col-3 quantri2">Name</div>

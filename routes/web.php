@@ -6,7 +6,7 @@ use App\Models\Post;
 use App\Models\Topic;
 use App\Models\User;
 use App\Models\Role;
-
+use App\Models\Comment;
 use App\Http\Kernel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Auth\Middleware\Authorize;
@@ -22,12 +22,14 @@ use Illuminate\Auth\Middleware\Authorize;
 */
 
 Route::get('/', function () {
-    $post = Post::all()->sortByDesc('Date');
+    $post = Post::where('status',1)->orderBy('Date','desc')->get();
     $topic = Topic::all();
     $user = User::all();
-    return view('trangchu', compact('post','topic','user'));
+    $comment = Comment::all();
+    return view('trangchu', compact('post','topic','user','comment'));
 })->name('dashboard');
-Route::get('/403', function () {
+Route::get('/403', function () 
+{
     return view('403');
 })->name('error');
 //Route::middleware(['auth:sanctum', 'verified'])->get('/trangchu', function () {
@@ -50,7 +52,10 @@ Route::get('dashboard',function(){
      $role = Role::all();
      return view('quantri',compact('user','role'));
  })->name('viewQT')->middleware('roleAdmin');
+ Route::get('kiembai',['as' => 'checkPost','uses' => 'App\Http\Controllers\PostController@checkPost'])->middleware('roleAdmin');
  Route::post('save/role/{id}',['as' => 'saveRole','uses' => 'App\Http\Controllers\UserController@setRole'])->middleware('roleAdmin');
  Route::get('delete/user/{id}',['as' => 'deleteUser','uses'=>'App\Http\Controllers\UserController@deleteUser'])->middleware('roleSuperAdmin');
  Route::post('comment/{id}',['as' => 'comment','uses'=> 'App\Http\Controllers\CommentController@createComment'])->middleware('auth');
  Route::post('subcomment/{id}',['as' => 'subcomment','uses'=> 'App\Http\Controllers\SubCommentController@createSubComment'])->middleware('auth');
+ Route::get('allow/post/{id}',['as' => 'allowP','uses'=>'App\Http\Controllers\PostController@allowPost'])->middleware('roleAdmin');
+ Route::get('deleteforadmin/{id}',['as' => 'deletePAdmin','uses'=>'App\Http\Controllers\PostController@deleteforAdmin'])->middleware('roleAdmin');

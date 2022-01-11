@@ -10,7 +10,7 @@ class Post extends Model
     use HasFactory;
     protected $table = "Post";
     public $timestamps = false;
-    protected $fillable = ["id","user_id","Name","Content","Date","topic_id"];
+    protected $fillable = ["id","user_id","Name","Content","Date","topic_id","status"];
     public function User(){
     	return $this->belongsto(User::class);
     }

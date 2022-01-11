@@ -18,19 +18,19 @@ class PostController extends Controller
         return view('trangchu', compact('post'));
     }
     public function getThaoLuan(){
-        $post = Post::where('topic_id',1)->orderBy('Date','desc')->get();
+        $post = Post::where('topic_id',1)->where('status',1)->orderBy('Date','desc')->get();
         $topic = Topic::all();
         $user = DB::table('users')->get();
         return view('thaoluan', compact('post','topic','user'));
     }
     public function getChiaSe(){
-        $post = Post::where('topic_id',3)->orderBy('Date','desc')->get();
+        $post = Post::where('topic_id',3)->where('status',1)->orderBy('Date','desc')->get();
         $topic = Topic::all();
         $user = DB::table('users')->get();
         return view('chiase', compact('post','topic','user'));
     }
     public function getHoiDap(){
-        $post = Post::where('topic_id',2)->orderBy('Date','desc')->get();
+        $post = Post::where('topic_id',2)->where('status',1)->orderBy('Date','desc')->get();
         $topic = Topic::all();
         $user = DB::table('users')->get();
         return view('hoidap', compact('post','topic','user'));
@@ -53,20 +53,38 @@ class PostController extends Controller
             'titlepost'=> 'required',
             'areapost'=> 'required'
         ];
-
+        $st = 1;
         Validator::make($rq->all(),$controls,$messages)->validate();
-        $post = Post::create([
-            'id' => $e,
-            'user_id' => $id,
-            'Name' => $rq->titlepost,
-            'Content' => $rq->areapost,
-            'Date' => $date,
-            'topic_id' => $rq->txttopic
-        ]);
+        if(Auth::user()->role_id > 2){
+            $post = Post::create([
+                'id' => $e,
+                'user_id' => $id,
+                'Name' => $rq->titlepost,
+                'Content' => $rq->areapost,
+                'Date' => $date,
+                'topic_id' => $rq->txttopic,
+                'status' => $st
+            ]);
+        }
+        else{
+            $post = Post::create([
+                'id' => $e,
+                'user_id' => $id,
+                'Name' => $rq->titlepost,
+                'Content' => $rq->areapost,
+                'Date' => $date,
+                'topic_id' => $rq->txttopic
+            ]);
+        }
         return redirect()->route('dashboard');
     }
     public function viewPost($id){
         $post = Post::where('id',$id)->first();
+        if($post->status == 0)
+        {
+            if(Auth::user()->role_id < 3)
+                return redirect()->route('dashboard'); 
+        }
         $user_post = User::where('id',$post->user_id)->first();
         $user = User::all();
         $allpost = Post::where('topic_id',$post->topic_id)->get();
@@ -88,6 +106,22 @@ class PostController extends Controller
         }
         $post = Post::where('id',$id)->delete();
         return redirect()->route('dashboard');
+
+    }
+    public function deleteforAdmin($id){
+        $post = Post::where('id',$id)->delete();
+        return back();
+    }
+    public function checkPost()
+    {
+        $post = Post::where('status',0)->get();
+        $topic = Topic::all();
+        $user = User::all();
+        return view('kiembai',compact('post','topic','user'));
+    }
+    public function allowPost($id){
+        $post = DB::table('post')->where('id',$id)->update(['status'=>1]);
+        return back();
     }
 }
 

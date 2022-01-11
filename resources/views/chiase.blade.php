@@ -1,7 +1,7 @@
 @extends('layout')
 @section('content')
 
-    <div class="container-fluid">
+    <div class="container-fluid"  style="min-height:700px">
         <h1 class="tieude">Cac bai viet moi</h1>
         <div  class="post hidden sm:flex sm:items-center sm:ml-6 ">
             @if (Route::has('login'))
