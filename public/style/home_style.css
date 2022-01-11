@@ -1,0 +1,84 @@
+*{
+                
+}
+.tieude{
+    margin-top: -35px;
+    position: absolute;
+    margin-left: 15%;
+}
+.post{
+    padding: 0px;
+    margin: 0px;
+    margin-top: -44px;
+    margin-right: 18.3%;
+    float: right;
+}
+body {
+    font-family: 'Nunito', sans-serif;
+    background-color : white;
+}
+.contents{
+    margin: 50px;
+    padding-left: 15%;
+    padding-right: 15%;
+    margin-left: 0px;
+
+}
+.a{
+    background-color: black;
+    text-align: center;
+    height: 30px;
+    font-size: 20px;
+    border:1px solid gray;
+    color: white;
+}
+.s{
+    background-color: black;
+    border:2px solid gray;
+    margin: 0px;
+
+}
+.nav1{
+    margin-left: 20px;
+}
+
+
+.dangbai1{
+    display: inline-block;
+}
+.dangbai2{
+    padding-top: 10px;
+    margin-left:14%;
+    margin-right: 16%;
+}
+.ss{
+    margin-left:14%;
+    margin-right:10%;
+    margin-top:50px
+}
+.quantri1{
+    margin-left:14%;
+    margin-top:30px;
+}
+.quantri2{
+    font-size: 20px;
+    line-height: 50px;
+    display: inline-block;
+    text-align: center; 
+    background-color: rgb(194, 101, 194);
+    height: 50px;
+    margin-bottom: 10px;
+    border-radius: 5px 5px 5px 5px;
+}
+.quantri3{
+    font-size: 15px;
+    display: inline-block;
+    text-align: center; 
+    background-color: rgb(112, 167, 240);
+    height: 50px;
+    border-bottom: 2px solid white;
+    border-radius: 5px 5px 5px 5px;
+}
+.quantri4{
+    margin-left:14%;
+}

@@ -59,3 +59,9 @@ Route::get('dashboard',function(){
  Route::post('subcomment/{id}',['as' => 'subcomment','uses'=> 'App\Http\Controllers\SubCommentController@createSubComment'])->middleware('auth');
  Route::get('allow/post/{id}',['as' => 'allowP','uses'=>'App\Http\Controllers\PostController@allowPost'])->middleware('roleAdmin');
  Route::get('deleteforadmin/{id}',['as' => 'deletePAdmin','uses'=>'App\Http\Controllers\PostController@deleteforAdmin'])->middleware('roleAdmin');
+ Route::get('/dangbai',['as'=>'dangbai','uses'=>'App\Http\Controllers\TopicController@addPost']);
+ Route::post('',['as'=>'insert','uses'=>'App\Http\Controllers\PostController@insertPost']);
+ Route::get('/tintuc',['as'=>'tintuc','uses'=>'App\Http\Controllers\NewsController@index']);
+ Route::get('/dangtin',['as'=>'dangtin','uses'=>'App\Http\Controllers\NewsController@addNews']);
+ Route::post('', ['as'=>'insertnew', 'uses'=>'App\Http\Controllers\NewsController@insertNews']);
+ Route::get('newsdetail/{id}', ['as'=>'ndtintuc', 'uses'=>'App\Http\Controllers\NewsController@getNewsDetail']); 

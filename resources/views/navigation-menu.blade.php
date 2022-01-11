@@ -15,19 +15,25 @@
                     <x-jet-nav-link style="margin-left: 20px" href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{'Diễn đàn'}}
                     </x-jet-nav-link>
-                    <x-jet-nav-link class="nav1" href="{{route('thaoluan')}}">
+                    <x-jet-nav-link  style="margin-left: 20px"  class="nav1" href="{{route('thaoluan')}}">
                         {{'Thảo luận'}}
                     </x-jet-nav-link>
-                    <x-jet-nav-link class="nav1" href="{{route('chiase')}}">
+                    <x-jet-nav-link  style="margin-left: 20px"  class="nav1" href="{{route('chiase')}}">
                         {{'Chia sẻ'}}
                     </x-jet-nav-link>
-                    <x-jet-nav-link class="nav1" href="{{route('hoidap')}}">
+                    <x-jet-nav-link style="margin-left: 20px"  class="nav1" href="{{route('hoidap')}}">
                         {{'Hỏi thắc mắc'}}
                     </x-jet-nav-link>
-                    <x-jet-nav-link  style="margin-left: 20px" href="{{ route('dashboard') }}">
+                    <x-jet-nav-link  style="margin-left: 20px" href="{{ route('tintuc') }}">
                         {{'Tin tức'}}
                     </x-jet-nav-link>
-
+                    @if (Auth::check())
+                                @if(Auth::user()->role_id > 2)
+                                    <x-jet-nav-link style="margin-left: 20px" class="nav1" href="{{ route('checkPost') }}">
+                                        <p id="kb">Kiểm bài</p>
+                                    </x-jet-nav-link>
+                                 @endif
+                            @endif
                 </div>
             </div>
 
