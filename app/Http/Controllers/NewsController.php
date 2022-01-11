@@ -9,7 +9,7 @@ class NewsController extends Controller
 {
     public function index()
     {
-        $news = News::Paginate(4);
+        $news = News::orderBy('id','DESC')->Paginate(4);
         return view('news', compact('news'));
     }
     public function addNews()
@@ -43,6 +43,9 @@ class NewsController extends Controller
         ]);
         $news = News::Paginate(4);
         return view('news', compact('news'));
-   
+    }
+    public function getNewsDetail($id){
+        $news = News::where('id', $id)->first();
+        return view('newsdetail', compact('news'));
     }
 }
