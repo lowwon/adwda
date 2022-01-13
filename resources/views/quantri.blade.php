@@ -1,5 +1,14 @@
 @extends('layout')
 @section('content')
+    <style>
+        .hinh{
+            float: right;
+            display: inline-block; 
+            padding-top: 10px;
+            padding-right: 10px; 
+            border-radius : 2px 2px 2px 2px;
+        }
+        </style>
     <div class="container-fluid" style="min-height:700px">
         <div class="quantri1">
             <div class="col-1 quantri2">ID</div>
@@ -12,7 +21,11 @@
                 <form method="POST" action="{{route('saveRole',['id'=>$u->id]) }}">
                     @csrf
                     <div class="col-1 quantri3"> <p style="margin-top: 15px" id="userid" name="userid" >{{$u->id}} </p></div>
-                    <div class="col-3 quantri3"> <p style="margin-top: 15px" >{{$u->name}} </p></div>
+                    <div class="col-3 quantri3">
+                         <p style="margin-top: 15px" >{{$u->name}} </p>    
+                         {{-- <a href="javascript:openModal('{{$u->id}}')"> chinh sửa </a> --}}
+
+                    </div>
                     <div  class="col-4 quantri3">
                         <div style="display: inline-block;" class="form-check">
                             @if ($u->role_id == 1)
@@ -52,7 +65,16 @@
                         <button type="submit" style="margin-top: -5px" class="btn btn-warning">Save</button>
                     <p></div>
                 </form>
+                
             </div>
-        @endforeach        
+
+        @endforeach   
+        {{-- <div style="text-align:left" id="divModal" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    
+                </div>
+            </div>
+        </div>     --}}
     </div>
 @stop

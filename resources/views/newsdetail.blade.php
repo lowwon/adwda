@@ -15,18 +15,21 @@
     .content{
         
     }
+    .ordernews{
+        font-size: 25px;
+        margin-top: 30px;
+    }
 </style>
 <div class="container" style="margin-top:30px">
 <div class="row">
-    <div>
-            <b>User</b><br>
-            <b>{{$news->create_at}}</b>
-    </div>
-    <div class="n_detail">        
+    <div class="n_detail col-7">        
         <b class="title">{!!$news->title!!}</b> <br>
         <b class="content">{!!$news->content!!}</b> <br>
         <img class="img-news" src="images/{{$news->img}}"> 
         {!!$news->para!!}
+    </div>
+    <div class="col-3">
+        <p class="ordernews"><strong>Các tin tức khác</strong></p>
     </div>
 </div>
 </div>

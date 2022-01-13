@@ -87,6 +87,9 @@
                     </div>
                 </div>    
             @endforeach
+            <div style="margin-top:20px; font-size:20">      
+                {{ $comment->links(); }}
+            </div>
         </div>
     </div>
     <div class="col-md-3" style="margin-top: 20px;height: auto">

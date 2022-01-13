@@ -30,6 +30,10 @@ class User extends Authenticatable
         'email',
         'password',
         'role_id',
+        'sex',
+        'phone',
+        'country',
+        'birthday'
     ];
     public function Post(){
     	return $this->hasMany(Post::class);

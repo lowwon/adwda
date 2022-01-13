@@ -18,22 +18,25 @@ class PostController extends Controller
         return view('trangchu', compact('post'));
     }
     public function getThaoLuan(){
-        $post = Post::where('topic_id',1)->where('status',1)->orderBy('Date','desc')->get();
+        $post = Post::where('topic_id',1)->where('status',1)->orderBy('Date','desc')->Paginate(10);
         $topic = Topic::all();
         $user = DB::table('users')->get();
-        return view('thaoluan', compact('post','topic','user'));
+        $comment = Comment::all();
+        return view('thaoluan', compact('post','topic','user','comment'));
     }
     public function getChiaSe(){
-        $post = Post::where('topic_id',3)->where('status',1)->orderBy('Date','desc')->get();
+        $post = Post::where('topic_id',3)->where('status',1)->orderBy('Date','desc')->Paginate(10);
         $topic = Topic::all();
         $user = DB::table('users')->get();
-        return view('chiase', compact('post','topic','user'));
+        $comment = Comment::all();
+        return view('chiase', compact('post','topic','user','comment'));
     }
     public function getHoiDap(){
-        $post = Post::where('topic_id',2)->where('status',1)->orderBy('Date','desc')->get();
+        $post = Post::where('topic_id',2)->where('status',1)->orderBy('Date','desc')->Paginate(10);
         $topic = Topic::all();
         $user = DB::table('users')->get();
-        return view('hoidap', compact('post','topic','user'));
+        $comment = Comment::all();
+        return view('hoidap', compact('post','topic','user','comment'));
     }
     public function insertPost(Request $rq)
     {
@@ -87,8 +90,8 @@ class PostController extends Controller
         }
         $user_post = User::where('id',$post->user_id)->first();
         $user = User::all();
-        $allpost = Post::where('topic_id',$post->topic_id)->get();
-        $comment = Comment::where('post_id',$id)->orderBy('date','desc')->get();
+        $allpost = Post::where('topic_id',$post->topic_id)->where('status',1)->get();
+        $comment = Comment::where('post_id',$id)->orderBy('date','desc')->simplePaginate(3);
         $subcomment = SubComment::all();
         return view('baidang',compact('post','allpost','comment','user_post','user','subcomment'));
     }
@@ -114,7 +117,7 @@ class PostController extends Controller
     }
     public function checkPost()
     {
-        $post = Post::where('status',0)->get();
+        $post = Post::where('status',0)->Paginate(10);
         $topic = Topic::all();
         $user = User::all();
         return view('kiembai',compact('post','topic','user'));

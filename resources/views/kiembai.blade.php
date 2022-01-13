@@ -61,7 +61,7 @@
                         <td class="col-2"> 
                              @foreach ($user as $u)
                                 @if($u->id == $a->user_id)
-                                    {{$u->name}}
+                                <a  href="{{route('info',['id'=>$u->id])}}">{{$u->name}}</a>
                                 @endif
                             @endforeach
                             
@@ -75,6 +75,7 @@
                     @endforeach   
                 </tbody>
             </table>
+            {{ $post->links(); }}
         </div>
     </div>
 @stop

@@ -22,7 +22,7 @@ use Illuminate\Auth\Middleware\Authorize;
 */
 
 Route::get('/', function () {
-    $post = Post::where('status',1)->orderBy('Date','desc')->get();
+    $post = Post::where('status',1)->orderBy('Date','desc')->Paginate(15);
     $topic = Topic::all();
     $user = User::all();
     $comment = Comment::all();
@@ -59,9 +59,9 @@ Route::get('dashboard',function(){
  Route::post('subcomment/{id}',['as' => 'subcomment','uses'=> 'App\Http\Controllers\SubCommentController@createSubComment'])->middleware('auth');
  Route::get('allow/post/{id}',['as' => 'allowP','uses'=>'App\Http\Controllers\PostController@allowPost'])->middleware('roleAdmin');
  Route::get('deleteforadmin/{id}',['as' => 'deletePAdmin','uses'=>'App\Http\Controllers\PostController@deleteforAdmin'])->middleware('roleAdmin');
- Route::get('/dangbai',['as'=>'dangbai','uses'=>'App\Http\Controllers\TopicController@addPost']);
- Route::post('',['as'=>'insert','uses'=>'App\Http\Controllers\PostController@insertPost']);
  Route::get('/tintuc',['as'=>'tintuc','uses'=>'App\Http\Controllers\NewsController@index']);
- Route::get('/dangtin',['as'=>'dangtin','uses'=>'App\Http\Controllers\NewsController@addNews']);
- Route::post('', ['as'=>'insertnew', 'uses'=>'App\Http\Controllers\NewsController@insertNews']);
+ Route::get('/dangtin',['as'=>'dangtin','uses'=>'App\Http\Controllers\NewsController@addNews'])->middleware('roleAdmin');
+ Route::post('insertnews', ['as'=>'insertnew', 'uses'=>'App\Http\Controllers\NewsController@insertNews'])->middleware('roleAdmin');
  Route::get('newsdetail/{id}', ['as'=>'ndtintuc', 'uses'=>'App\Http\Controllers\NewsController@getNewsDetail']); 
+ Route::get('accoutinfo/{id}',['as'=>'info', 'uses'=>'App\Http\Controllers\UserController@getinfo']);
+ Route::post('updateAccount/{id}',['as'=>'updateUser','uses'=>'App\Http\Controllers\UserController@updateUser']);

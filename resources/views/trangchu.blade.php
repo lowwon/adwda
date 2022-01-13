@@ -21,11 +21,11 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                    <th class="col-2"><a >Chủ để</a></th>
+                    <th class="col-2">Chủ để</th>
                     <th class="col-4">Tiêu đề</th>
                     <th class="col-3">Ngày đăng</th>
                     <th class="col-2">Người đăng</th>
-                    <th class="col-2">Trả lời</th>
+                    <th class="col-1">Trả lời</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -77,12 +77,12 @@
                         <td class="col-2"> 
                              @foreach ($user as $u)
                                 @if($u->id == $a->user_id)
-                                    {{$u->name}}
+                                    <a  href="{{route('info',['id'=>$u->id])}}">{{$u->name}}</a>
                                 @endif
                             @endforeach
                             
                         </td>
-                        <td class="col-2">
+                        <td class="col-1">
                             <?php
                                 $i = 0;
                                 foreach ($comment as $c){
@@ -98,6 +98,7 @@
                     @endforeach   
                 </tbody>
             </table>
+            {{ $post->links(); }}
         </div>
     </div>
 @stop

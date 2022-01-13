@@ -42,7 +42,7 @@ class NewsController extends Controller
             'para'=>$request->noidung,
         ]);
         $news = News::Paginate(4);
-        return view('news', compact('news'));
+        return  redirect()->route('tintuc');
     }
     public function getNewsDetail($id){
         $news = News::where('id', $id)->first();

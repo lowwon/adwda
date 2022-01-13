@@ -33,8 +33,8 @@
                                 @endif
                             @endforeach
                         </a></td>
-                        <td class="col-3"><a href="#">
-                            <a href="{{route('viewPost',['id'=>$a->id])}}><?php
+                        <td class="col-4"><a href="#">
+                            <a href="{{route('viewPost',['id'=>$a->id])}}"><?php
                                 if (strlen($a->Name)>40)
                                 {
                                     $str = substr($a->Name,0,40);
@@ -59,16 +59,28 @@
                         <td class="col-2"> 
                              @foreach ($user as $u)
                                 @if($u->id == $a->user_id)
-                                    {{$u->name}}
+                                    <a  href="{{route('info',['id'=>$u->id])}}">{{$u->name}}</a>
                                 @endif
                             @endforeach
                             
                         </td>
-                        <td class="col-2">1</td>
+                        <td class="col-1">
+                            <?php
+                                $i = 0;
+                                foreach ($comment as $c){
+                                    if($c->post_id == $a->id)
+                                    {
+                                    $i = $i + 1;
+                                    }
+                                } 
+                                echo $i;
+                            ?>       
+                        </td>
                     </tr>
                     @endforeach   
                 </tbody>
             </table>
+            {{ $post->links(); }}
         </div>
     </div>
 @stop

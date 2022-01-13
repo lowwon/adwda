@@ -19,6 +19,6 @@ class RoleSuperAdmin
         if(Auth::check() && Auth::user()->role_id > 3){
             return $next($request);
         }
-        return redirect()->route('dashboard');   
+        return back();   
     }
 }
