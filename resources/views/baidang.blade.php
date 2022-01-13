@@ -127,7 +127,7 @@
         { name: 'basicstyles', items: ['Bold', 'Italic'] },
         { name: 'links', items: ['Link', 'Unlink'] },
         { name: 'paragraph', items: ['NumberedList', 'BulletedList'] }
-        ], uiColor: '#d1f0fb'
+        ]
         , width: ['100%'], height: ['100px']
     });
     CKEDITOR.config.width = '98.5%';

@@ -31,13 +31,14 @@
                 <input type="submit" class="btn btn-info" value="Đăng bài">
             </div>
         </form>
-        <script src="//cdn.ckeditor.com/4.17.1/basic/ckeditor.js"></script>
+        <script src="//cdn.ckeditor.com/4.17.1/full/ckeditor.js"></script>
         <script type="text/javascript">
             CKEDITOR.replace( 'areapost',{
                 toolbar: [
-                { name: 'basicstyles', items: ['Bold', 'Italic'] },
+                { name: 'basicstyles', items: ['Bold', 'Italic', 'Format'] },
                 { name: 'links', items: ['Link', 'Unlink'] },
-                { name: 'paragraph', items: ['NumberedList', 'BulletedList'] }
+                { name: 'paragraph', items: ['NumberedList', 'BulletedList'] },
+                { name: 'my_clipboard', items: [ 'Cut', 'Copy', 'Paste' ] },
                 ], uiColor: '#d1f0fb'
                 , width: ['100%'], height: ['800px']
             });
