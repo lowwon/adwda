@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Comment;
 use App\Models\SubComment;
 use Illuminate\Http\Request;
+use App\Models\Notification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 class UserController extends Controller
@@ -27,7 +28,11 @@ class UserController extends Controller
     public function getinfo($id){
         $user = User::where('id',$id)->first();
         $post = Post::where('user_id',$id)->where('status',1)->simplePaginate(8);
-        return view('accountinfo',compact('user','post'));
+        if(Auth::check())
+            $noti = Notification::where('user_id',Auth::user()->id)->where('status',0)->orderBy('date','desc')->Paginate(5);
+        else
+            $noti = null;
+        return view('accountinfo',compact('user','post','noti'));
     }
     public function updateUser(Request $rq, $id){
         $messages = [

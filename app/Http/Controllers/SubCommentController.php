@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Post;
 use App\Models\Comment;
 use App\Models\SubComment;
+use App\Models\Notification;
 class SubCommentController extends Controller
 {
     public function createSubComment(Request $rq, $id){
@@ -27,6 +28,17 @@ class SubCommentController extends Controller
                 'Date' => $date,
                 'user_id' => Auth::user()->id,
                 'Content' => $rq->subcomment,
+            ]);
+            $user = User::where('id',Auth::user()->id)->first();
+            $name = $user->name;
+            $comment = Comment::where('id',$subcomment->comment_id)->first();
+            $ctc = $name.' has reply on your comment';
+            $l = $comment->post_id;
+            $notification = Notification::create([
+                'content' => $ctc,
+                'user_id' => $comment->user_id,
+                'link' => $l,
+                'date' => new DateTime('now'),
             ]);
         }
         return back();

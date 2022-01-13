@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Post;
 use App\Models\Comment;
+use App\Models\Notification;
 use DateTime;
 use Auth;
 class CommentController extends Controller
@@ -26,6 +27,16 @@ class CommentController extends Controller
                 'post_id'=> $id,
                 'user_id' => Auth::user()->id,
                 'date' => $date
+            ]);
+            $user = User::where('id',$comment->user_id)->first();
+            $post = Post::where('id', $comment->post_id)->first();
+            $ct = $user->name.' has comment on your post';
+            $l = $comment->post_id;
+            $notification = Notification::create([
+                'content' => $ct,
+                'user_id' => $post->user_id,
+                'link' => $l,
+                'date' => new DateTime('now'),
             ]);
         }
         return back();

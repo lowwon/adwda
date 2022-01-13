@@ -7,7 +7,9 @@ use App\Models\Topic;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\Comment;
+use App\Models\Notification;
 use App\Http\Kernel;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Auth\Middleware\Authorize;
 /*
@@ -26,7 +28,11 @@ Route::get('/', function () {
     $topic = Topic::all();
     $user = User::all();
     $comment = Comment::all();
-    return view('trangchu', compact('post','topic','user','comment'));
+    if(Auth::check())
+        $noti = Notification::where('user_id',Auth::user()->id)->where('status',0)->orderBy('date','desc')->Paginate(5);
+    else
+        $noti = null;
+    return view('trangchu', compact('post','topic','user','comment','noti'));
 })->name('dashboard');
 Route::get('/403', function () 
 {
@@ -50,7 +56,11 @@ Route::get('dashboard',function(){
  route::get('quantri',function(){
      $user = User::all();
      $role = Role::all();
-     return view('quantri',compact('user','role'));
+     if(Auth::check())
+        $noti = Notification::where('user_id',Auth::user()->id)->where('status',0)->orderBy('date','desc')->Paginate(5);
+    else
+        $noti = null;
+     return view('quantri',compact('user','role','noti'));
  })->name('viewQT')->middleware('roleAdmin');
  Route::get('kiembai',['as' => 'checkPost','uses' => 'App\Http\Controllers\PostController@checkPost'])->middleware('roleAdmin');
  Route::post('save/role/{id}',['as' => 'saveRole','uses' => 'App\Http\Controllers\UserController@setRole'])->middleware('roleAdmin');
@@ -65,3 +75,8 @@ Route::get('dashboard',function(){
  Route::get('newsdetail/{id}', ['as'=>'ndtintuc', 'uses'=>'App\Http\Controllers\NewsController@getNewsDetail']); 
  Route::get('accoutinfo/{id}',['as'=>'info', 'uses'=>'App\Http\Controllers\UserController@getinfo']);
  Route::post('updateAccount/{id}',['as'=>'updateUser','uses'=>'App\Http\Controllers\UserController@updateUser']);
+ Route::get('/changeStatus/{id}',function($id){
+    $noti = Notification::where('id',$id)->update(['status'=>1]);
+    $n = Notification::where('id',$id)->first();
+    return redirect()->route('viewPost',['id'=>$n->link]);
+ })->name('changeNoti');

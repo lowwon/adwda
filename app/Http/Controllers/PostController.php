@@ -7,6 +7,7 @@ use App\Models\Topic;
 use App\Models\User;
 use App\Models\Comment;
 use App\Models\SubComment;
+use App\Models\Notification;
 use Illuminate\Support\Facades\DB;
 use DateTime;
 use Auth;
@@ -22,21 +23,33 @@ class PostController extends Controller
         $topic = Topic::all();
         $user = DB::table('users')->get();
         $comment = Comment::all();
-        return view('thaoluan', compact('post','topic','user','comment'));
+        if(Auth::check())
+            $noti = Notification::where('user_id',Auth::user()->id)->where('status',0)->orderBy('date','desc')->Paginate(5);
+        else
+            $noti = null;
+        return view('thaoluan', compact('post','topic','user','comment','noti'));
     }
     public function getChiaSe(){
         $post = Post::where('topic_id',3)->where('status',1)->orderBy('Date','desc')->Paginate(10);
         $topic = Topic::all();
         $user = DB::table('users')->get();
         $comment = Comment::all();
-        return view('chiase', compact('post','topic','user','comment'));
+        if(Auth::check())
+            $noti = Notification::where('user_id',Auth::user()->id)->where('status',0)->orderBy('date','desc')->Paginate(5);
+        else
+            $noti = null;
+        return view('chiase', compact('post','topic','user','comment','noti'));
     }
     public function getHoiDap(){
         $post = Post::where('topic_id',2)->where('status',1)->orderBy('Date','desc')->Paginate(10);
         $topic = Topic::all();
         $user = DB::table('users')->get();
         $comment = Comment::all();
-        return view('hoidap', compact('post','topic','user','comment'));
+        if(Auth::check())
+            $noti = Notification::where('user_id',Auth::user()->id)->where('status',0)->orderBy('date','desc')->Paginate(5);
+        else
+            $noti = null;
+        return view('hoidap', compact('post','topic','user','comment','noti'));
     }
     public function insertPost(Request $rq)
     {
@@ -93,7 +106,11 @@ class PostController extends Controller
         $allpost = Post::where('topic_id',$post->topic_id)->where('status',1)->get();
         $comment = Comment::where('post_id',$id)->orderBy('date','desc')->simplePaginate(3);
         $subcomment = SubComment::all();
-        return view('baidang',compact('post','allpost','comment','user_post','user','subcomment'));
+        if(Auth::check())
+        $noti = Notification::where('user_id',Auth::user()->id)->where('status',0)->orderBy('date','desc')->Paginate(5);
+        else
+            $noti = null;
+        return view('baidang',compact('post','allpost','comment','user_post','user','subcomment','noti'));
     }
     public function delete($id){
         $post = Post::where('id',$id)->first();
@@ -120,7 +137,11 @@ class PostController extends Controller
         $post = Post::where('status',0)->Paginate(10);
         $topic = Topic::all();
         $user = User::all();
-        return view('kiembai',compact('post','topic','user'));
+        if(Auth::check())
+            $noti = Notification::where('user_id',Auth::user()->id)->where('status',0)->orderBy('date','desc')->Paginate(5);
+        else
+            $noti = null;
+        return view('kiembai',compact('post','topic','user','noti'));
     }
     public function allowPost($id){
         $post = DB::table('post')->where('id',$id)->update(['status'=>1]);

@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Notification;
+use Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\News;
@@ -10,12 +12,20 @@ class NewsController extends Controller
     public function index()
     {
         $news = News::orderBy('id','DESC')->Paginate(4);
-        return view('news', compact('news'));
+        if(Auth::check())
+            $noti = Notification::where('user_id',Auth::user()->id)->where('status',0)->orderBy('date','desc')->Paginate(5);
+        else
+            $noti = null;
+        return view('news', compact('news','noti'));
     }
     public function addNews()
     {
         $news = News::all();
-        return view('addnews', compact('news'));
+        if(Auth::check())
+            $noti = Notification::where('user_id',Auth::user()->id)->where('status',0)->orderBy('date','desc')->Paginate(5);
+        else
+            $noti = null;
+        return view('addnews', compact('news','noti'));
     }
     public function insertNews(Request $request)
     {
@@ -46,6 +56,10 @@ class NewsController extends Controller
     }
     public function getNewsDetail($id){
         $news = News::where('id', $id)->first();
-        return view('newsdetail', compact('news'));
+        if(Auth::check())
+            $noti = Notification::where('user_id',Auth::user()->id)->where('status',0)->orderBy('date','desc')->Paginate(5);
+        else
+            $noti = null;
+        return view('newsdetail', compact('news','noti'));
     }
 }
