@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Auth;
 use Datetime;
@@ -29,17 +29,23 @@ class SubCommentController extends Controller
                 'user_id' => Auth::user()->id,
                 'Content' => $rq->subcomment,
             ]);
-            $user = User::where('id',Auth::user()->id)->first();
-            $name = $user->name;
             $comment = Comment::where('id',$subcomment->comment_id)->first();
-            $ctc = $name.' has reply on your comment';
-            $l = $comment->post_id;
-            $notification = Notification::create([
-                'content' => $ctc,
-                'user_id' => $comment->user_id,
-                'link' => $l,
-                'date' => new DateTime('now'),
-            ]);
+            if(Auth::user()->id == $comment->user_id)
+                return back();
+            else{
+                $user = User::where('id',Auth::user()->id)->first();
+                $post = Post::where('id', $comment->post_id)->first();
+                $name = $user->name;
+                $user1 = User::where('id',$post->user_id)->first();
+                $ctc = $name.' has reply your comment on '.$user1->name."'s post";
+                $l = $comment->post_id;
+                $notification = Notification::create([
+                    'content' => $ctc,
+                    'user_id' => $comment->user_id,
+                    'link' => $l,
+                    'date' => new DateTime('now'),
+                ]);
+            }
         }
         return back();
     }

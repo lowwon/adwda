@@ -35,21 +35,6 @@ class UserController extends Controller
         return view('accountinfo',compact('user','post','noti'));
     }
     public function updateUser(Request $rq, $id){
-        $messages = [
-            "name.required" => "Bạn phải nhập tên",
-            "email.required" => "Bạn phải nhập Email",
-            "sex.required" => "Bạn phải chọn giới tính",
-            "phone.required" => "Bạn phải nhập số điện thoại",
-            "ct.required" => "Bạn phải chọn quốc gia",
-        ];
-        $controls =[
-            'name' => 'required',
-            'email' => 'required',
-            'sex' =>'required',
-            'phone' => 'required',
-            'ct' => 'required',
-        ];
-        Validator::make($rq->all(),$controls,$messages)->validate();
         DB::table('users')->where('id',$id)->update(['name'=>$rq->name,'email'=>$rq->email,'sex'=>$rq->sex,'phone'=>$rq->phone,'country'=>$rq->ct,'birthday'=>$rq->birthday]);
         $user = User::where('id',$id)->first();
         if($user->id < 2){
@@ -57,4 +42,15 @@ class UserController extends Controller
         }
         return back();
     }
+    public function updateAvatar(Request $rq, $id){
+        $filename = "logo.png";
+        if($rq->file('fileUpLoad')->isValid())
+        {
+            $filename = $rq->fileUpLoad->getClientOriginalName();
+            $rq->fileUpLoad->move('images/', $filename);
+        }
+        DB::table('users')->where('id',$id)->update(['avatar'=>$filename]);
+        return back();
+    }
+
 }

@@ -75,8 +75,10 @@ Route::get('dashboard',function(){
  Route::get('newsdetail/{id}', ['as'=>'ndtintuc', 'uses'=>'App\Http\Controllers\NewsController@getNewsDetail']); 
  Route::get('accoutinfo/{id}',['as'=>'info', 'uses'=>'App\Http\Controllers\UserController@getinfo']);
  Route::post('updateAccount/{id}',['as'=>'updateUser','uses'=>'App\Http\Controllers\UserController@updateUser']);
+ Route::post('update/Avatar/{id}',['as'=>'updateAvatar','uses'=>'App\Http\Controllers\UserController@updateAvatar']);
  Route::get('/changeStatus/{id}',function($id){
     $noti = Notification::where('id',$id)->update(['status'=>1]);
     $n = Notification::where('id',$id)->first();
     return redirect()->route('viewPost',['id'=>$n->link]);
  })->name('changeNoti');
+

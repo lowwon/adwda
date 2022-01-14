@@ -1,20 +1,24 @@
 @extends('layout')
 @section('content')
-    <div style="margin-top : -54px;margin-right:400px;float : right; width: 200px;height: 10px;">
-        <input type="text" style="display: inline-block;border-radius: 8px 8px 8px 8px" class="form-control" placeholder="Tìm kiếm">
-    </div>
-    @if(Auth::check())
-    <div style="margin-top : -48px;margin-right:330px;float : right; width: 40px;height: 20px;">
+<div style="margin-top : -54px;margin-right:30%;float : right; width: 200px;height: 10px;">
+    <input type="text" style="display: inline-block;border-radius: 8px 8px 8px 8px" class="form-control" placeholder="Tìm kiếm">
+</div>
+@if(Auth::check())
+    <div style="margin-top : -48px;margin-right:100px;float : right; width: 40px;height: 20px;">
         @if(count($noti) == 0)
             <img id="show" style="float: right;display: inline-block;width: 30px;height:30px;" src="images/tb.jpg">
         @else
             <img id="show" style="float: right;display: inline-block;width: 30px;height:30px;" src="images/tb1.jpg">
         @endif
-        <div id="content" style="float: right; font-size: 17px; border-radius:15px 15px 15px 15px; position: relative;display: none; width: 300px; max-height: 360px; margin-top: 20px;background: #c2d0f0">
+        <div id="content" style="float: right; font-size: 17px; border-radius:15px 15px 15px 15px; position: relative;display: none; width: 300px; max-height: 580px; margin-top: 20px;background: #c2d0f0">
+            <div style="font-size:30px;margin-top: 10px;margin-left: 20px">
+                <strong >Thông báo</strong>
+            </div>
+            <hr style="margin : 10px">
             @if(count($noti) == 0)
                 <div style="position: static; margin-bottom:10px; margin-top:10px; text-align: center"> 
                     <p>Thông báo trống</p>
-                    <hr style="margin-top: 10px;margin-bottom:10px">
+                    <hr style="margin : 10px">
                 </div>
                 <script>
                     document.getElementById("show").onclick = function () {
@@ -34,11 +38,11 @@
                 </script>
             @else 
                 @foreach ($noti as $n)
-                    <div style="position: static;margin-left: 30px;margin-right: 10px;margin-top: 20px"> 
+                    <div style="position: static;margin: 20px"> 
                         <a href="{{route('changeNoti',['id'=>$n->id])}}">{{$n->content}}</a>
-                        <p style="float: right;font-size: 10px;margin-top: 10px">{{$n->date}}</p>
+                        <p style="float: right;font-size: 10px;margin-top: 5px">{{$n->date}}</p>
+                        <hr style="margin-top:20px">
                     </div>
-                    <hr style="margin : 10px">
                 @endforeach
                 <script>
                     document.getElementById("show").onclick = function () {

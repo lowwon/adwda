@@ -33,7 +33,8 @@ class User extends Authenticatable
         'sex',
         'phone',
         'country',
-        'birthday'
+        'birthday',
+        'avatar'
     ];
     public function Post(){
     	return $this->hasMany(Post::class);

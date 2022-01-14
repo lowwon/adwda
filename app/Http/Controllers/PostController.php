@@ -103,7 +103,7 @@ class PostController extends Controller
         }
         $user_post = User::where('id',$post->user_id)->first();
         $user = User::all();
-        $allpost = Post::where('topic_id',$post->topic_id)->where('status',1)->get();
+        $allpost = Post::where('topic_id',$post->topic_id)->where('status',1)->simplePaginate(10);
         $comment = Comment::where('post_id',$id)->orderBy('date','desc')->simplePaginate(3);
         $subcomment = SubComment::all();
         if(Auth::check())

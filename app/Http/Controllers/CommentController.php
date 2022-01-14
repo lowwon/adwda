@@ -12,6 +12,13 @@ use Auth;
 class CommentController extends Controller
 {
     public function createComment(Request $rq, $id){
+        $messages=[
+            'areapost.required'=>'Bạn phải nhập nội dung!',
+        ];
+        $controls = [
+            'areapost'=>'required',
+        ];
+        Validator::make($rq->all(),$controls, $messages)->validate();
         $saa = Comment::all();
         $e = 0;
         foreach($saa as $a){
@@ -28,16 +35,22 @@ class CommentController extends Controller
                 'user_id' => Auth::user()->id,
                 'date' => $date
             ]);
-            $user = User::where('id',$comment->user_id)->first();
             $post = Post::where('id', $comment->post_id)->first();
-            $ct = $user->name.' has comment on your post';
-            $l = $comment->post_id;
-            $notification = Notification::create([
-                'content' => $ct,
-                'user_id' => $post->user_id,
-                'link' => $l,
-                'date' => new DateTime('now'),
-            ]);
+            if(Auth::user()->id == $post->user_id)
+                return back();
+            else{
+                $user = User::where('id',$comment->user_id)->first();
+                $var = substr($post->Name,0,15);
+                $ct = $user->name.' has comment on your post | '.$var."...";
+                $ct = substr($ct,0,70);
+                $l = $comment->post_id;
+                $notification = Notification::create([
+                    'content' => $ct,
+                    'user_id' => $post->user_id,
+                    'link' => $l,
+                    'date' => new DateTime('now'),
+                ]);
+            }
         }
         return back();
     }

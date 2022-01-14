@@ -35,6 +35,9 @@
             border-radius: 7px;
             border-spacing: 0px;
         }
+        a:hover{
+            color: red;
+        }
         .nav1{
     margin-left: 20px;
 }
