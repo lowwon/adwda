@@ -56,10 +56,11 @@ class NewsController extends Controller
     }
     public function getNewsDetail($id){
         $news = News::where('id', $id)->first();
+        $other = News::where('id', '<>', $news->id)->orderBy('id','desc')->take(4)->get();
         if(Auth::check())
             $noti = Notification::where('user_id',Auth::user()->id)->where('status',0)->orderBy('date','desc')->Paginate(5);
         else
             $noti = null;
-        return view('newsdetail', compact('news','noti'));
+        return view('newsdetail', compact('news','noti','other'));
     }
 }
