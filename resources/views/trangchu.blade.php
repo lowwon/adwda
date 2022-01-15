@@ -62,7 +62,7 @@
                     </script>
                 @endif
                 <div style="position: static ;bottom: 0px; margin-bottom:10px; text-align: center">
-                    <a style="opacity: 1.0" href="#">View All</a>
+                    <a style="opacity: 1.0" href="{{route('noti',['id' => Auth::user()->id])}}">View All</a>
                 </div>
             </div>
         </div>

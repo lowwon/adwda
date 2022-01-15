@@ -9,7 +9,6 @@ use App\Models\Role;
 use App\Models\Comment;
 use App\Models\Notification;
 use App\Http\Kernel;
-
 use Illuminate\Support\Facades\DB;
 use Illuminate\Auth\Middleware\Authorize;
 /*
@@ -38,21 +37,36 @@ Route::get('/403', function ()
 {
     return view('403');
 })->name('error');
-//Route::middleware(['auth:sanctum', 'verified'])->get('/trangchu', function () {
-//    return view('welcome');
-//})->name('dashboard');
 Route::get('dashboard',function(){
     return redirect()->route('dashboard');
  });
+ //topic
  Route::get('/thaoluan',['as'=>'thaoluan','uses'=>'App\Http\Controllers\PostController@getThaoLuan']);
  Route::get('/chiase',['as'=>'chiase','uses'=>'App\Http\Controllers\PostController@getChiaSe']);
  Route::get('/hoidap',['as'=>'hoidap','uses'=>'App\Http\Controllers\PostController@getHoiDap']);
- Route::get('/dangbai',['as'=>'dangbai','uses'=>'App\Http\Controllers\TopicController@addPost'])->middleware('role');
+//dangbai
  Route::post('',['as'=>'insert','uses'=>'App\Http\Controllers\PostController@insertPost']);
+//bai dang
  Route::get('/baidang/{id}',['as' => 'viewPost','uses'=>'App\Http\Controllers\PostController@viewPost']);
  Route::delete('delete/{id}',['as' => 'delete','uses'=>'App\Http\Controllers\PostController@delete']);
+ //comment
  Route::get('delete/comment/{id}',['as'=>'deleteComment','uses'=>'App\Http\Controllers\CommentController@delete']);
  Route::get('delete/subcomment/{id}',['as' =>'deleteSubComment','uses'=>'App\Http\Controllers\SubCommentController@deleteSubComment']);
+ //tin tuc
+ Route::get('newsdetail/{id}', ['as'=>'ndtintuc', 'uses'=>'App\Http\Controllers\NewsController@getNewsDetail']); 
+ Route::get('/tintuc',['as'=>'tintuc','uses'=>'App\Http\Controllers\NewsController@index']);
+ //tai khoan
+ Route::get('accoutinfo/{id}',['as'=>'info', 'uses'=>'App\Http\Controllers\UserController@getinfo']);
+ Route::post('updateAccount/{id}',['as'=>'updateUser','uses'=>'App\Http\Controllers\UserController@updateUser']);
+ Route::post('update/Avatar/{id}',['as'=>'updateAvatar','uses'=>'App\Http\Controllers\UserController@updateAvatar']);
+ //thong bao
+ Route::get('/changeStatus/{id}',['as'=>'changeNoti','uses'=>'App\Http\Controllers\NotificationController@changeStatus']);
+ Route::get('/thongbao/{id}',['as'=>'noti','uses'=>'App\Http\Controllers\NotificationController@viewNoti'])->middleware('auth');
+ Route::get('/deletetb/{id}',['as'=>'deleteNoti','uses'=>'App\Http\Controllers\NotificationController@deleteNoti'])->middleware('auth');
+
+//role user primary
+ Route::get('/dangbai',['as'=>'dangbai','uses'=>'App\Http\Controllers\TopicController@addPost'])->middleware('role');
+//role admin
  route::get('quantri',function(){
      $user = User::all();
      $role = Role::all();
@@ -64,21 +78,18 @@ Route::get('dashboard',function(){
  })->name('viewQT')->middleware('roleAdmin');
  Route::get('kiembai',['as' => 'checkPost','uses' => 'App\Http\Controllers\PostController@checkPost'])->middleware('roleAdmin');
  Route::post('save/role/{id}',['as' => 'saveRole','uses' => 'App\Http\Controllers\UserController@setRole'])->middleware('roleAdmin');
+ Route::get('deleteforadmin/{id}',['as' => 'deletePAdmin','uses'=>'App\Http\Controllers\PostController@deleteforAdmin'])->middleware('roleAdmin');
+ Route::get('allow/post/{id}',['as' => 'allowP','uses'=>'App\Http\Controllers\PostController@allowPost'])->middleware('roleAdmin');
+ Route::post('insertnews', ['as'=>'insertnew', 'uses'=>'App\Http\Controllers\NewsController@insertNews'])->middleware('roleAdmin');
+ Route::get('/dangtin',['as'=>'dangtin','uses'=>'App\Http\Controllers\NewsController@addNews'])->middleware('roleAdmin');
+//role super admin
  Route::get('delete/user/{id}',['as' => 'deleteUser','uses'=>'App\Http\Controllers\UserController@deleteUser'])->middleware('roleSuperAdmin');
+ //role check dang nhap
  Route::post('comment/{id}',['as' => 'comment','uses'=> 'App\Http\Controllers\CommentController@createComment'])->middleware('auth');
  Route::post('subcomment/{id}',['as' => 'subcomment','uses'=> 'App\Http\Controllers\SubCommentController@createSubComment'])->middleware('auth');
- Route::get('allow/post/{id}',['as' => 'allowP','uses'=>'App\Http\Controllers\PostController@allowPost'])->middleware('roleAdmin');
- Route::get('deleteforadmin/{id}',['as' => 'deletePAdmin','uses'=>'App\Http\Controllers\PostController@deleteforAdmin'])->middleware('roleAdmin');
- Route::get('/tintuc',['as'=>'tintuc','uses'=>'App\Http\Controllers\NewsController@index']);
- Route::get('/dangtin',['as'=>'dangtin','uses'=>'App\Http\Controllers\NewsController@addNews'])->middleware('roleAdmin');
- Route::post('insertnews', ['as'=>'insertnew', 'uses'=>'App\Http\Controllers\NewsController@insertNews'])->middleware('roleAdmin');
- Route::get('newsdetail/{id}', ['as'=>'ndtintuc', 'uses'=>'App\Http\Controllers\NewsController@getNewsDetail']); 
- Route::get('accoutinfo/{id}',['as'=>'info', 'uses'=>'App\Http\Controllers\UserController@getinfo']);
- Route::post('updateAccount/{id}',['as'=>'updateUser','uses'=>'App\Http\Controllers\UserController@updateUser']);
- Route::post('update/Avatar/{id}',['as'=>'updateAvatar','uses'=>'App\Http\Controllers\UserController@updateAvatar']);
- Route::get('/changeStatus/{id}',function($id){
-    $noti = Notification::where('id',$id)->update(['status'=>1]);
-    $n = Notification::where('id',$id)->first();
-    return redirect()->route('viewPost',['id'=>$n->link]);
- })->name('changeNoti');
+
+
+
+
+
 
