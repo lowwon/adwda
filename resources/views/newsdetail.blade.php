@@ -95,8 +95,22 @@
         <img class="img-news" src="images/{{$news->img}}"> 
         {!!$news->para!!}
     </div>
-    <div class="col-3">
+    <div class="col-4">
         <p class="ordernews"><strong>Các tin tức khác</strong></p>
+        @foreach($other as $o)
+            <div class="row" style = "margin-top: 10px">
+                <div class="col-md-5">
+                    <a href="{{route('ndtintuc',['id' => $o->id])}}">
+                        <img src="images/{{$o->img}}" class="img-fluid" style="height:100px; width:300px">
+                    </a>
+                </div>
+                <div class="col-md-7">
+                    <div class="ten" style="width:300px">
+                        <a href="{{route('ndtintuc',['id' => $o->id])}}"><b>{!!$o->title!!}</b></a>
+                    </div>
+                </div> 
+            </div>
+        @endforeach
     </div>
 </div>
 </div>
