@@ -63,4 +63,19 @@ class NewsController extends Controller
             $noti = null;
         return view('newsdetail', compact('news','noti','other'));
     }
+    public function listNews()
+    {
+        $news = News::paginate(5);
+        return view('newslist', compact('news'));
+    }
+    public function delNews($id)
+    {
+        $record = News::where('id',$id)->first();
+        if(file_exists(public_path('images/'.$record->img)))
+        {
+            unlink(public_path('images/'.$record->img));
+        }
+        News::where('id',$id)->delete();
+        return redirect()->route('newslist');
+    }
 }
