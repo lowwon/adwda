@@ -91,7 +91,8 @@
                     <div class="col-sm-3">
                         <a href="{{route('newslist')}}" ><input type="button" class="btn btn-dark" name="dt" id="dt" value="Xoá tin" style="width: 100px; margin-right: 50px; margin-top: -50px"></a>
                     </div>
-                </div>        
+                </div> 
+                @endif       
             @endif
             <hr style="margin-top: 30px; margin-bottom: 30px">
         </div>

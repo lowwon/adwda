@@ -82,6 +82,8 @@ Route::get('dashboard',function(){
  Route::get('allow/post/{id}',['as' => 'allowP','uses'=>'App\Http\Controllers\PostController@allowPost'])->middleware('roleAdmin');
  Route::post('insertnews', ['as'=>'insertnew', 'uses'=>'App\Http\Controllers\NewsController@insertNews'])->middleware('roleAdmin');
  Route::get('/dangtin',['as'=>'dangtin','uses'=>'App\Http\Controllers\NewsController@addNews'])->middleware('roleAdmin');
+ Route::get('newslist', ['as'=>'newslist', 'uses'=>'App\Http\Controllers\NewsController@listNews'])->middleware('roleAdmin');
+ Route::get('newslist/{id}',['as'=>'xoatin','uses'=>'App\Http\Controllers\NewsController@delNews'])->middleware('roleAdmin');
 //role super admin
  Route::get('delete/user/{id}',['as' => 'deleteUser','uses'=>'App\Http\Controllers\UserController@deleteUser'])->middleware('roleSuperAdmin');
  //role check dang nhap
