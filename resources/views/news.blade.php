@@ -84,8 +84,15 @@
             </p>
             @if(Auth::check())
                 @if (Auth::user()->role_id > 2)
-                <a href="{{route('dangtin')}}" ><input type="button" class="btn btn-dark" name="dt" id="dt" value="Đăng tin" style="float: right; margin-right: 50px; margin-top: -50px"></a>
-                @endif         
+                <div class="row" style="float:right">
+                    <div class="col-sm-3" style="margin-right: 15px">
+                        <a href="{{route('dangtin')}}"><input type="button" class="btn btn-dark" name="dt" id="dt" value="Đăng tin" style="width: 100px; margin-right: 50px; margin-top: -50px"></a>
+                    </div>
+                    <div class="col-sm-3">
+                        <a href="{{route('newslist')}}" ><input type="button" class="btn btn-dark" name="dt" id="dt" value="Xoá tin" style="width: 100px; margin-right: 50px; margin-top: -50px"></a>
+                    </div>
+                </div> 
+                @endif       
             @endif
             <hr style="margin-top: 30px; margin-bottom: 30px">
         </div>
