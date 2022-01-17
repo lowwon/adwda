@@ -8,6 +8,7 @@
             <th>Hình tin tức</th>
             <th>Tiêu đề</th>
             <th>Tóm tắt</th>
+            <th style="width:200px">Người đăng</th>
             <th style = "width: 100px"></th>
         </tr>
         @foreach($news as $n)
@@ -15,7 +16,8 @@
             <td>{{$n->id}}</td>
             <td><img src="images/{{$n->img}}" width="200" height="80"></td>
             <td>{{$n->title}}</td>
-            <td>{!!$n->content!!}</td>
+            <td style= "text-align: justify;">{!!$n->content!!}</td>
+            <td >{{$n->User->name}}</td>
             <td><a href = "{{route('xoatin',['id'=>$n->id])}}">Delete</a></td>
         </tr>
         @endforeach
