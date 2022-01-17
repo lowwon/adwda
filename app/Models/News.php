@@ -10,5 +10,8 @@ class News extends Model
     use HasFactory;
     protected $table = "news";
     public $timestamps = false;
-    protected $fillable =['id', 'title', 'content', 'img', 'para', 'create_at'];
+    protected $fillable =['id', 'title', 'content', 'img', 'para', 'create_at','user_id'];
+    public function User(){
+    	return $this->belongsto(User::class);
+    }
 }

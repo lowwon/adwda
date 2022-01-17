@@ -29,6 +29,7 @@ class NewsController extends Controller
     }
     public function insertNews(Request $request)
     {
+        $id = Auth::user()->id;
         $messages=[
             'tieude.required'=>'Bạn phải nhập tiêu đề!',
             'hinh.required'=>'Bạn phải nhập hình tin tức!',
@@ -50,6 +51,7 @@ class NewsController extends Controller
             'content'=>$request->tomtat,
             'img'=>$filename,
             'para'=>$request->noidung,
+            'user_id' => $id,
         ]);
         $news = News::Paginate(4);
         return  redirect()->route('tintuc');

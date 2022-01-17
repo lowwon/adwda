@@ -94,6 +94,10 @@
         <b class="content">{!!$news->content!!}</b> <br>
         <img class="img-news" src="images/{{$news->img}}"> 
         {!!$news->para!!}
+        <div style="float:right">
+            <b>Post by {{$news->User->name}}</b></br>
+            <b>{{$news->create_at}}</b>
+        </div>
     </div>
     <div class="col-4">
         <p class="ordernews"><strong>Các tin tức khác</strong></p>
@@ -101,15 +105,17 @@
             <div class="row" style = "margin-top: 10px">
                 <div class="col-md-5">
                     <a href="{{route('ndtintuc',['id' => $o->id])}}">
-                        <img src="images/{{$o->img}}" class="img-fluid" style="height:100px; width:300px">
+                        <img src="images/{{$o->img}}" class="img-fluid" style="height:110px; width:300px">
                     </a>
                 </div>
-                <div class="col-md-7">
+                <div class="col-md-7" style= "text-align: justify;">
                     <div class="ten" style="width:300px">
                         <a href="{{route('ndtintuc',['id' => $o->id])}}"><b>{!!$o->title!!}</b></a>
+                        <p>{!!$o->content!!}</p>
                     </div>
                 </div> 
             </div>
+            <hr style="width:500px; margin-top: 20px; margin-bottom: 20px">
         @endforeach
     </div>
 </div>
