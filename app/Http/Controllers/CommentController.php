@@ -1,14 +1,3 @@
-<?php
-
-namespace App\Http\Controllers;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\Request;
-use App\Models\User;
-use App\Models\Post;
-use App\Models\Comment;
-use App\Models\Notification;
-use DateTime;
-use Auth;
 class CommentController extends Controller
 {
     public function createComment(Request $rq, $id){
@@ -65,6 +54,7 @@ class CommentController extends Controller
             if(Auth::user()->role_id < $user->role_id)
                 return back();
         }
+        $subcomment = SubComment::where('comment_id',$id)->delete();
         $comment = Comment::where('id',$id)->delete();
         return back();
     }
