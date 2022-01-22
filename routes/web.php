@@ -51,6 +51,7 @@ Route::get('dashboard',function(){
  Route::delete('delete/{id}',['as' => 'delete','uses'=>'App\Http\Controllers\PostController@delete']);
  //comment
  Route::get('delete/comment/{id}',['as'=>'deleteComment','uses'=>'App\Http\Controllers\CommentController@delete']);
+ Route::get('delete/comment2/{id}',['as'=>'deleteComment2','uses'=>'App\Http\Controllers\CommentController@delete2']);
  Route::get('delete/subcomment/{id}',['as' =>'deleteSubComment','uses'=>'App\Http\Controllers\SubCommentController@deleteSubComment']);
  //tin tuc
  Route::get('newsdetail/{id}', ['as'=>'ndtintuc', 'uses'=>'App\Http\Controllers\NewsController@getNewsDetail']); 
@@ -67,15 +68,7 @@ Route::get('dashboard',function(){
 //role user primary
  Route::get('/dangbai',['as'=>'dangbai','uses'=>'App\Http\Controllers\TopicController@addPost'])->middleware('role');
 //role admin
- route::get('quantri',function(){
-     $user = User::all();
-     $role = Role::all();
-     if(Auth::check())
-        $noti = Notification::where('user_id',Auth::user()->id)->where('status',0)->orderBy('date','desc')->Paginate(5);
-    else
-        $noti = null;
-     return view('quantri',compact('user','role','noti'));
- })->name('viewQT')->middleware('roleAdmin');
+ route::get('/quantri',['as'=>'viewQT','uses'=>'App\Http\Controllers\UserController@viewQT'])->middleware('roleAdmin');
  Route::get('kiembai',['as' => 'checkPost','uses' => 'App\Http\Controllers\PostController@checkPost'])->middleware('roleAdmin');
  Route::post('save/role/{id}',['as' => 'saveRole','uses' => 'App\Http\Controllers\UserController@setRole'])->middleware('roleAdmin');
  Route::get('deleteforadmin/{id}',['as' => 'deletePAdmin','uses'=>'App\Http\Controllers\PostController@deleteforAdmin'])->middleware('roleAdmin');
@@ -89,6 +82,8 @@ Route::get('dashboard',function(){
  //role check dang nhap
  Route::post('comment/{id}',['as' => 'comment','uses'=> 'App\Http\Controllers\CommentController@createComment'])->middleware('auth');
  Route::post('subcomment/{id}',['as' => 'subcomment','uses'=> 'App\Http\Controllers\SubCommentController@createSubComment'])->middleware('auth');
+
+
 
 
 

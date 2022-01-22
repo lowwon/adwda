@@ -54,5 +54,13 @@ class UserController extends Controller
         DB::table('users')->where('id',$id)->update(['avatar'=>$filename]);
         return back();
     }
-
+    public function viewQT(){
+        $user = User::orderBy('role_id','desc')->get();
+        $role = Role::all();
+        if(Auth::check())
+           $noti = Notification::where('user_id',Auth::user()->id)->where('status',0)->orderBy('date','desc')->Paginate(5);
+       else
+           $noti = null;
+        return view('quantri',compact('user','role','noti'));
+    }
 }

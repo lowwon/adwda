@@ -13,8 +13,8 @@ use DateTime;
 use Auth;
 class PostController extends Controller
 {
-    public function index()
-    {
+
+    public function index(){
         $post = Post::all()->sortByDesc('Date');
         return view('trangchu', compact('post'));
     }
@@ -132,8 +132,7 @@ class PostController extends Controller
         $post = Post::where('id',$id)->delete();
         return back();
     }
-    public function checkPost()
-    {
+    public function checkPost(){
         $post = Post::where('status',0)->Paginate(10);
         $topic = Topic::all();
         $user = User::all();
@@ -146,6 +145,9 @@ class PostController extends Controller
     public function allowPost($id){
         $post = DB::table('post')->where('id',$id)->update(['status'=>1]);
         return back();
+    }
+    public function increaseLike(){
+        
     }
 }
 

@@ -9,6 +9,7 @@ use App\Models\News;
 use Illuminate\Support\Facades\DB;
 class NewsController extends Controller
 {
+    
     public function index()
     {
         $news = News::orderBy('id','DESC')->Paginate(4);

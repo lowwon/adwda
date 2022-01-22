@@ -12,7 +12,8 @@ use App\Models\SubComment;
 use App\Models\Notification;
 class SubCommentController extends Controller
 {
-    public function createSubComment(Request $rq, $id){
+    public function createSubComment(Request $request, $id){
+        $str =  $request->input('request');
         $saa = SubComment::all();
         $e = 0;
         foreach($saa as $a){
@@ -20,14 +21,14 @@ class SubCommentController extends Controller
         }
         $e = $e + 1;
         $date = new DateTime('now');
-        if($rq->subcomment != "")
+        if($str != "")
         {
             $subcomment = SubComment::create([
                 'id' => $e,
                 'comment_id'=> $id,
                 'Date' => $date,
                 'user_id' => Auth::user()->id,
-                'Content' => $rq->subcomment,
+                'Content' => $str,
             ]);
             $comment = Comment::where('id',$subcomment->comment_id)->first();
             if(Auth::user()->id == $comment->user_id)

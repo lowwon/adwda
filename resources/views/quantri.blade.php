@@ -8,7 +8,7 @@
             padding-right: 10px; 
             border-radius : 2px 2px 2px 2px;
         }
-        </style>
+    </style>
 <div style="margin-top : -54px;margin-right:30%;float : right; width: 200px;height: 10px;">
     <input type="text" style="display: inline-block;border-radius: 8px 8px 8px 8px" class="form-control" placeholder="Tìm kiếm">
 </div>
@@ -134,14 +134,9 @@
                 </form>
                 
             </div>
-
         @endforeach   
-        {{-- <div style="text-align:left" id="divModal" class="modal" tabindex="-1" role="dialog">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    
-                </div>
-            </div>
-        </div>     --}}
+    </div>
+    <div style="margin-top:20px; font-size:20">      
+
     </div>
 @stop

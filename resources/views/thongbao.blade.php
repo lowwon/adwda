@@ -1,7 +1,7 @@
 @extends('layout')
 @section('content')
     <div class="container-fluid" style="min-height:700px">
-        <div class="col-5" style="border-radius: 5px 5px 5px 5px ; margin-left: 30%; margin-top:20px;background-color: darkgray">
+        <div class="col-5" style="border-radius: 5px 5px 5px 5px ; margin-left: 30%; margin-top:20px;background-color: rgb(226, 223, 223)">
             <p style="margin-left: 20px;font-size: 30px;padding-top: 20px"><b>Thông báo</b></p>
             <div style="padding-bottom: 20px">
                 <button id="bt1" style="margin-left: 20px; margin-top: 20px;border-radius: 10px 10px 10px 10px" class="btn btn-primary">Chưa đọc</button>
