@@ -10,7 +10,7 @@ class Post extends Model
     use HasFactory;
     protected $table = "Post";
     public $timestamps = false;
-    protected $fillable = ["id","user_id","Name","Content","Date","topic_id","status"];
+    protected $fillable = ["id","user_id","Name","Content","Date","topic_id","status","number_like","number_dislike"];
     public function User(){
     	return $this->belongsto(User::class);
     }
@@ -19,6 +19,9 @@ class Post extends Model
     }
     public function Comment(){
         return $this->hasMany(Comment::class);
+    }
+    public function Post_User(){
+        return $this->hasMany(Post_User::class);
     }
     
 }

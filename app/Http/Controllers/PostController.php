@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Post_User;
 use App\Models\Topic;
 use App\Models\User;
 use App\Models\Comment;
@@ -13,8 +14,8 @@ use DateTime;
 use Auth;
 class PostController extends Controller
 {
-    public function index()
-    {
+
+    public function index(){
         $post = Post::all()->sortByDesc('Date');
         return view('trangchu', compact('post'));
     }
@@ -51,8 +52,7 @@ class PostController extends Controller
             $noti = null;
         return view('hoidap', compact('post','topic','user','comment','noti'));
     }
-    public function insertPost(Request $rq)
-    {
+    public function insertPost(Request $rq){
         $saa = Post::all();
         $e = 0;
         foreach($saa as $a){
@@ -102,6 +102,12 @@ class PostController extends Controller
                 return redirect()->route('dashboard'); 
         }
         $user_post = User::where('id',$post->user_id)->first();
+        $post_user = Post_User::where('post_id',$id)->get();
+        $check = 0;
+        if(Auth::check()){
+            if(Post_User::where('post_id',$id)->where('user_id',Auth::user()->id)->first() != null)
+            $check = 1;
+        }
         $user = User::all();
         $allpost = Post::where('topic_id',$post->topic_id)->where('status',1)->simplePaginate(10);
         $comment = Comment::where('post_id',$id)->orderBy('date','desc')->simplePaginate(3);
@@ -110,7 +116,7 @@ class PostController extends Controller
         $noti = Notification::where('user_id',Auth::user()->id)->where('status',0)->orderBy('date','desc')->Paginate(5);
         else
             $noti = null;
-        return view('baidang',compact('post','allpost','comment','user_post','user','subcomment','noti'));
+        return view('baidang',compact('post','allpost','comment','user_post','user','subcomment','noti','post_user','check'));
     }
     public function delete($id){
         $post = Post::where('id',$id)->first();
@@ -132,8 +138,7 @@ class PostController extends Controller
         $post = Post::where('id',$id)->delete();
         return back();
     }
-    public function checkPost()
-    {
+    public function checkPost(){
         $post = Post::where('status',0)->Paginate(10);
         $topic = Topic::all();
         $user = User::all();
@@ -145,6 +150,59 @@ class PostController extends Controller
     }
     public function allowPost($id){
         $post = DB::table('post')->where('id',$id)->update(['status'=>1]);
+        return back();
+    }
+    public function increaseLike($id){
+        $post = Post::where('id',$id)->first();
+        $i = (int)$post->number_like + 1;
+        $j = (int)$post->number_dislike - 1;
+        $check = Post_User::where('post_id',$id)->where('user_id',Auth::user()->id)->first();
+        if($check == null){
+            Post::where('id',$id)->update(['number_like'=>$i]);
+            $post_user = Post_User::create([
+                'post_id'=>$id,
+                'user_id'=>Auth::user()->id,
+                'checklike'=>1,
+            ]);
+        }
+        else{
+            if($check->checklike == 1){
+                $i = $i-2;
+                Post::where('id',$id)->update(['number_like'=>$i]);
+                Post_User::where('post_id',$id)->where('user_id',Auth::user()->id)->delete();
+            }
+            else{
+                Post::where('id',$id)->update(['number_like'=>$i,'number_dislike'=>$j]);
+                Post_User::where('post_id',$id)->where('user_id',Auth::user()->id)->update(['checklike'=>1,'checkdislike'=>0]);
+            }
+        }
+        return back();
+    }
+    public function recreaseLike($id){
+        $post = Post::where('id',$id)->first();
+        $i = (int)$post->number_dislike + 1;
+        $j = (int)$post->number_like - 1;
+        $check = Post_User::where('post_id',$id)->where('user_id',Auth::user()->id)->first();
+        if($check == null){
+            Post::where('id',$id)->update(['number_dislike'=>$i]);
+            $post_user = Post_User::create([
+                'post_id'=>$id,
+                'user_id'=>Auth::user()->id,
+                'checkdislike'=>1,
+            ]);
+        }
+        else{
+            if($check->checkdislike == 1)
+            {
+                $i = $i-2;
+                Post::where('id',$id)->update(['number_dislike'=>$i]);
+                Post_User::where('post_id',$id)->where('user_id',Auth::user()->id)->delete();
+            }
+            else{
+                Post::where('id',$id)->update(['number_dislike'=>$i,'number_like'=>$j]);
+                Post_User::where('post_id',$id)->where('user_id',Auth::user()->id)->update(['checklike'=>0,'checkdislike'=>1]);
+            }
+        }
         return back();
     }
 }

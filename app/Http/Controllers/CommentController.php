@@ -3,22 +3,25 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Auth;
+use Datetime;
 use App\Models\User;
 use App\Models\Post;
 use App\Models\Comment;
+use App\Models\SubComment;
 use App\Models\Notification;
-use DateTime;
-use Auth;
+
 class CommentController extends Controller
 {
-    public function createComment(Request $rq, $id){
-        $messages=[
-            'areapost.required'=>'Bạn phải nhập nội dung!',
-        ];
-        $controls = [
-            'areapost'=>'required',
-        ];
-        Validator::make($rq->all(),$controls, $messages)->validate();
+    public function createComment(Request $request, $id){
+        // $messages=[
+        //     'areapost.required'=>'Bạn phải nhập nội dung!',
+        // ];
+        // $controls = [
+        //     'areapost'=>'required',
+        // ];
+        // Validator::make($rq->all(),$controls, $messages)->validate();
+        $str =  $request->input('request');
         $saa = Comment::all();
         $e = 0;
         foreach($saa as $a){
@@ -26,11 +29,11 @@ class CommentController extends Controller
         }
         $e = $e + 1;
         $date = new DateTime('now');
-        if($rq->areapost != "")
+        if($str  != "")
         {
             $comment = Comment::create([
                 'id' => $e,
-                'Content' => $rq->areapost,
+                'Content' => $str,
                 'post_id'=> $id,
                 'user_id' => Auth::user()->id,
                 'date' => $date
@@ -52,7 +55,7 @@ class CommentController extends Controller
                 ]);
             }
         }
-        return back();
+        return redirect()->route('dashboard');
     }
     public function delete($id){
         $comment = Comment::where('id',$id)->first();
@@ -65,7 +68,14 @@ class CommentController extends Controller
             if(Auth::user()->role_id < $user->role_id)
                 return back();
         }
+        $subcomment = SubComment::where('comment_id',$id)->delete();
         $comment = Comment::where('id',$id)->delete();
+        return back();
+    }
+    public function delete2($id){
+        $comment = Comment::where('user_id',$id)->orderBy('date','desc')->first();
+        SubComment::where('comment_id',$comment->id)->delete();
+        Comment::where('user_id',$id)->orderBy('date','desc')->first()->delete();
         return back();
     }
 }

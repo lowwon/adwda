@@ -8,7 +8,7 @@
             padding-right: 10px; 
             border-radius : 2px 2px 2px 2px;
         }
-        </style>
+    </style>
 <div style="margin-top : -54px;margin-right:30%;float : right; width: 200px;height: 10px;">
     <input type="text" style="display: inline-block;border-radius: 8px 8px 8px 8px" class="form-control" placeholder="Tìm kiếm">
 </div>
@@ -19,7 +19,7 @@
         @else
             <img id="show" style="float: right;display: inline-block;width: 30px;height:30px;" src="images/tb1.jpg">
         @endif
-        <div id="content" style="float: right; font-size: 17px; border-radius:15px 15px 15px 15px; position: relative;display: none; width: 300px; max-height: 580px; margin-top: 20px;background: #c2d0f0">
+        <div id="content" style="float: right; font-size: 17px; border-radius:15px 15px 15px 15px; position: relative;display: none; width: 300px; max-height: 580px; margin-top: 20px;background: linear-gradient(to right, #e2ddf0, #a9ff9e);">
             <div style="font-size:30px;margin-top: 10px;margin-left: 20px">
                 <strong >Thông báo</strong>
             </div>
@@ -80,7 +80,7 @@
         <div class="quantri1">
             <div class="col-1 quantri2">ID</div>
             <div class="col-3 quantri2">Name</div>
-            <div  class="col-4 quantri2">Role</div>
+            <div  class="col-5 quantri2">Role</div>
             <div class="col-2 quantri2">Action</div>
         </div>     
         @foreach ($user as $u)
@@ -88,60 +88,55 @@
                 <form method="POST" action="{{route('saveRole',['id'=>$u->id]) }}">
                     @csrf
                     <div class="col-1 quantri3"> <p style="margin-top: 15px" id="userid" name="userid" >{{$u->id}} </p></div>
-                    <div class="col-3 quantri3">
-                         <p style="margin-top: 15px" >{{$u->name}} </p>    
-                         {{-- <a href="javascript:openModal('{{$u->id}}')"> chinh sửa </a> --}}
-
+                    <div class="col-3 quantri3" >
+                        <p style="margin-top: 15px" >{{$u->name}} </p>  
+                        <a href="{{route('info',['id'=>$u->id])}}"><i style="float: right;margin-top:-22px;margin-right: 10px" class="gg-eye">
+                        </i></a>
                     </div>
-                    <div  class="col-4 quantri3">
+                    <div  class="col-5 quantri3" >
                         <div style="display: inline-block;" class="form-check">
                             @if ($u->role_id == 1)
-                                <input style="margin-top: 15px" class="form-check-input" type="radio" name="radios" id="user" value="1" checked>
+                                <input style="margin-top: 20px" class="form-check-input" type="radio" name="radios" id="user" value="1" checked>
                             @else
-                                <input style="margin-top: 15px" class="form-check-input" type="radio" name="radios" id="user" value="1">
+                                <input style="margin-top: 20px" class="form-check-input" type="radio" name="radios" id="user" value="1">
                             @endif
                             <label class="form-check-label" for="radios"> <p style="margin-top: 15px" >User </p></label>
                         </div>
                         <div  style="display: inline-block;" class="form-check">
                             @if ($u->role_id == 2)
-                                <input style="margin-top: 15px" class="form-check-input" type="radio" name="radios" id="userp" value="2" checked>
+                                <input style="margin-top: 20px" class="form-check-input" type="radio" name="radios" id="userp" value="2" checked>
                             @else
-                                <input style="margin-top: 15px" class="form-check-input" type="radio" name="radios" id="userp" value="2">
+                                <input style="margin-top: 20px" class="form-check-input" type="radio" name="radios" id="userp" value="2">
                             @endif
                             <label class="form-check-label" for="radios"> <p style="margin-top: 15px" >UserPrimary </p></label>
                         </div>
                         <div  style="display: inline-block;" class="form-check">
                             @if ($u->role_id == 3)
-                                <input style="margin-top: 15px" class="form-check-input" type="radio" name="radios" id="admin" value="3" checked>
+                                <input style="margin-top: 20px" class="form-check-input" type="radio" name="radios" id="admin" value="3" checked>
                             @else
-                                <input style="margin-top: 15px" class="form-check-input" type="radio" name="radios" id="admin" value="3">                  
+                                <input style="margin-top: 20px" class="form-check-input" type="radio" name="radios" id="admin" value="3">                  
                                 @endif
                             <label class="form-check-label" for="radios"> <p style="margin-top: 15px" >Admin </p></label>
                         </div>
                         <div  style="display: inline-block;" class="form-check">
                             @if ($u->role_id == 4)
-                                <input style="margin-top: 15px" class="form-check-input" type="radio" name="radios" id="admins" value="4" checked>
+                                <input style="margin-top: 20px" class="form-check-input" type="radio" name="radios" id="admins" value="4" checked>
                             @else
-                                <input style="margin-top: 15px" class="form-check-input" type="radio" name="radios" id="admins" value="4">
+                                <input style="margin-top: 20px" class="form-check-input" type="radio" name="radios" id="admins" value="4">
                                 @endif
                             <label class="form-check-label" for="radios"> <p style="margin-top: 15px" > SuperAdmin </p></label> 
                         </div>
                     </div>
-                    <div class="col-2 quantri3"><p style="margin-top: 11px" >
-                        <button type="button" style="margin-top: -5px" class="btn btn-danger"><a style="color: black"href="{{ route('deleteUser',['id'=>$u->id])}}">Delete</a></button>
-                        <button type="submit" style="margin-top: -5px" class="btn btn-warning">Save</button>
-                    <p></div>
+                    <div class="col-2 quantri3"><p style="margin-top: 15px" >
+                        <button type="button" style="margin-top: -5px;background: linear-gradient(to right, #ff2f39, #680000c0); color: #ffffff" class="btn btn-danger"><a style="color: white" href="{{ route('deleteUser',['id'=>$u->id])}}">Delete</a></button>
+                        <button type="submit" style="margin-top: -5px;background: linear-gradient(to right, #928401, #ffee00c0)" class="btn btn-warning">Save</button>
+                    </div>
                 </form>
                 
             </div>
-
         @endforeach   
-        {{-- <div style="text-align:left" id="divModal" class="modal" tabindex="-1" role="dialog">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    
-                </div>
-            </div>
-        </div>     --}}
+        <div style="margin-top:20px; font-size:20;margin-left: 7%;margin-right: 7%">      
+            {{ $user->links(); }}
+        </div>
     </div>
 @stop

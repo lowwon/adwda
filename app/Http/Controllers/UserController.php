@@ -5,6 +5,7 @@ use Auth;
 use App\Models\Post;
 use App\Models\Topic;
 use App\Models\User;
+use App\Models\Role;
 use App\Models\Comment;
 use App\Models\SubComment;
 use Illuminate\Http\Request;
@@ -54,5 +55,13 @@ class UserController extends Controller
         DB::table('users')->where('id',$id)->update(['avatar'=>$filename]);
         return back();
     }
-
+    public function viewQT(){
+        $user = User::orderBy('role_id','desc')->Paginate(3);
+        $role = Role::all();
+        if(Auth::check())
+           $noti = Notification::where('user_id',Auth::user()->id)->where('status',0)->orderBy('date','desc')->Paginate(5);
+       else
+           $noti = null;
+        return view('quantri',compact('user','role','noti'));
+    }
 }
