@@ -49,6 +49,9 @@ Route::get('dashboard',function(){
 //bai dang
  Route::get('/baidang/{id}',['as' => 'viewPost','uses'=>'App\Http\Controllers\PostController@viewPost']);
  Route::delete('delete/{id}',['as' => 'delete','uses'=>'App\Http\Controllers\PostController@delete']);
+ Route::get('likepost/{id}',['as'=>'likePost','uses'=>'App\Http\Controllers\PostController@increaseLike']);
+ Route::get('dislikepost/{id}',['as'=>'dislikePost','uses'=>'App\Http\Controllers\PostController@recreaseLike']);
+
  //comment
  Route::get('delete/comment/{id}',['as'=>'deleteComment','uses'=>'App\Http\Controllers\CommentController@delete']);
  Route::get('delete/comment2/{id}',['as'=>'deleteComment2','uses'=>'App\Http\Controllers\CommentController@delete2']);

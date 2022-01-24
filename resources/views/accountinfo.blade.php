@@ -10,7 +10,7 @@
         @else
             <img id="show" style="float: right;display: inline-block;width: 30px;height:30px;" src="images/tb1.jpg">
         @endif
-        <div id="content" style="float: right; font-size: 17px; border-radius:15px 15px 15px 15px; position: relative;display: none; width: 300px; max-height: 580px; margin-top: 20px;background: #c2d0f0">
+        <div id="content" style="float: right; font-size: 17px; border-radius:15px 15px 15px 15px; position: relative;display: none; width: 300px; max-height: 580px; margin-top: 20px;background: linear-gradient(to right, #e2ddf0, #a9ff9e);">
             <div style="font-size:30px;margin-top: 10px;margin-left: 20px">
                 <strong >Thông báo</strong>
             </div>
@@ -67,7 +67,7 @@
         </div>
     </div>
 @endif
-    <div class="container-fluid row" style="max-height: 700px">
+    <div class="container-fluid row" style="max-height: 700px;margin-bottom: 100px">
         <div class="col-6" style="font-size: 30px;margin-left: 10%; margin-top: 70px">
             @if (Auth::user()->id == $user->id || Auth::user()->role_id > 2)
             @if($errors->any())
@@ -394,7 +394,26 @@
             </div> 
             <div style="margin-top: 20px"> 
                 Phone :
-                <p style="display: inline-block; border-radius: 5px 5px 5px 5px; float: right;margin-right: 170px" > {{$user->phone}}</p>        
+                <p style="display: inline-block; border-radius: 5px 5px 5px 5px; float: right;margin-right: 170px" > 
+                    @php
+                        if(strlen($user->phone) > 7)
+                        {
+                            $a = substr($user->phone,0,7)."***";
+                            echo $a;
+                        }
+                        else
+                        {
+                            $f = 10-strlen($user->phone);
+                            $i = 0;
+                            $x = "";
+                            for($i = 0; $i < $f; $i++)
+                            {
+                                $x .= "*";
+                            }
+                            echo $user->phone.$x;
+                        }
+                    @endphp
+                </p>        
             </div>
             <div style="margin-top: 20px">
                 Contry :
@@ -406,9 +425,9 @@
         </div>
         <div class="col-4" style="max-height: 700px" > 
             <div>
-                <p style="font-size: 20px; margin-top:20px"><strong>Các bài viết gần đây</strong></p>
+                <p style="font-size: 30px; margin-top:20px"><strong>Các bài viết gần đây</strong></p>
                 @foreach ($post as $p)
-                    <p style="font-size: 15px; margin-top:20px" ><a href="{{route('viewPost',['id'=>$p->id])}}">{{$p->Name}}</a></p>
+                    <p style="font-size: 20px; margin-top:20px" ><a href="{{route('viewPost',['id'=>$p->id])}}">{{$p->Name}}</a></p>
                     <hr style="margin-top:10px" >
                 @endforeach
 

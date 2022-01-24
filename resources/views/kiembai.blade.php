@@ -10,7 +10,7 @@
         @else
             <img id="show" style="float: right;display: inline-block;width: 30px;height:30px;" src="images/tb1.jpg">
         @endif
-        <div id="content" style="float: right; font-size: 17px; border-radius:15px 15px 15px 15px; position: relative;display: none; width: 300px; max-height: 580px; margin-top: 20px;background: #c2d0f0">
+        <div id="content" style="float: right; font-size: 17px; border-radius:15px 15px 15px 15px; position: relative;display: none; width: 300px; max-height: 580px; margin-top: 20px;background: linear-gradient(to right, #e2ddf0, #a9ff9e);">
             <div style="font-size:30px;margin-top: 10px;margin-left: 20px">
                 <strong >Thông báo</strong>
             </div>
@@ -68,7 +68,7 @@
     </div>
 @endif
     <div class="container-fluid" style="min-height:700px">
-        <div class="contents">          
+        <div style="margin-left: 15%;margin-right: 15%;margin-top: 20px">          
             <table class="table table-hover">
                 <thead>
                     <tr>

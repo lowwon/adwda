@@ -10,7 +10,7 @@
             @else
                 <img id="show" style="float: right;display: inline-block;width: 30px;height:30px;" src="images/tb1.jpg">
             @endif
-            <div id="content" style="float: right; font-size: 17px; border-radius:15px 15px 15px 15px; position: relative;display: none; width: 300px; max-height: 580px; margin-top: 20px;background: #c2d0f0">
+            <div id="content" style="float: right; font-size: 17px; border-radius:15px 15px 15px 15px; position: relative;display: none; width: 300px; max-height: 580px; margin-top: 20px;background: linear-gradient(to right, #e2ddf0, #a9ff9e);">
                 <div style="font-size:30px;margin-top: 10px;margin-left: 20px">
                     <strong >Thông báo</strong>
                 </div>
@@ -68,104 +68,122 @@
         </div>
     @endif
     <div class="container-fluid" style="min-height:700px">
-        <h1 class="tieude">Cac bai viet moi</h1>
-        <div  class="post hidden sm:flex sm:items-center sm:ml-6 ">
-            @if (Route::has('login'))
-                @auth
-                @if (Auth::user()->role_id > 1)
-                    <a href="{{route('dangbai')}}"><input type="button" class="btn btn-primary" value="Đăng bài" id="db" nam="db"> </a>    
+        <div style="margin-top: 4%">
+            <h1 class="tieude" style="display: inline-block">Các bài viết mới</h1>
+            <div style="float: right; display: inline-block;margin-top: -40px;margin-right: 137px" >
+                @if (Route::has('login'))
+                    @auth
+                    @if (Auth::user()->role_id > 1)
+                        <a href="{{route('dangbai')}}"><input type="button" class="btn btn-primary" value="Đăng bài" id="db" nam="db"> </a>    
+                    @else
+                        <button class="btn btn-primary" type="button" onclick="alert('User thường không có quyền đăng bài')">Đăng bài</button>
+                    @endif
+                                
                 @else
-                    <button class="btn btn-primary" type="button" onclick="alert('User thường không có quyền đăng bài')">Đăng bài</button>
+                    <a href="{{ route('login') }}" ><input type="button" class="btn btn-primary" value="Đăng bài"></a>
+                    @endauth
                 @endif
-                             
-            @else
-                <a href="{{ route('login') }}" ><input type="button" class="btn btn-primary" value="Đăng bài"></a>
-                @endauth
-            @endif
-
+            </div>
         </div>
-        <div class="contents">          
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                    <th class="col-2">Chủ để</th>
-                    <th class="col-4">Tiêu đề</th>
-                    <th class="col-3">Ngày đăng</th>
-                    <th class="col-2">Người đăng</th>
-                    <th class="col-1">Trả lời</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($post as $a)
-                    <tr>
-                        <td class="col-2"><a
-                            @if ($a->topic_id == 1) 
-                                href="{{route('thaoluan')}}"
-                            @else 
-                            {
-                                @if ($a->topic_id == 2)
-                                    href="{{route('hoidap')}}"
-                                @else
-                                    href="{{route('chiase')}}"
+        <div class="row">
+            <div class="col-2" style="display: inline-block; height: 730px; width:300px ">
+                <a href="{{route('thaoluan')}}"><div class="box">
+                    <p style="padding-top: 60px">Thảo luận</p>
+                </div></a>
+                <a href="{{route('hoidap')}}"><div class="box">
+                    <p style="padding-top: 60px">Chia sẻ</p>
+                </div></a>
+                <a href="{{route('chiase')}}"><div class="box">
+                    <p style="padding-top: 60px">Hỏi đáp</p>
+                </div></a>
+                <a href="{{route('tintuc')}}"><div class="box">
+                    <p style="padding-top: 60px">Tin tức</p>
+                </div></a>
+            </div>
+            <div class="col-9" style="display: inline-block; margin-left: -55px;">          
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                        <th class="col-2">Chủ để</th>
+                        <th class="col-4">Tiêu đề</th>
+                        <th class="col-3">Ngày đăng</th>
+                        <th class="col-2">Người đăng</th>
+                        <th class="col-1">Trả lời</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($post as $a)
+                        <tr>
+                            <td class="col-2"><a
+                                @if ($a->topic_id == 1) 
+                                    href="{{route('thaoluan')}}"
+                                @else 
+                                {
+                                    @if ($a->topic_id == 2)
+                                        href="{{route('hoidap')}}"
+                                    @else
+                                        href="{{route('chiase')}}"
+                                    @endif
+                                }
                                 @endif
-                            }
-                            @endif
-                            >
-                            @foreach ($topic as $t)
-                            @if($t->id == $a->topic_id)
+                                >
+                                @foreach ($topic as $t)
+                                @if($t->id == $a->topic_id)
 
-                                     {{$t->Name}}
-                                @endif
-                            @endforeach
-                        </a></td>
-                        <td class="col-4"><a href="#">
-                            <a href="{{route('viewPost',['id'=>$a->id])}}"><?php
-                                if (strlen($a->Name)>40)
-                                {
-                                    $str = substr($a->Name,0,40);
-                                    echo $str;
-                                }                                
-                                else{
-                                    echo $a->Name;
-                                }
-                            ?></a>
-                        </a></td>
-                        <td style="" class="col-3">
-                            <?php
-                                if (strlen($a->Date)>50)
-                                {
-                                    echo $a->Date;
-                                }                                
-                                else{
-                                    echo $a->Date;
-                                }
-                            ?>
-                        </td>
-                        <td class="col-2"> 
-                             @foreach ($user as $u)
-                                @if($u->id == $a->user_id)
-                                    <a  href="{{route('info',['id'=>$u->id])}}">{{$u->name}}</a>
-                                @endif
-                            @endforeach
-                            
-                        </td>
-                        <td class="col-1">
-                            <?php
-                                $i = 0;
-                                foreach ($comment as $c){
-                                    if($c->post_id == $a->id)
+                                        {{$t->Name}}
+                                    @endif
+                                @endforeach
+                            </a></td>
+                            <td class="col-4"><a href="#">
+                                <a href="{{route('viewPost',['id'=>$a->id])}}"><?php
+                                    if (strlen($a->Name)>40)
                                     {
-                                    $i = $i + 1;
+                                        $str = substr($a->Name,0,40);
+                                        echo $str;
+                                    }                                
+                                    else{
+                                        echo $a->Name;
                                     }
-                                } 
-                                echo $i;
-                            ?>       
-                        </td>
-                    </tr>
-                    @endforeach   
-                </tbody>
-            </table>
-            {{ $post->links(); }}
+                                ?></a>
+                            </a></td>
+                            <td style="" class="col-3">
+                                <?php
+                                    if (strlen($a->Date)>50)
+                                    {
+                                        echo $a->Date;
+                                    }                                
+                                    else{
+                                        echo $a->Date;
+                                    }
+                                ?>
+                            </td>
+                            <td class="col-2"> 
+                                @foreach ($user as $u)
+                                    @if($u->id == $a->user_id)
+                                        <a  href="{{route('info',['id'=>$u->id])}}">{{$u->name}}</a>
+                                    @endif
+                                @endforeach
+                                
+                            </td>
+                            <td class="col-1">
+                                <?php
+                                    $i = 0;
+                                    foreach ($comment as $c){
+                                        if($c->post_id == $a->id)
+                                        {
+                                        $i = $i + 1;
+                                        }
+                                    } 
+                                    echo $i;
+                                ?>       
+                            </td>
+                        </tr>
+                        @endforeach   
+                    </tbody>
+                </table>
+                {{ $post->links(); }}
+            </div>
+            
         </div>
     </div>
 @stop

@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-        
+        <link href='https://css.gg/eye.css' rel='stylesheet'>
         <title>Laravel</title>
         <script type="text/javascript"></script>
         <script type="text/javascript" src="https://code.jquery.com/jquery-latest.pack.js"></script>
@@ -32,11 +32,23 @@
         <!-- Scripts -->
         <script src="{{ mix('js/app.js') }}" defer></script>
         <style>
-        .gg-arrow-up-r:hover {
-            background: #6dee78;
-            cursor: pointer;
+        .bltt{
+            background: linear-gradient(to right, #abfcff, #ffbdf4)
         }
-            .gg-arrow-up-r {
+        .x:hover{
+            color:black;
+        }
+        .gg-arrow-up-r:visited:hover{
+            background: linear-gradient(to right, #11f142, #19a4f5);
+            cursor: pointer;
+            color: black;
+        }
+        .gg-arrow-up-r:hover {
+            background: linear-gradient(to right, #11f142, #19a4f5);
+            cursor: pointer;
+            color: black;
+        }
+        .gg-arrow-up-r {
         box-sizing: border-box;
         position: relative;
         display: block;
@@ -72,7 +84,9 @@
         background: currentColor
         } 
         .gg-arrow-down-r:hover{
-            background: #ee6d73;
+            background: linear-gradient(to right, #f12711, #f5af19);
+            
+            color: black;
             cursor: pointer;
         }
          .gg-arrow-down-r {
@@ -121,15 +135,20 @@
             color: red;
         }
         .nav1{
-    margin-left: 20px;
-}
+            margin-left: 20px;
+        }
 
         thead {
             display: table-header-group;
             vertical-align: middle;
             border-color: inherit;
             border-collapse: separate;
-            background-color: #94b2df;
+            font-size: 20px;
+            background: linear-gradient(to right, #5bb5ff, #ec40d0);
+        }
+        tbody{
+            font-size: 18px;
+            background: linear-gradient(to right, #97cbf7, #fa99ea);
         }
         tr {
             display: table-row;
@@ -321,13 +340,13 @@
                             </div>
                         @endif
                     </div>
-                    
-                   
                 </div>
             </div>  
         </nav>
         @yield('content')
-        <div style="font-size: 20px; margin-top: 50px;margin-left:6%; position:absolute; bottom : auto " class="container body-content">
+        <div style="height: 50px">
+        </div>
+        <div style="font-size: 20px" style="font-size: 20px; margin-top: 50px;margin-left:6%; position:absolute; bottom : auto " class="container body-content">
             <hr style="margin-bottom:10px"/>
             <div style="margin-bottom:10px">
                 <strong style="display: inline-block;padding-top: -10px">Contact</strong>

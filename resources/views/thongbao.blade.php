@@ -1,11 +1,11 @@
 @extends('layout')
 @section('content')
     <div class="container-fluid" style="min-height:700px">
-        <div class="col-5" style="border-radius: 5px 5px 5px 5px ; margin-left: 30%; margin-top:20px;background-color: rgb(226, 223, 223)">
+        <div class="col-5" style="border-radius: 5px 5px 5px 5px ; margin-left: 30%; margin-top:20px;background: linear-gradient(to right, #e2ddf0, #a9ff9e);">
             <p style="margin-left: 20px;font-size: 30px;padding-top: 20px"><b>Thông báo</b></p>
             <div style="padding-bottom: 20px">
-                <button id="bt1" style="margin-left: 20px; margin-top: 20px;border-radius: 10px 10px 10px 10px" class="btn btn-primary">Chưa đọc</button>
-                <button id="bt2" style="margin-left: 20px;  margin-top: 20px;border-radius: 10px 10px 10px 10px" class="btn btn-primary">Tất cả</button>
+                <button id="bt1" style="margin-left: 20px; margin-top: 20px;border-radius: 10px 10px 10px 10px;background: linear-gradient(to right, #ffabf1, #fdff9e); color:black" class="btn btn-dark">Chưa đọc</button>
+                <button id="bt2" style="margin-left: 20px;  margin-top: 20px;border-radius: 10px 10px 10px 10px;background: linear-gradient(to right, #ffabf1, #fdff9e); color:black" class="btn btn-dark">Tất cả</button>
                 <a style="float: right;margin-right: 20px;display: inline;font-size: 20px;margin-top: 25px" href="{{route('deleteNoti',['id'=>Auth::user()->id])}}">Xoá tất cả thông báo</a>
             </div>
             @if(count($notiall) == 0)

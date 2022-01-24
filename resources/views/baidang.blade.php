@@ -10,7 +10,7 @@
         @else
             <img id="show" style="float: right;display: inline-block;width: 30px;height:30px;" src="images/tb1.jpg">
         @endif
-        <div id="content" style="float: right; font-size: 17px; border-radius:15px 15px 15px 15px; position: relative;display: none; width: 300px; max-height: 580px; margin-top: 20px;background: #c2d0f0">
+        <div id="content" style="float: right; font-size: 17px; border-radius:15px 15px 15px 15px; position: relative;display: none; width: 300px; max-height: 580px; margin-top: 20px;background: linear-gradient(to right, #e2ddf0, #a9ff9e);">
             <div style="font-size:30px;margin-top: 10px;margin-left: 20px">
                 <strong >Thông báo</strong>
             </div>
@@ -70,10 +70,32 @@
 <div class="container-fluid row">
     <div class="col-md-1" style="margin-left: 3%; height: 700px">
         <div style="margin-top: 210px; position: fixed">
-            <p style="text-align: center; font-size: 25px">{{$post->number_like}}</p>
-            <i id="number_like" style="margin-bottom: 20px" class="gg-arrow-up-r"></i>
-            <i id="number_dislike" style="margin-left: 1px" class="gg-arrow-down-r"></i>
-            <p style="text-align: center; font-size: 25px">{{$post->number_dislike}}</p>
+            <p id="count_like" style="text-align: center; font-size: 25px">{{$post->number_like}}</p>
+            @if(Auth::check())
+                @if($check == 1)
+                    @foreach ($post_user as $p)
+                        @if($p->user_id == Auth::user()->id)
+                            @if($p->checklike == 1)
+                                <p style="display: none" id="checkx">1</p>
+                                <a class="x" href="{{route('likePost',['id'=>$post->id])}}"><i id="number_like" style="background-color:gold; margin-bottom: 20px" class="gg-arrow-up-r"></i></a>
+                                <a class="x" href="{{route('dislikePost',['id'=>$post->id])}}"><i id="number_dislike" style="margin-left: 1px" class="gg-arrow-down-r"></i></a>
+                            @else
+                                <p style="display: none" id="checkx">2</p>
+                                <a class="x" href="{{route('likePost',['id'=>$post->id])}}"><i id="number_like" style="margin-bottom: 20px" class="gg-arrow-up-r"></i></a>
+                                <a class="x" href="{{route('dislikePost',['id'=>$post->id])}}"><i id="number_dislike" style="background-color:gold; margin-left: 1px" class="gg-arrow-down-r"></i></a>
+                            @endif
+                        @endif
+                    @endforeach
+                @else
+                    <p style="display: none" id="checkx">0</p>
+                    <a class="x" href="{{route('likePost',['id'=>$post->id])}}"><i id="number_like" style="margin-bottom: 20px" class="gg-arrow-up-r"></i></a>
+                    <a class="x" href="{{route('dislikePost',['id'=>$post->id])}}"><i id="number_dislike" style="margin-left: 1px" class="gg-arrow-down-r"></i></a>
+                @endif
+            @else 
+                <a href="{{route('login')}}"><i style="margin-bottom: 20px" class="gg-arrow-up-r"></i></a>
+                <a href="{{route('login')}}"><i style="margin-bottom: 20px" class="gg-arrow-down-r"></i></a>
+            @endif
+            <p id="count_dislike" style="text-align: center; font-size: 25px">{{$post->number_dislike}}</p>
         </div>
     </div>
     <div class="col-md-7" style="margin-top: 20px; font-size: 35px">
@@ -99,15 +121,7 @@
         </div>
         <div>
             <p style="font-size:20px; margin-top: 20px; margin-bottom: 10px; margin-left: 3px">Bình luận</p>
-            @if($errors->any())
-            <div style="font-size:20px;margin :5px" class ="text text-danger">
-                <ul>
-                    @foreach($errors-> all() as $error)
-                    <li>{{$error}}</li>
-                    @endforeach
-                </ul>
-            </div>
-            @endif
+            <p style="font-size: 20px;color:red;margin-bottom: 10px" id="errorcmt"></p>
             <p style="display: none" id="idpost" value="{{$post->id}}">{{$post->id}}</p>
             <form id="formxx" method="POST" action = "{{route('comment',['id'=>$post->id])}}">
                 {{ csrf_field() }}
@@ -124,7 +138,7 @@
             <p style="font-size:20px; margin-top: 20px; margin-bottom: 10px; margin-left: 3px">Các bình luận khác</p>
             <div class="binhluan">
                 @foreach ($comment as $c)
-                    <div id="{{$c->id}}" style="background-color: rgb(238, 248, 253); margin-top : 10px;padding-bottom : 25px; font-size: 25px; height: auto; border: 2px solid gray;border-radius: 5px 5px 5px 5px">
+                    <div id="{{$c->id}}" class="bltt" style=" margin-top : 10px;padding-bottom : 25px; font-size: 25px; height: auto; border: 2px solid gray;border-radius: 5px 5px 5px 5px">
                         <div style="font-size: 20px; margin: 15px">   
                             @foreach ($user as $u)
                                     @if($u->id == $c->user_id)
@@ -153,10 +167,11 @@
                                 @endforeach
                             @endcan
                             <div style="display: none ; margin-top : 30px; margin-left: 55px; margin-bottom: 50px"  id="A_{{$c->id}}" >
+                                <p class="errsubcmt" style="font-size: 18px; color:red; margin-top: -15;margin-bottom: 5px"></p>
                                 <form method="POST" action = "{{route('subcomment',['id'=>$c->id])}}">
                                     {{csrf_field()}}
                                     <input style="display: none" id="idcmt" name="idcmt" value="{{$c->id}}">
-                                    <textarea style="width: 700px; border-radius: 5px 5px 5px 5px" required name="subcomment" id="subcomment"  ></textarea>
+                                    <textarea style="width: 675px; border-radius: 5px 5px 5px 5px" required name="subcomment" id="subcomment"></textarea>
                                     <input style="float: right; margin-top: 5px; margin-right: 10px" type="submit" class="btn btn-primary subbutton" value="Bình luận">
                                 </form>
                             </div>
@@ -190,7 +205,7 @@
                     </div>    
                 @endforeach
             </div>
-            <div style="margin-top:20px; font-size:20">      
+            <div style="margin-top:40px; font-size:20;margin-bottom: 100px">      
                 {{ $comment->links(); }}
             </div>
         </div>
@@ -226,6 +241,113 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $('#number_like').click(function(event){
+            event.preventDefault();
+            var id = $("#idpost").text();
+            console.log(id);
+            $.ajax({
+                type: 'GET',
+                url: '/likepost/' + id, 
+                data:  {
+                    id : id
+                },
+                success: function(){
+                    var count = $("#count_like").text();
+                    var count2 = $("#count_dislike").text();
+                    var checkx = $('#checkx').text();
+                    console.log(checkx);
+                    if(checkx != 1){
+                        var z = parseInt(count);
+                        z = z+ 1
+                        console.log(z);
+                        if(checkx == 2){
+                            var k = parseInt(count2);
+                            k = k - 1;
+                            var id2 = 'number_dislike';
+                            document.getElementById(id2).style.backgroundColor = 'initial';
+                            $('#count_dislike').html(k);
+                        }
+                        console.log(z);
+                        var id1 = 'number_like';
+                        document.getElementById(id1).style.backgroundColor = 'gold';
+                        $('#count_like').html(z);
+                        $('#checkx').html('1');
+                    }
+                    else{
+                        var z = parseInt(count);
+                        z = z - 1
+                        console.log(z);
+                        var id1 = 'number_like';
+                        document.getElementById(id1).style.backgroundColor = 'initial';
+                        $('#count_like').html(z);
+                        $('#checkx').html('0');
+                    }
+                    console.log('it works!');
+                } 
+            });
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $('#number_dislike').click(function(event){
+            event.preventDefault();
+            var id = $("#idpost").text();
+            console.log(id);
+            $.ajax({
+                type: 'GET',
+                url: '/dislikepost/' + id, 
+                data:  {
+                    id : id
+                },
+                success: function(){
+                    var count = $("#count_dislike").text();
+                    var count2 = $('#count_like').text();
+                    var checkx = $('#checkx').text();
+                    console.log(checkx);
+                    if(checkx != 2){
+                        var z = parseInt(count);
+                        z = z+ 1
+                        if(checkx == 1){
+                            var k = parseInt(count2);
+                            k = k-1;
+                            var id2 = 'number_like';
+                            document.getElementById(id2).style.backgroundColor = 'initial';
+                            $('#count_like').html(k);
+                        }
+                        console.log(z);
+                        var id1 = 'number_dislike';                        
+                        document.getElementById(id1).style.backgroundColor = 'gold';
+                        $('#count_dislike').html(z);
+                        $('#checkx').html('2');
+                        }
+                    else{
+                        var z = parseInt(count);
+                        z = z - 1
+                        console.log(z);
+                        var id1 = 'number_dislike';
+                        document.getElementById(id1).style.backgroundColor = 'initial';
+                        $('#count_dislike').html(z);
+                        $('#checkx').html('0');
+                    }
+                    console.log('it works!');
+                } 
+            });
+        });
+    });
+</script>
 <script type="text/javascript">
     $(document).ready(function(){
         $.ajaxSetup({
@@ -303,23 +425,29 @@
                         id : id
                     },
                     success: function(){
-                        var idz = 'blc_'+id
-                        console.log(idz);
-                        $("textarea[name=subcomment]").eq(index).val("");
-                        var html = "@if(Auth::check())"
-                        html += '<div>';
-                        html += '<img width="30px" height="30px" style="display: inline-block; border-radius: 5px 5px 5px 5px; margin-left: 75px;margin-right: 5px;margin-top: 5px" src="images/{{Auth::user()->avatar}}">'
-                        html += '<a  href="{{route('info',['id'=>Auth::user()->id])}}" style="display: inline-block;font-size: 15px;margin-top: 10px; color:rgb(160, 24, 47)" >{{Auth::user()->name}}</a>'
-                        html += '<p style="font-size: 15px;display: inline-block; float: right;margin-top: 10px;margin-right: 15px">just now</p>'
-                        html += '<div style="font-size: 20px; margin-left: 100px;margin-top: 10px">'
-                        html += request
-                        html += '</div>'
-                        html += '<hr style="margin-top:10px;margin-left: 75px;margin-top: 10px">'
-                        html += "@endif"
-                        // html += '</div>'
-                        // html += '</div>'
-                        $('.binhluancon').eq(index).append(html);
-                        console.log('it works!');
+                        if(request == ""){
+                            $('.errsubcmt').eq(index).html("Bạn chưa nhập nội dung bình luận");
+                        }
+                        else{
+                            var idz = 'blc_'+id
+                            console.log(idz);
+                            $("textarea[name=subcomment]").eq(index).val("");
+                            var html = "@if(Auth::check())"
+                            html += '<div>';
+                            html += '<img width="30px" height="30px" style="display: inline-block; border-radius: 5px 5px 5px 5px; margin-left: 75px;margin-right: 5px;margin-top: 5px" src="images/{{Auth::user()->avatar}}">'
+                            html += '<a  href="{{route('info',['id'=>Auth::user()->id])}}" style="display: inline-block;font-size: 15px;margin-top: 10px; color:rgb(160, 24, 47)" >{{Auth::user()->name}}</a>'
+                            html += '<p style="font-size: 15px;display: inline-block; float: right;margin-top: 10px;margin-right: 15px">just now</p>'
+                            html += '<div style="font-size: 20px; margin-left: 100px;margin-top: 10px">'
+                            html += request
+                            html += '</div>'
+                            html += '<hr style="margin-top:10px;margin-left: 75px;margin-top: 10px">'
+                            html += "@endif"
+                            // html += '</div>'
+                            // html += '</div>'
+                            $('.binhluancon').eq(index).append(html);
+                            $('.errsubcmt').eq(index).text("")
+                            console.log('it works!');
+                        }
                     } 
                 });
             });
@@ -350,9 +478,13 @@
                 id : id
             },
             success: function(){
+            if(request == ""){
+                $('#errorcmt').html("Bạn chưa nhập nội dung bình luận");
+            }
+            else{
                 var now = new Date();
                 var html = "@if(Auth::check())"
-                html += '<div style="background-color: rgb(255, 250, 244); margin-top : 10px;padding-bottom : 25px; font-size: 25px; height: auto; border: 2px solid gray;border-radius: 5px 5px 5px 5px">';
+                html += '<div style="background: linear-gradient(to right, #abfcff, #ffbdf4); margin-top : 10px;padding-bottom : 25px; font-size: 25px; height: auto; border: 2px solid gray;border-radius: 5px 5px 5px 5px">';
                 html += '<div style="font-size: 20px; margin: 15px">'
                 html += '<img width="40px" height="40px" style="display: inline-block; border-radius: 5px 5px 5px 5px;margin-right: 5px;margin-top: -5px" src="images/{{Auth::user()->avatar}}">'
                 html += '<a  href="{{route('info',['id'=>$u->id])}}" style="display: inline-block; margin-left:5px; font-size: 20px; ;margin-top: 10px; color:rgb(7, 96, 122)">{{Auth::user()->name}}</a>'
@@ -366,8 +498,10 @@
                 html += "@endif"
                 $("textarea[name=areapostx]").val("");
                 $('.binhluan').prepend(html);
+                $('#errorcmt').text("")
                 console.log('it works!');
-            } 
+            }                
+        }
         });
     });
     });
