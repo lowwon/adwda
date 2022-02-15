@@ -27,6 +27,12 @@ class NotificationController extends Controller
         $notiall = Notification::where('user_id',$id)->get();
         return view('thongbao',compact('noti','notiall'));
      }
+    public function seenNoti($id,$userid){
+        Notification::where('id',$id)->update(['status'=>1]);
+        $noti = Notification::where('user_id',$userid)->where('status',0)->get();
+        $notiall = Notification::where('user_id',$userid)->get();
+        return view('thongbao',compact('noti','notiall'));
+    }
 // name('noti')->middleware('auth');
 // name('deleteNoti')->middleware('auth');
 }

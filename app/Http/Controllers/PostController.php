@@ -14,7 +14,17 @@ use DateTime;
 use Auth;
 class PostController extends Controller
 {
-
+    public function searchall(Request $request){
+        $post = Post::where('Name','like', "%$request->searchtext%")->orderBy('Date','desc')->Paginate(15);
+        $topic = Topic::all();
+        $user = DB::table('users')->get();
+        $comment = Comment::all();
+        if(Auth::check())
+            $noti = Notification::where('user_id',Auth::user()->id)->where('status',0)->orderBy('date','desc')->Paginate(5);
+        else
+            $noti = null;
+        return view('trangchu', compact('post','topic','user','comment','noti'));
+    }
     public function index(){
         $post = Post::all()->sortByDesc('Date');
         return view('trangchu', compact('post'));

@@ -59,21 +59,18 @@ class CommentController extends Controller
     }
     public function delete($id){
         $comment = Comment::where('id',$id)->first();
-        if(Auth::user()->id < 2)
-        {
-            $this->authorize($comment,'delete');
-        }
-        else{
-            $user = User::where('id',$comment->user_id)->first();
-            if(Auth::user()->role_id < $user->role_id)
-                return back();
-        }
+        $user = User::where('id',$comment->user_id)->first();
+        if(Auth::user()->role_id < $user->role_id)
+            return back();
         $subcomment = SubComment::where('comment_id',$id)->delete();
         $comment = Comment::where('id',$id)->delete();
         return back();
     }
     public function delete2($id){
         $comment = Comment::where('user_id',$id)->orderBy('date','desc')->first();
+        $user = User::where('id',$comment->user_id)->first();
+        if(Auth::user()->id != $user->id)
+            return back();
         SubComment::where('comment_id',$comment->id)->delete();
         Comment::where('user_id',$id)->orderBy('date','desc')->first()->delete();
         return back();

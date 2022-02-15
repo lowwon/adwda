@@ -1,7 +1,10 @@
 @extends('layout')
 @section('content')
-<div style="margin-top : -54px;margin-right:30%;float : right; width: 200px;height: 10px;">
-    <input type="text" style="display: inline-block;border-radius: 8px 8px 8px 8px" class="form-control" placeholder="Tìm kiếm">
+<div style="margin-top : -54px;margin-right:22%;float : right; width: 400px;height: 10px">
+    <i onclick="showSearch();" id="timkiem" class="gg-search"></i>
+    <form action = "{{route('searchall')}}">
+        <input type="text" id="searchtext" name="searchtext">
+    </form>
 </div>
 @if(Auth::check())
     <div style="margin-top : -48px;margin-right:100px;float : right; width: 40px;height: 20px;">
@@ -62,7 +65,7 @@
                 </script>
             @endif
             <div style="position: static ;bottom: 0px; margin-bottom:10px; text-align: center">
-                <a style="opacity: 1.0" href="#">View All</a>
+                <a style="opacity: 1.0" href="{{route('noti',['id' => Auth::user()->id])}}">View All</a>
             </div>
         </div>
     </div>

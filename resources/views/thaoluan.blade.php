@@ -1,7 +1,10 @@
 @extends('layout')
 @section('content')
-    <div style="margin-top : -54px;margin-right:30%;float : right; width: 200px;height: 10px;">
-        <input type="text" style="display: inline-block;border-radius: 8px 8px 8px 8px" class="form-control" placeholder="Tìm kiếm">
+    <div style="margin-top : -54px;margin-right:22%;float : right; width: 400px;height: 10px">
+        <i onclick="showSearch();" id="timkiem" class="gg-search"></i>
+        <form action = "{{route('searchall')}}">
+            <input type="text" id="searchtext" name="searchtext">
+        </form>
     </div>
     @if(Auth::check())
         <div style="margin-top : -48px;margin-right:100px;float : right; width: 40px;height: 20px;">
@@ -70,7 +73,7 @@
     <div class="container-fluid" style="min-height:700px">
         <div style="margin-top: 4%">
             <h1 class="tieude" style="display: inline-block">Các bài viết mới</h1>
-            <div style="float: right; display: inline-block;margin-top: -40px;margin-right: 137px" >
+            <div style="float: right; display: inline-block;margin-top: -47px;margin-right: 12% " >
                 @if (Route::has('login'))
                     @auth
                     @if (Auth::user()->role_id > 1)
@@ -84,23 +87,9 @@
                     @endauth
                 @endif
             </div>
-        </div>
+        </div>  
         <div class="row">
-            <div class="col-2" style="display: inline-block; height: 730px; width:300px ">
-                <a href="{{route('thaoluan')}}"><div class="box">
-                    <p style="padding-top: 60px">Thảo luận</p>
-                </div></a>
-                <a href="{{route('hoidap')}}"><div class="box">
-                    <p style="padding-top: 60px">Chia sẻ</p>
-                </div></a>
-                <a href="{{route('chiase')}}"><div class="box">
-                    <p style="padding-top: 60px">Hỏi đáp</p>
-                </div></a>
-                <a href="{{route('tintuc')}}"><div class="box">
-                    <p style="padding-top: 60px">Tin tức</p>
-                </div></a>
-            </div>
-            <div class="col-9" style="display: inline-block; margin-left: -55px;">          
+            <div class="col-9" style="display: inline-block;margin-left: 13%">          
                 <table class="table table-hover">
                     <thead>
                         <tr>

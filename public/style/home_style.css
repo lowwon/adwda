@@ -4,7 +4,7 @@
 .tieude{
     margin-top: -35px;
     position: absolute;
-    margin-left: 16.5%;
+    margin-left: 13%;
     font-size: 20px;
 }
 .post{
@@ -96,4 +96,95 @@ body {
     margin-top: -20px;
     margin-bottom: 10px;
     font-size: 35px;
+}
+.guess{
+    display: inline-block;
+    border-radius: 5px 5px 5px 5px;
+    float: right;
+    margin-right: 70px;
+}
+.imginfo{
+    border: 5px soild black; 
+    margin-bottom: 40px; 
+    border-radius: 50px 50px 50px 50px; 
+    display: inline-block
+}
+.avt{
+    float: right;
+    display: inline-block;
+    width: 30px;
+    height:30px;
+}
+.mainacc{
+    font-size: 30px;
+    margin-left: 10%;
+     margin-top: 70px
+}
+.setaccount{
+    font-size: 30px;
+    margin-left: 10%;
+     margin-top: 70px
+}
+.choseimg{
+    margin-left: 40px; 
+    margin-top:-50px; 
+    font-size: 20px;
+    border-radius :10px 10px 10px 10px;
+    background-color: black;
+    color:white; 
+    display: inline-block;  
+    cursor: pointer; 
+    padding : 6px 7px
+}
+.labelchoseimg{
+    margin-top:-50px;  
+    font-size: 20px;
+    border-radius :10px 10px 10px 10px; 
+    background-color: black;
+    color:white; 
+    display: inline-block;  
+    cursor: pointer; 
+    padding : 6px 7px;
+}
+.contenttb{
+    border-radius: 5px 5px 5px 5px ;
+    margin-left: 30%; 
+    margin-top:20px;
+    background: linear-gradient(to right, #e2ddf0, #a9ff9e);
+}
+.bttb{
+    margin-left: 20px;
+    margin-top: 20px;
+    border-radius: 10px 10px 10px 10px;
+    background: linear-gradient(to right, #ffabf1, #fdff9e);
+    color:black
+}
+.deletetb{
+    float: right;
+    margin-right: 20px;
+    display: inline;
+    font-size: 20px;
+    margin-top: 25px
+}
+.noidungtb{
+    position: static;
+    margin: 20px;
+    font-size: 20px
+}
+.seentb{
+    float: right;
+    margin-top: 5px; 
+    margin-right: 10px
+}
+#timkiem{
+    float: right;
+    display: inline-block;
+    margin-top: 10px;
+}
+#searchtext{
+    display: none;
+    border-radius: 10px 10px 10px 10px;
+    float: right;
+    margin-right: 20px;
+    margin-top: 0px;
 }

@@ -1,7 +1,10 @@
 @extends('layout')
 @section('content')
-<div style="margin-top : -54px;margin-right:30%;float : right; width: 200px;height: 10px;">
-    <input type="text" style="display: inline-block;border-radius: 8px 8px 8px 8px" class="form-control" placeholder="Tìm kiếm">
+<div style="margin-top : -54px;margin-right:22%;float : right; width: 400px;height: 10px">
+    <i onclick="showSearch();" id="timkiem" class="gg-search"></i>
+    <form action = "{{route('searchall')}}">
+        <input type="text" id="searchtext" name="searchtext">
+    </form>
 </div>
 @if(Auth::check())
     <div style="margin-top : -48px;margin-right:100px;float : right; width: 40px;height: 20px;">
@@ -62,7 +65,7 @@
                 </script>
             @endif
             <div style="position: static ;bottom: 0px; margin-bottom:10px; text-align: center">
-                <a style="opacity: 1.0" href="#">View All</a>
+                <a style="opacity: 1.0" href="{{route('noti',['id' => Auth::user()->id])}}">View All</a>
             </div>
         </div>
     </div>
@@ -126,7 +129,7 @@
             <form id="formxx" method="POST" action = "{{route('comment',['id'=>$post->id])}}">
                 {{ csrf_field() }}
                 @csrf
-                <textarea style="width: 830px; height : 100px; border-radius: 5px 5px 5px 5px"  name="areapostx" id="areapostx"></textarea>
+                <textarea style="width:100%; height : 100px; border-radius: 5px 5px 5px 5px"  name="areapostx" id="areapostx"></textarea>
                 @if(Auth::check())
                     <input id="commentButton" style="float: right; margin-top: 5px"  type="submit" class="btn btn-primary" value="Bình luận">
                 @else 
@@ -160,7 +163,7 @@
                             @can('delete', $c) 
                                 @foreach ($user as $u)
                                     @if($u->id == $c->user_id)
-                                        @if(Auth::user()->role_id > $u->role_id)
+                                        @if(Auth::user()->role_id > $u->role_id || Auth::user()->id == $u->id)
                                             <a class="xoacmt" href="#" style="float: right ; font-size: 15px; margin-right: 15px">Xoá</a> 
                                         @endif     
                                     @endif
@@ -171,7 +174,7 @@
                                 <form method="POST" action = "{{route('subcomment',['id'=>$c->id])}}">
                                     {{csrf_field()}}
                                     <input style="display: none" id="idcmt" name="idcmt" value="{{$c->id}}">
-                                    <textarea style="width: 675px; border-radius: 5px 5px 5px 5px" required name="subcomment" id="subcomment"></textarea>
+                                    <textarea style="width: 98.5%; height: 100px; border-radius: 5px 5px 5px 5px" required name="subcomment" id="subcomment"></textarea>
                                     <input style="float: right; margin-top: 5px; margin-right: 10px" type="submit" class="btn btn-primary subbutton" value="Bình luận">
                                 </form>
                             </div>
@@ -193,7 +196,13 @@
                                         @endphp</div>
                                         @can('delete',$sc)
                                         <p class = "subcmt" style="display: none">{{$sc->id}}</p>
-                                        <a href="{{route('deleteSubComment',['id'=>$sc->id])}}" class="xoasubcmt" style="float: right ; font-size: 15px; margin-right: 15px;margin-top: -20px">Xoá</a> 
+                                            @foreach ($user as $u)
+                                                @if($u->id == $sc->user_id)
+                                                    @if(Auth::user()->role_id > $u->role_id || Auth::user()->id == $u->id)
+                                                        <a href="{{route('deleteSubComment',['id'=>$sc->id])}}" class="xoasubcmt" style="float: right ; font-size: 15px; margin-right: 15px;margin-top: -20px">Xoá</a> 
+                                                    @endif
+                                                @endif
+                                            @endforeach
                                         @endcan
                                         <hr style="margin-top:10px;margin-left: 75px;margin-top: 10px">
                                     </div>
@@ -248,169 +257,6 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-        $('#number_like').click(function(event){
-            event.preventDefault();
-            var id = $("#idpost").text();
-            console.log(id);
-            $.ajax({
-                type: 'GET',
-                url: '/likepost/' + id, 
-                data:  {
-                    id : id
-                },
-                success: function(){
-                    var count = $("#count_like").text();
-                    var count2 = $("#count_dislike").text();
-                    var checkx = $('#checkx').text();
-                    console.log(checkx);
-                    if(checkx != 1){
-                        var z = parseInt(count);
-                        z = z+ 1
-                        console.log(z);
-                        if(checkx == 2){
-                            var k = parseInt(count2);
-                            k = k - 1;
-                            var id2 = 'number_dislike';
-                            document.getElementById(id2).style.backgroundColor = 'initial';
-                            $('#count_dislike').html(k);
-                        }
-                        console.log(z);
-                        var id1 = 'number_like';
-                        document.getElementById(id1).style.backgroundColor = 'gold';
-                        $('#count_like').html(z);
-                        $('#checkx').html('1');
-                    }
-                    else{
-                        var z = parseInt(count);
-                        z = z - 1
-                        console.log(z);
-                        var id1 = 'number_like';
-                        document.getElementById(id1).style.backgroundColor = 'initial';
-                        $('#count_like').html(z);
-                        $('#checkx').html('0');
-                    }
-                    console.log('it works!');
-                } 
-            });
-        });
-    });
-</script>
-<script type="text/javascript">
-    $(document).ready(function(){
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $('#number_dislike').click(function(event){
-            event.preventDefault();
-            var id = $("#idpost").text();
-            console.log(id);
-            $.ajax({
-                type: 'GET',
-                url: '/dislikepost/' + id, 
-                data:  {
-                    id : id
-                },
-                success: function(){
-                    var count = $("#count_dislike").text();
-                    var count2 = $('#count_like').text();
-                    var checkx = $('#checkx').text();
-                    console.log(checkx);
-                    if(checkx != 2){
-                        var z = parseInt(count);
-                        z = z+ 1
-                        if(checkx == 1){
-                            var k = parseInt(count2);
-                            k = k-1;
-                            var id2 = 'number_like';
-                            document.getElementById(id2).style.backgroundColor = 'initial';
-                            $('#count_like').html(k);
-                        }
-                        console.log(z);
-                        var id1 = 'number_dislike';                        
-                        document.getElementById(id1).style.backgroundColor = 'gold';
-                        $('#count_dislike').html(z);
-                        $('#checkx').html('2');
-                        }
-                    else{
-                        var z = parseInt(count);
-                        z = z - 1
-                        console.log(z);
-                        var id1 = 'number_dislike';
-                        document.getElementById(id1).style.backgroundColor = 'initial';
-                        $('#count_dislike').html(z);
-                        $('#checkx').html('0');
-                    }
-                    console.log('it works!');
-                } 
-            });
-        });
-    });
-</script>
-<script type="text/javascript">
-    $(document).ready(function(){
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $('.xoasubcmt').each(function(index){
-            $(this).click(function(event){
-                event.preventDefault();
-                var id =  $(".subcmt").eq(index).text()
-                console.log(id);
-                $.ajax({
-                    type: 'GET',
-                    url: '/delete/subcomment/' + id, 
-                    data:  {
-                        id : id
-                    },
-                    success: function(){
-                        document.getElementById(id).style.display = 'none';
-                        console.log('it works!');
-                    } 
-                });
-            });
-        });
-    });
-</script>
-
-<script type="text/javascript">
-    $(document).ready(function(){
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $('.xoacmt').each(function(index){
-            $(this).click(function(event){
-                event.preventDefault();
-                var id = $("input[name=idcmt]").eq(index).val();
-                console.log(id);
-                    $.ajax({
-                        type: 'GET',
-                        url: '/delete/comment/' + id, 
-                        data:  {
-                            id : id
-                        },
-                        success: function(){
-                            document.getElementById(id).style.display = 'none';
-                            console.log('it works!');
-                        } 
-                    });
-            });
-        });
-    });
-</script>
-
-<script type="text/javascript">
-    $(document).ready(function(){
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
         $('.subbutton').each(function(index){
             $(this).click(function(event){
                 event.preventDefault();
@@ -432,16 +278,16 @@
                             var idz = 'blc_'+id
                             console.log(idz);
                             $("textarea[name=subcomment]").eq(index).val("");
-                            var html = "@if(Auth::check())"
+                            var html = '@if(Auth::check())'
                             html += '<div>';
                             html += '<img width="30px" height="30px" style="display: inline-block; border-radius: 5px 5px 5px 5px; margin-left: 75px;margin-right: 5px;margin-top: 5px" src="images/{{Auth::user()->avatar}}">'
-                            html += '<a  href="{{route('info',['id'=>Auth::user()->id])}}" style="display: inline-block;font-size: 15px;margin-top: 10px; color:rgb(160, 24, 47)" >{{Auth::user()->name}}</a>'
+                            html += '<a  href="{{route("info",["id"=>Auth::user()->id])}}" style="display: inline-block;font-size: 15px;margin-top: 10px; color:rgb(160, 24, 47)" >{{Auth::user()->name}}</a>'
                             html += '<p style="font-size: 15px;display: inline-block; float: right;margin-top: 10px;margin-right: 15px">just now</p>'
                             html += '<div style="font-size: 20px; margin-left: 100px;margin-top: 10px">'
                             html += request
                             html += '</div>'
                             html += '<hr style="margin-top:10px;margin-left: 75px;margin-top: 10px">'
-                            html += "@endif"
+                            html += '@endif'
                             // html += '</div>'
                             // html += '</div>'
                             $('.binhluancon').eq(index).append(html);
@@ -453,10 +299,6 @@
             });
         });
     });
-</script>
-
-
-<script type="text/javascript">
     $(document).ready(function(){
         $.ajaxSetup({
             headers: {
@@ -487,12 +329,12 @@
                 html += '<div style="background: linear-gradient(to right, #abfcff, #ffbdf4); margin-top : 10px;padding-bottom : 25px; font-size: 25px; height: auto; border: 2px solid gray;border-radius: 5px 5px 5px 5px">';
                 html += '<div style="font-size: 20px; margin: 15px">'
                 html += '<img width="40px" height="40px" style="display: inline-block; border-radius: 5px 5px 5px 5px;margin-right: 5px;margin-top: -5px" src="images/{{Auth::user()->avatar}}">'
-                html += '<a  href="{{route('info',['id'=>$u->id])}}" style="display: inline-block; margin-left:5px; font-size: 20px; ;margin-top: 10px; color:rgb(7, 96, 122)">{{Auth::user()->name}}</a>'
+                html += '<a  href="{{route("info",["id"=>$u->id])}}" style="display: inline-block; margin-left:5px; font-size: 20px; ;margin-top: 10px; color:rgb(7, 96, 122)">{{Auth::user()->name}}</a>'
                 html += '<p style="display: inline-block; float: right;margin-top: 10px">just now</p>'
                 html += '<div style="font-size: 20px; margin-left: 35px;margin-top: 20px">'
                 html += request
                 html += '</div>'
-                html += '<a href="{{route('deleteComment2',['id'=>Auth::user()->id])}}" style="float: right ; font-size: 15px; margin-right: 15px">Xoá</a>'
+                html += '<a href="{{route("deleteComment2",["id"=>Auth::user()->id])}}" style="float: right ; font-size: 15px; margin-right: 15px">Xoá</a>'
                 html += '</div>'
                 html += '</div>'
                 html += "@endif"
@@ -506,7 +348,6 @@
     });
     });
 </script>
-
 <script src="//cdn.ckeditor.com/4.17.1/basic/ckeditor.js"></script>
 <script type="text/javascript">
     CKEDITOR.replace( 'areapost',{
