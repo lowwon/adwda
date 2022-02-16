@@ -241,12 +241,14 @@
         @endforeach
         <div>
             @can('delete', $post)
-            <form id="form2" method="POST" action = "{{route('delete',['id'=>$post->id])}}">
-                @method('DELETE')
-                @csrf
-            <input id="deleteButton" style = "float: right;margin: 10px" type="submit" value="Xoá bài" class="btn btn-danger">
-            <form>
-        @endcan
+            @if(Auth::user()->role_id > $user_post->role_id)
+                <form id="form2" method="POST" action = "{{route('delete',['id'=>$post->id])}}">
+                    @method('DELETE')
+                    @csrf
+                <input id="deleteButton" style = "float: right;margin: 10px" type="submit" value="Xoá bài" class="btn btn-danger">
+                <form>
+            @endif  
+            @endcan
         </div>
     </div>
 </div>

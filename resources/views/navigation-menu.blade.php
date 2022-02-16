@@ -126,9 +126,9 @@
                             @endif
                             <div class="border-t border-gray-100"></div>
                             @if(Auth::user()->role_id > 2)
-                                <form method="POST" action="">
+                                <form method="POST" action="">      
                                     @csrf
-                                    <x-jet-dropdown-link href="">
+                                    <x-jet-dropdown-link href="{{route('viewQT')}}  ">
                                         {{'Manager' }}
                                     </x-jet-dropdown-link>
                                 </form>

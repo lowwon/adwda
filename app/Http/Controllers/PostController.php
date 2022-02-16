@@ -130,14 +130,14 @@ class PostController extends Controller
     }
     public function delete($id){
         $post = Post::where('id',$id)->first();
-        if(Auth::user()->role_id < 2)
-            $this->authorize($post,'delete');
+        if(Auth::user()->role_id < 2)       
+            return redirect()->route('dashboard');
         else{
             $a = $post->user_id;
             $user = User::where('id',$a)->first();
             if(Auth::user()->role_id < $user->role_id)
             {
-                return view('baidang',compact('post'));
+                return back();
             }
         }
         $post = Post::where('id',$id)->delete();
