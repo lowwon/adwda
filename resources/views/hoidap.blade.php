@@ -1,78 +1,77 @@
 @extends('layout')
 @section('content')
-    <div style="margin-top : -54px;margin-right:22%;float : right; width: 400px;height: 10px">
-        <i onclick="showSearch();" id="timkiem" class="gg-search"></i>
-        <form action = "{{route('searchall')}}">
-            <input type="text" id="searchtext" name="searchtext">
-        </form>
-    </div>
-    @if(Auth::check())
-        <div style="margin-top : -48px;margin-right:100px;float : right; width: 40px;height: 20px;">
-            @if(count($noti) == 0)
-                <img id="show" style="float: right;display: inline-block;width: 30px;height:30px;" src="images/tb.jpg">
-            @else
-                <img id="show" style="float: right;display: inline-block;width: 30px;height:30px;" src="images/tb1.jpg">
-            @endif
-            <div id="content" style="float: right; font-size: 17px; border-radius:15px 15px 15px 15px; position: relative;display: none; width: 300px; max-height: 580px; margin-top: 20px;background: linear-gradient(to right, #e2ddf0, #a9ff9e);">
-                <div style="font-size:30px;margin-top: 10px;margin-left: 20px">
-                    <strong >Thông báo</strong>
-                </div>
-                <hr style="margin : 10px">
-                @if(count($noti) == 0)
-                    <div style="position: static; margin-bottom:10px; margin-top:10px; text-align: center"> 
-                        <p>Thông báo trống</p>
-                        <hr style="margin : 10px">
-                    </div>
-                    <script>
-                        document.getElementById("show").onclick = function () {
-                            if( document.getElementById("content").style.display == 'none')
-                            {
-                                document.getElementById("content").style.display = 'block';
-                                document.getElementById("show").src = 'images/tb2.jpg';
-                            }
-                            else 
-                            {
-                                document.getElementById("content").style.display = 'none';
-                                document.getElementById("show").src = 'images/tb.jpg';
-                            }
-            
-                                return false;
-                        };
-                    </script>
-                @else 
-                    @foreach ($noti as $n)
-                        <div style="position: static;margin: 20px"> 
-                            <a href="{{route('changeNoti',['id'=>$n->id])}}">{{$n->content}}</a>
-                            <p style="float: right;font-size: 10px;margin-top: 5px">{{$n->date}}</p>
-                            <hr style="margin-top:20px">
-                        </div>
-                    @endforeach
-                    <script>
-                        document.getElementById("show").onclick = function () {
-                            if( document.getElementById("content").style.display == 'none')
-                            {
-                                document.getElementById("content").style.display = 'block';
-                                document.getElementById("show").src = 'images/tb2.jpg';
-                            }
-                            else 
-                            {
-                                document.getElementById("content").style.display = 'none';
-                                document.getElementById("show").src = 'images/tb1.jpg';
-                            }
-            
-                                return false;
-                        };
-                    </script>
-                @endif
-                <div style="position: static ;bottom: 0px; margin-bottom:10px; text-align: center">
-                    <a style="opacity: 1.0" href="{{route('noti',['id' => Auth::user()->id])}}">View All</a>
-                </div>
-            </div>
-        </div>
-    @endif
     <div class="container-fluid" style="min-height:700px">
         <div style="margin-top: 4%">
+            @if(Auth::check())
+                <div class="noti">
+                    @if(count($noti) == 0)
+                        <img id="show"  class="imgnoti" src="images/tb.jpg">
+                    @else
+                        <img id="show"  class="imgnoti" src="images/tb.jpg">
+                    @endif
+                    <div id="content" class="notibox">
+                        <div style="font-size:30px;margin-top: 10px;margin-left: 20px">
+                            <strong >Thông báo</strong>
+                        </div>
+                        <hr style="margin : 10px">
+                        @if(count($noti) == 0)
+                            <div style="position: static; margin-bottom:10px; margin-top:10px; text-align: center"> 
+                                <p>Thông báo trống</p>
+                                <hr style="margin : 10px">
+                            </div>
+                            <script>
+                                document.getElementById("show").onclick = function () {
+                                    if( document.getElementById("content").style.display == 'none')
+                                    {
+                                        document.getElementById("content").style.display = 'block';
+                                        document.getElementById("show").src = 'images/tb2.jpg';
+                                    }
+                                    else 
+                                    {
+                                        document.getElementById("content").style.display = 'none';
+                                        document.getElementById("show").src = 'images/tb.jpg';
+                                    }
+                                        return false;
+                                };
+                            </script>
+                        @else 
+                            @foreach ($noti as $n)
+                                <div style="position: static;margin: 20px"> 
+                                    <a href="{{route('changeNoti',['id'=>$n->id])}}">{{$n->content}}</a>
+                                    <p style="float: right;font-size: 10px;margin-top: 5px">{{$n->date}}</p>
+                                    <hr style="margin-top:20px">
+                                </div>
+                            @endforeach
+                            <script>
+                                document.getElementById("show").onclick = function () {
+                                    if( document.getElementById("content").style.display == 'none')
+                                    {
+                                        document.getElementById("content").style.display = 'block';
+                                        document.getElementById("show").src = 'images/tb2.jpg';
+                                    }
+                                    else 
+                                    {
+                                        document.getElementById("content").style.display = 'none';
+                                        document.getElementById("show").src = 'images/tb1.jpg';
+                                    }
+                    
+                                        return false;
+                                };
+                            </script>
+                        @endif
+                        <div style="position: static ;bottom: 0px; margin-bottom:10px; text-align: center">
+                            <a style="opacity: 1.0" href="{{route('noti',['id' => Auth::user()->id])}}">View All</a>
+                        </div>
+                    </div>
+                </div>
+            @endif
             <h1 class="tieude" style="display: inline-block">Các bài viết mới</h1>
+            <div class="searchbox">
+                <i onclick="showSearch();" id="timkiem" class="gg-search"></i>
+                <form action = "{{route('searchall')}}">
+                    <input type="text" id="searchtext" name="searchtext">
+                </form>
+            </div>
             <div style="float: right; display: inline-block;margin-top: -47px;margin-right: 12% " >
                 @if (Route::has('login'))
                     @auth

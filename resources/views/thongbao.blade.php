@@ -56,35 +56,6 @@
         }
     </script>
     <script type="text/javascript">
-        $(document).ready(function(){
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $('.seentb').each(function(index){
-                $(this).click(function(event){
-                    event.preventDefault()
-                    var id = $(".idtb").eq(index).text();
-                    var userid = $(".iduser").eq(index).text();
-                    console.log(id);
-                    console.log(userid);
-                    $.ajax({
-                        type: 'GET',
-                        url: '/seen/' + id + '/' + userid, 
-                        data:  {
-                            id : id,
-                            userid : userid
-                        },
-                        success: function(){
-                            var xx = 'tb_'+id;
-                            console.log(xx);
-                            document.getElementById(xx).style.display = 'none';
-                            console.log('it works!');
-                        }
-                    });
-                });
-            });
-        });
+
     </script>
 @stop

@@ -1,19 +1,13 @@
 @extends('layout')
 @section('content')
-<div style="margin-top : -54px;margin-right:22%;float : right; width: 400px;height: 10px">
-    <i onclick="showSearch();" id="timkiem" class="gg-search"></i>
-    <form action = "{{route('searchall')}}">
-        <input type="text" id="searchtext" name="searchtext">
-    </form>
-</div>
 @if(Auth::check())
-    <div style="margin-top : -48px;margin-right:100px;float : right; width: 40px;height: 20px;">
+    <div class="noti1">
         @if(count($noti) == 0)
-            <img id="show" style="float: right;display: inline-block;width: 30px;height:30px;" src="images/tb.jpg">
+            <img id="show" class="imgnoti" src="images/tb.jpg">
         @else
-            <img id="show" style="float: right;display: inline-block;width: 30px;height:30px;" src="images/tb1.jpg">
+            <img id="show" class="imgnoti" src="images/tb1.jpg">
         @endif
-        <div id="content" style="float: right; font-size: 17px; border-radius:15px 15px 15px 15px; position: relative;display: none; width: 300px; max-height: 580px; margin-top: 20px;background: linear-gradient(to right, #e2ddf0, #a9ff9e);">
+        <div id="content" class="notibox">
             <div style="font-size:30px;margin-top: 10px;margin-left: 20px">
                 <strong >Thông báo</strong>
             </div>
@@ -65,12 +59,12 @@
                 </script>
             @endif
             <div style="position: static ;bottom: 0px; margin-bottom:10px; text-align: center">
-                <a style="opacity: 1.0" href="{{route('noti',['id' => Auth::user()->id])}}">View All</a>
+                <a href="{{route('noti',['id' => Auth::user()->id])}}">View All</a>
             </div>
         </div>
     </div>
 @endif
-    <div class="container-fluid row" style="max-height: 700px;margin-bottom: 100px">
+    <div class="container-fluid row" style="max-height: 700px;margin-bottom: 100px">    
         @if (Auth::user()->id == $user->id || Auth::user()->role_id > $user->role_id && Auth::user()->role_id > 2)
             @if($errors->any())
                 <div class="alert text-danger"  style="font-size: 30px;margin-left: 10%; margin-top: 0px; margin-bottom: -60px">
@@ -101,7 +95,7 @@
                                 reader.onload = function(e){
                                     document.getElementById("imgs").src = e.target.result;
                                 }
-                            reader.readAsDataURL(this.files[0]);
+                                reader.readAsDataURL(this.files[0]);
                             }
                         </script>      
                     </div>

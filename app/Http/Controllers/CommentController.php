@@ -14,13 +14,6 @@ use App\Models\Notification;
 class CommentController extends Controller
 {
     public function createComment(Request $request, $id){
-        // $messages=[
-        //     'areapost.required'=>'Bạn phải nhập nội dung!',
-        // ];
-        // $controls = [
-        //     'areapost'=>'required',
-        // ];
-        // Validator::make($rq->all(),$controls, $messages)->validate();
         $str =  $request->input('request');
         $saa = Comment::all();
         $e = 0;
@@ -55,19 +48,19 @@ class CommentController extends Controller
                 ]);
             }
         }
-        return redirect()->route('dashboard');
+        return back();
     }
     public function delete($id){
         $comment = Comment::where('id',$id)->first();
         $user = User::where('id',$comment->user_id)->first();
         if(Auth::user()->role_id < $user->role_id)
             return back();
-        $subcomment = SubComment::where('comment_id',$id)->delete();
-        $comment = Comment::where('id',$id)->delete();
+        SubComment::where('comment_id',$id)->delete();
+        Comment::where('id',$id)->delete();
         return back();
     }
     public function delete2($id){
-        $comment = Comment::where('user_id',$id)->orderBy('date','desc')->first();
+        $comment = Comment::where('user_id',$id)->orderBy('date','desc')->fSirst();
         $user = User::where('id',$comment->user_id)->first();
         if(Auth::user()->id != $user->id)
             return back();

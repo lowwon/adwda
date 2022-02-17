@@ -188,3 +188,56 @@ body {
     margin-right: 20px;
     margin-top: 0px;
 }
+.notibox{
+    float: right;
+    font-size: 17px; 
+    border-radius:15px 15px 15px 15px; 
+    position: relative;
+    display: none; 
+    width: 300px; 
+    max-height: 580px; 
+    margin-top: 20px;
+    background: linear-gradient(to right, #e2ddf0, #a9ff9e);
+}
+.searchbox{
+    margin-top : -50px;
+    margin-right:25%;
+    float : right; 
+    width: 400px;
+    height: 10px; 
+    position: relative;
+}
+.noti{
+    margin-top : -45px;
+    margin-right:1%;
+    float : right; 
+    width: 40px;
+    height: 20px;
+}
+.noti1{
+    margin-top : 10px;
+    margin-right:1%;
+    float : right;
+     width: 40px;
+     height: 20px;
+}
+.imgnoti{
+    float: right;
+    display: inline-block;
+    width: 30px;
+    height:30px;
+}
+.tt1{
+    background-color:gold; margin-bottom: 20px;
+}
+.tt2{
+    background-color:gold; margin-left: 1px;
+}
+.deleteuser{
+    margin-top: -5px;
+    background: linear-gradient(to right, #ff2f39, #680000c0);
+     color: #ffffff;
+}
+.save{
+    margin-top: -5px;background: linear-gradient(to right, #928401, #ffee00c0)
+}

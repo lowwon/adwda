@@ -118,15 +118,33 @@ class PostController extends Controller
             if(Post_User::where('post_id',$id)->where('user_id',Auth::user()->id)->first() != null)
             $check = 1;
         }
-        $user = User::all();
+        $ux = [];
+        $c = Comment::where('post_id',$id)->orderBy('date','desc')->get();
+        foreach($c as $com){
+            $u = User::where('id',$com->user_id)->first();
+            $ux[] = $u;
+        }
+        $user = array_unique($ux);
         $allpost = Post::where('topic_id',$post->topic_id)->where('status',1)->simplePaginate(10);
         $comment = Comment::where('post_id',$id)->orderBy('date','desc')->simplePaginate(3);
-        $subcomment = SubComment::all();
+        $subcomment = [];
+        foreach($c as $com){
+            $sc = SubComment::where('comment_id',$com->id)->get();
+            foreach($sc as $scc){
+                $subcomment[] = $scc;
+            }
+        }
+        $us = []; 
+        foreach($subcomment as $scb){
+            $u = User::where('id',$scb->user_id)->first();
+            $us[] = $u;
+        }
+        $user_sc = array_unique($us);
         if(Auth::check())
-        $noti = Notification::where('user_id',Auth::user()->id)->where('status',0)->orderBy('date','desc')->Paginate(5);
+            $noti = Notification::where('user_id',Auth::user()->id)->where('status',0)->orderBy('date','desc')->Paginate(5);
         else
             $noti = null;
-        return view('baidang',compact('post','allpost','comment','user_post','user','subcomment','noti','post_user','check'));
+        return view('baidang',compact('post','allpost','comment','user_post','user','user_sc','subcomment','noti','post_user','check'));
     }
     public function delete($id){
         $post = Post::where('id',$id)->first();
@@ -140,9 +158,13 @@ class PostController extends Controller
                 return back();
             }
         }
-        $post = Post::where('id',$id)->delete();
+        $comment = Comment::where('post_id',$id)->get();
+        foreach($comment as $c){
+            SubComment::where('comment_id',$c->id)->delete();
+        }
+        Comment::where('post_id',$id)->delete();
+        Post::where('id',$id)->delete();
         return redirect()->route('dashboard');
-
     }
     public function deleteforAdmin($id){
         $post = Post::where('id',$id)->delete();
@@ -159,7 +181,7 @@ class PostController extends Controller
         return view('kiembai',compact('post','topic','user','noti'));
     }
     public function allowPost($id){
-        $post = DB::table('post')->where('id',$id)->update(['status'=>1]);
+        $post = DB::table('post')->where('id',$id)->update(['status'=>1]);   
         return back();
     }
     public function increaseLike($id){

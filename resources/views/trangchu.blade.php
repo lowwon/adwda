@@ -1,19 +1,15 @@
 @extends('layout')
 @section('content')
-    <div style="margin-top : -54px;margin-right:22%;float : right; width: 400px;height: 10px">
-        <i onclick="showSearch();" id="timkiem" class="gg-search"></i>
-        <form action = "{{route('searchall')}}">
-            <input type="text" id="searchtext" name="searchtext">
-        </form>
-    </div>
-    @if(Auth::check())
-        <div style="margin-top : -48px;margin-right:100px;float : right; width: 40px;height: 20px;">
+
+    <div class="container-fluid" style="min-height:700px">
+        @if(Auth::check())
+        <div class="noti">
             @if(count($noti) == 0)
-                <img id="show" style="float: right;display: inline-block;width: 30px;height:30px;" src="images/tb.jpg">
+                <img id="show"  class="imgnoti" src="images/tb.jpg">
             @else
-                <img id="show" style="float: right;display: inline-block;width: 30px;height:30px;" src="images/tb1.jpg">
+                <img id="show"  class="imgnoti"src="images/tb.jpg">
             @endif
-            <div id="content" style="float: right; font-size: 17px; border-radius:15px 15px 15px 15px; position: relative;display: none; width: 300px; max-height: 580px; margin-top: 20px;background: linear-gradient(to right, #e2ddf0, #a9ff9e);">
+            <div id="content" class="notibox">
                 <div style="font-size:30px;margin-top: 10px;margin-left: 20px">
                     <strong >Thông báo</strong>
                 </div>
@@ -69,9 +65,14 @@
             </div>
         </div>
     @endif
-    <div class="container-fluid" style="min-height:700px">
         <div style="margin-top: 4%">
             <h1 class="tieude" style="display: inline-block">Các bài viết mới</h1>
+            <div class="searchbox">
+                <i onclick="showSearch();" id="timkiem" class="gg-search"></i>
+                <form action = "{{route('searchall')}}">
+                    <input type="text" id="searchtext" name="searchtext">
+                </form>
+            </div>
             <div style="float: right; display: inline-block;margin-top: -47px;margin-right: 12% " >
                 @if (Route::has('login'))
                     @auth
@@ -79,8 +80,7 @@
                         <a href="{{route('dangbai')}}"><input type="button" class="btn btn-primary" value="Đăng bài" id="db" nam="db"> </a>    
                     @else
                         <button class="btn btn-primary" type="button" onclick="alert('User thường không có quyền đăng bài')">Đăng bài</button>
-                    @endif
-                                
+                    @endif 
                 @else
                     <a href="{{ route('login') }}" ><input type="button" class="btn btn-primary" value="Đăng bài"></a>
                     @endauth

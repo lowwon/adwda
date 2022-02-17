@@ -9,72 +9,70 @@
             border-radius : 2px 2px 2px 2px;
         }
     </style>
-
-@if(Auth::check())
-    <div style="margin-top : -48px;margin-right:100px;float : right; width: 40px;height: 20px;">
-        @if(count($noti) == 0)
-            <img id="show" style="float: right;display: inline-block;width: 30px;height:30px;" src="images/tb.jpg">
-        @else
-            <img id="show" style="float: right;display: inline-block;width: 30px;height:30px;" src="images/tb1.jpg">
-        @endif
-        <div id="content" style="float: right; font-size: 17px; border-radius:15px 15px 15px 15px; position: relative;display: none; width: 300px; max-height: 580px; margin-top: 20px;background: linear-gradient(to right, #e2ddf0, #a9ff9e);">
-            <div style="font-size:30px;margin-top: 10px;margin-left: 20px">
-                <strong >Thông báo</strong>
-            </div>
-            <hr style="margin : 10px">
-            @if(count($noti) == 0)
-                <div style="position: static; margin-bottom:10px; margin-top:10px; text-align: center"> 
-                    <p>Thông báo trống</p>
-                    <hr style="margin : 10px">
-                </div>
-                <script>
-                    document.getElementById("show").onclick = function () {
-                        if( document.getElementById("content").style.display == 'none')
-                        {
-                            document.getElementById("content").style.display = 'block';
-                            document.getElementById("show").src = 'images/tb2.jpg';
-                        }
-                        else 
-                        {
-                            document.getElementById("content").style.display = 'none';
-                            document.getElementById("show").src = 'images/tb.jpg';
-                        }
-        
-                            return false;
-                    };
-                </script>
-            @else 
-                @foreach ($noti as $n)
-                    <div style="position: static;margin: 20px"> 
-                        <a href="{{route('changeNoti',['id'=>$n->id])}}">{{$n->content}}</a>
-                        <p style="float: right;font-size: 10px;margin-top: 5px">{{$n->date}}</p>
-                        <hr style="margin-top:20px">
-                    </div>
-                @endforeach
-                <script>
-                    document.getElementById("show").onclick = function () {
-                        if( document.getElementById("content").style.display == 'none')
-                        {
-                            document.getElementById("content").style.display = 'block';
-                            document.getElementById("show").src = 'images/tb2.jpg';
-                        }
-                        else 
-                        {
-                            document.getElementById("content").style.display = 'none';
-                            document.getElementById("show").src = 'images/tb1.jpg';
-                        }
-        
-                            return false;
-                    };
-                </script>
-            @endif
-            <div style="position: static ;bottom: 0px; margin-bottom:10px; text-align: center">
-                <a style="opacity: 1.0" href="{{route('noti',['id' => Auth::user()->id])}}">View All</a>
-            </div>
-        </div>
-    </div>
-@endif
     <div class="container-fluid" style="min-height:700px">
+        @if(Auth::check())
+                <div style="margin-top : 10px;margin-right:1%;float : right; width: 40px;height: 20px;">
+                    @if(count($noti) == 0)
+                        <img id="show"  class="imgnoti" src="images/tb.jpg">
+                    @else
+                        <img id="show"  class="imgnoti" src="images/tb.jpg">
+                    @endif
+                    <div id="content" style="float: right; font-size: 17px; border-radius:15px 15px 15px 15px; position: relative;display: none; width: 300px; max-height: 580px; margin-top: 20px;background: linear-gradient(to right, #e2ddf0, #a9ff9e);">
+                        <div style="font-size:30px;margin-top: 10px;margin-left: 20px">
+                            <strong >Thông báo</strong>
+                        </div>
+                        <hr style="margin : 10px">
+                        @if(count($noti) == 0)
+                            <div style="position: static; margin-bottom:10px; margin-top:10px; text-align: center"> 
+                                <p>Thông báo trống</p>
+                                <hr style="margin : 10px">
+                            </div>
+                            <script>
+                                document.getElementById("show").onclick = function () {
+                                    if( document.getElementById("content").style.display == 'none')
+                                    {
+                                        document.getElementById("content").style.display = 'block';
+                                        document.getElementById("show").src = 'images/tb2.jpg';
+                                    }
+                                    else 
+                                    {
+                                        document.getElementById("content").style.display = 'none';
+                                        document.getElementById("show").src = 'images/tb.jpg';
+                                    }
+                                        return false;
+                                };
+                            </script>
+                        @else 
+                            @foreach ($noti as $n)
+                                <div style="position: static;margin: 20px"> 
+                                    <a href="{{route('changeNoti',['id'=>$n->id])}}">{{$n->content}}</a>
+                                    <p style="float: right;font-size: 10px;margin-top: 5px">{{$n->date}}</p>
+                                    <hr style="margin-top:20px">
+                                </div>
+                            @endforeach
+                            <script>
+                                document.getElementById("show").onclick = function () {
+                                    if( document.getElementById("content").style.display == 'none')
+                                    {
+                                        document.getElementById("content").style.display = 'block';
+                                        document.getElementById("show").src = 'images/tb2.jpg';
+                                    }
+                                    else 
+                                    {
+                                        document.getElementById("content").style.display = 'none';
+                                        document.getElementById("show").src = 'images/tb1.jpg';
+                                    }
+                    
+                                        return false;
+                                };
+                            </script>
+                        @endif
+                        <div style="position: static ;bottom: 0px; margin-bottom:10px; text-align: center">
+                            <a style="opacity: 1.0" href="{{route('noti',['id' => Auth::user()->id])}}">View All</a>
+                        </div>
+                    </div>
+                </div>
+            @endif
         <div class="quantri1">
             <div class="col-1 quantri2">ID</div>
             <div class="col-3 quantri2">Name</div>
@@ -119,15 +117,15 @@
                         <div  style="display: inline-block;" class="form-check">
                             @if ($u->role_id == 4)
                                 <input style="margin-top: 20px" class="form-check-input" type="radio" name="radios" id="admins" value="4" checked>
-                            @else
+                            @else   
                                 <input style="margin-top: 20px" class="form-check-input" type="radio" name="radios" id="admins" value="4">
                                 @endif
                             <label class="form-check-label" for="radios"> <p style="margin-top: 15px" > SuperAdmin </p></label> 
                         </div>
                     </div>
                     <div class="col-2 quantri3"><p style="margin-top: 15px" >
-                        <button type="button" style="margin-top: -5px;background: linear-gradient(to right, #ff2f39, #680000c0); color: #ffffff" class="btn btn-danger"><a style="color: white" href="{{ route('deleteUser',['id'=>$u->id])}}">Delete</a></button>
-                        <button type="submit" style="margin-top: -5px;background: linear-gradient(to right, #928401, #ffee00c0)" class="btn btn-warning">Save</button>
+                        <button type="button" class="btn btn-danger deleteuser"><a style="color: white" href="{{ route('deleteUser',['id'=>$u->id])}}">Delete</a></button>
+                        <button type="submit" class="btn btn-warning save">Save</button>
                     </div>
                 </form>
                 

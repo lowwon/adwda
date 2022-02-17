@@ -39,6 +39,36 @@ $(document).ready(function(){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+    $('.seentb').each(function(index){
+        $(this).click(function(event){
+            event.preventDefault()
+            var id = $(".idtb").eq(index).text();
+            var userid = $(".iduser").eq(index).text();
+            console.log(id);
+            console.log(userid);
+            $.ajax({
+                type: 'GET',
+                url: '/seen/' + id + '/' + userid, 
+                data:  {
+                    id : id,
+                    userid : userid
+                },
+                success: function(){
+                    var xx = 'tb_'+id;
+                    console.log(xx);
+                    document.getElementById(xx).style.display = 'none';
+                    console.log('it works!');
+                }
+            });
+        });
+    });
+});
+$(document).ready(function(){
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
     $('#number_like').click(function(event){
         event.preventDefault();
         var id = $("#idpost").text();
@@ -53,11 +83,9 @@ $(document).ready(function(){
                 var count = $("#count_like").text();
                 var count2 = $("#count_dislike").text();
                 var checkx = $('#checkx').text();
-                console.log(checkx);
                 if(checkx != 1){
                     var z = parseInt(count);
                     z = z+ 1
-                    console.log(z);
                     if(checkx == 2){
                         var k = parseInt(count2);
                         k = k - 1;
@@ -65,7 +93,6 @@ $(document).ready(function(){
                         document.getElementById(id2).style.backgroundColor = 'initial';
                         $('#count_dislike').html(k);
                     }
-                    console.log(z);
                     var id1 = 'number_like';
                     document.getElementById(id1).style.backgroundColor = 'gold';
                     $('#count_like').html(z);
@@ -74,7 +101,6 @@ $(document).ready(function(){
                 else{
                     var z = parseInt(count);
                     z = z - 1
-                    console.log(z);
                     var id1 = 'number_like';
                     document.getElementById(id1).style.backgroundColor = 'initial';
                     $('#count_like').html(z);
@@ -155,7 +181,6 @@ $(document).ready(function(){
                 },
                 success: function(){
                     document.getElementById(id).style.display = 'none';
-                    console.log('it works!');
                 } 
             });
         });
@@ -180,9 +205,15 @@ $(document).ready(function(){
                     },
                     success: function(){
                         document.getElementById(id).style.display = 'none';
-                        console.log('it works!');
                     } 
                 });
         });
     });
 });
+function showsc(id){
+    if( document.getElementById(id).style.display == 'none')
+        document.getElementById(id).style.display = 'block';
+    else 
+    document.getElementById(id).style.display = 'none';
+    return false;
+}

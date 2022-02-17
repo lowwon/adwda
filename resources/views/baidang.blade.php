@@ -1,19 +1,13 @@
 @extends('layout')
 @section('content')
-<div style="margin-top : -54px;margin-right:22%;float : right; width: 400px;height: 10px">
-    <i onclick="showSearch();" id="timkiem" class="gg-search"></i>
-    <form action = "{{route('searchall')}}">
-        <input type="text" id="searchtext" name="searchtext">
-    </form>
-</div>
 @if(Auth::check())
-    <div style="margin-top : -48px;margin-right:100px;float : right; width: 40px;height: 20px;">
+    <div class="noti1" style="margin-bottom: -60px">
         @if(count($noti) == 0)
-            <img id="show" style="float: right;display: inline-block;width: 30px;height:30px;" src="images/tb.jpg">
+            <img id="show" class="imgnoti" src="images/tb.jpg">
         @else
-            <img id="show" style="float: right;display: inline-block;width: 30px;height:30px;" src="images/tb1.jpg">
+            <img id="show" class="imgnoti" src="images/tb1.jpg">
         @endif
-        <div id="content" style="float: right; font-size: 17px; border-radius:15px 15px 15px 15px; position: relative;display: none; width: 300px; max-height: 580px; margin-top: 20px;background: linear-gradient(to right, #e2ddf0, #a9ff9e);">
+        <div id="content" class="notibox">
             <div style="font-size:30px;margin-top: 10px;margin-left: 20px">
                 <strong >Thông báo</strong>
             </div>
@@ -65,13 +59,13 @@
                 </script>
             @endif
             <div style="position: static ;bottom: 0px; margin-bottom:10px; text-align: center">
-                <a style="opacity: 1.0" href="{{route('noti',['id' => Auth::user()->id])}}">View All</a>
+                <a href="{{route('noti',['id' => Auth::user()->id])}}">View All</a>
             </div>
         </div>
     </div>
-@endif
+@endif  
 <div class="container-fluid row">
-    <div class="col-md-1" style="margin-left: 3%; height: 700px">
+    <div class="col-2" style="padding-left: 6%; height: 700px">
         <div style="margin-top: 210px; position: fixed">
             <p id="count_like" style="text-align: center; font-size: 25px">{{$post->number_like}}</p>
             @if(Auth::check())
@@ -80,17 +74,17 @@
                         @if($p->user_id == Auth::user()->id)
                             @if($p->checklike == 1)
                                 <p style="display: none" id="checkx">1</p>
-                                <a class="x" href="{{route('likePost',['id'=>$post->id])}}"><i id="number_like" style="background-color:gold; margin-bottom: 20px" class="gg-arrow-up-r"></i></a>
+                                <a class="x" href="{{route('likePost',['id'=>$post->id])}}"><i id="number_like" class="gg-arrow-up-r tt1"></i></a>
                                 <a class="x" href="{{route('dislikePost',['id'=>$post->id])}}"><i id="number_dislike" style="margin-left: 1px" class="gg-arrow-down-r"></i></a>
                             @else
                                 <p style="display: none" id="checkx">2</p>
                                 <a class="x" href="{{route('likePost',['id'=>$post->id])}}"><i id="number_like" style="margin-bottom: 20px" class="gg-arrow-up-r"></i></a>
-                                <a class="x" href="{{route('dislikePost',['id'=>$post->id])}}"><i id="number_dislike" style="background-color:gold; margin-left: 1px" class="gg-arrow-down-r"></i></a>
+                                <a class="x" href="{{route('dislikePost',['id'=>$post->id])}}"><i id="number_dislike" class="gg-arrow-down-r tt2"></i></a>
                             @endif
                         @endif
                     @endforeach
                 @else
-                    <p style="display: none" id="checkx">0</p>
+                    <p style="display: none" id="checkx">0</p>  
                     <a class="x" href="{{route('likePost',['id'=>$post->id])}}"><i id="number_like" style="margin-bottom: 20px" class="gg-arrow-up-r"></i></a>
                     <a class="x" href="{{route('dislikePost',['id'=>$post->id])}}"><i id="number_dislike" style="margin-left: 1px" class="gg-arrow-down-r"></i></a>
                 @endif
@@ -101,18 +95,14 @@
             <p id="count_dislike" style="text-align: center; font-size: 25px">{{$post->number_dislike}}</p>
         </div>
     </div>
-    <div class="col-md-7" style="margin-top: 20px; font-size: 35px">
+    <div class="col-7" style="margin-top: 20px; font-size: 35px">
         <div>
             <p style="margin-top: 5px "><strong>
                 {{$post->Name}}
             </strong></p>
             <p style="font-size: 20px; display: inline; color:rgb(148, 128, 13) "> Người đăng : 
-                @foreach ($user as $u)
-                    @if ($post->user_id == $u->id)
-                        <a  href="{{route('info',['id'=>$u->id])}}">{{$u->name}}</a>      
-                        <img width="40px" height="40px" style="display: inline-block; border-radius: 5px 5px 5px 5px;margin-left: 10px;margin-top: -10px" src="images/{{$u->avatar}}">                  
-                    @endif
-                @endforeach
+            <a  href="{{route('info',['id'=>$user_post->id])}}">{{$user_post->name}}</a>      
+            <img width="40px" height="40px" style="display: inline-block; border-radius: 5px 5px 5px 5px;margin-left: 10px;margin-top: -10px" src="images/{{$user_post->avatar}}">                  
             </p>
             <p style="font-size: 20px;float: right; margin-top: 17px; display: inline;" >{{$post->Date}}</p>
             <hr style="margin-top: 5px ">
@@ -130,11 +120,7 @@
                 {{ csrf_field() }}
                 @csrf
                 <textarea style="width:100%; height : 100px; border-radius: 5px 5px 5px 5px"  name="areapostx" id="areapostx"></textarea>
-                @if(Auth::check())
-                    <input id="commentButton" style="float: right; margin-top: 5px"  type="submit" class="btn btn-primary" value="Bình luận">
-                @else 
-                    <a href="{{route('login')}}"><input style="float: right; margin-top: 5px"  type="submit" class="btn btn-primary" value="Bình luận"></a>
-                @endif
+                <input id="commentButton" style="float: right; margin-top: 5px"  type="submit" class="btn btn-primary" value="Bình luận">
             </form>
         </div>
         <div>
@@ -184,7 +170,7 @@
                                 @foreach ($subcomment as $sc)
                                     @if ($sc->comment_id == $c->id)
                                     <div id="{{$sc->id}}">
-                                        @foreach ($user as $u)
+                                        @foreach ($user_sc as $u)
                                             @if($u->id == $sc->user_id)
                                                 <img width="30px" height="30px" style="display: inline-block; border-radius: 5px 5px 5px 5px; margin-left: 75px;margin-right: 5px;margin-top: 5px" src="images/{{$u->avatar}}">
                                                 <a  href="{{route('info',['id'=>$u->id])}}" style="display: inline-block;font-size: 15px;margin-top: 10px; color:rgb(160, 24, 47)" >{{$u->name}}</a>
@@ -196,7 +182,7 @@
                                         @endphp</div>
                                         @can('delete',$sc)
                                         <p class = "subcmt" style="display: none">{{$sc->id}}</p>
-                                            @foreach ($user as $u)
+                                            @foreach ($user_sc as $u)
                                                 @if($u->id == $sc->user_id)
                                                     @if(Auth::user()->role_id > $u->role_id || Auth::user()->id == $u->id)
                                                         <a href="{{route('deleteSubComment',['id'=>$sc->id])}}" class="xoasubcmt" style="float: right ; font-size: 15px; margin-right: 15px;margin-top: -20px">Xoá</a> 
@@ -219,7 +205,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-3" style="margin-top: 20px;height: auto">
+    <div class="col-3" style="margin-top: 20px;height: auto">
         <p style="font-size:20px;margin-top: 10px;margin-bottom: 10px" ><b>Câu hỏi cùng chủ đề</b></p>
         @foreach ($allpost as $item)
             @if($item->id != $post->id)
@@ -241,13 +227,13 @@
         @endforeach
         <div>
             @can('delete', $post)
-            @if(Auth::user()->role_id > $user_post->role_id)
-                <form id="form2" method="POST" action = "{{route('delete',['id'=>$post->id])}}">
-                    @method('DELETE')
-                    @csrf
-                <input id="deleteButton" style = "float: right;margin: 10px" type="submit" value="Xoá bài" class="btn btn-danger">
-                <form>
-            @endif  
+                @if(Auth::user()->role_id >= $user_post->role_id)
+                    <form id="form2" method="POST" action = "{{route('delete',['id'=>$post->id])}}">
+                        @method('DELETE')
+                        @csrf
+                    <input id="deleteButton" style = "float: right;margin: 10px" type="submit" value="Xoá bài" class="btn btn-danger">
+                    <form>
+                @endif  
             @endcan
         </div>
     </div>
@@ -290,8 +276,6 @@
                             html += '</div>'
                             html += '<hr style="margin-top:10px;margin-left: 75px;margin-top: 10px">'
                             html += '@endif'
-                            // html += '</div>'
-                            // html += '</div>'
                             $('.binhluancon').eq(index).append(html);
                             $('.errsubcmt').eq(index).text("")
                             console.log('it works!');
@@ -331,7 +315,7 @@
                 html += '<div style="background: linear-gradient(to right, #abfcff, #ffbdf4); margin-top : 10px;padding-bottom : 25px; font-size: 25px; height: auto; border: 2px solid gray;border-radius: 5px 5px 5px 5px">';
                 html += '<div style="font-size: 20px; margin: 15px">'
                 html += '<img width="40px" height="40px" style="display: inline-block; border-radius: 5px 5px 5px 5px;margin-right: 5px;margin-top: -5px" src="images/{{Auth::user()->avatar}}">'
-                html += '<a  href="{{route("info",["id"=>$u->id])}}" style="display: inline-block; margin-left:5px; font-size: 20px; ;margin-top: 10px; color:rgb(7, 96, 122)">{{Auth::user()->name}}</a>'
+                html += '<a  href="{{route("info",["id"=>Auth::user()->id])}}" style="display: inline-block; margin-left:5px; font-size: 20px; ;margin-top: 10px; color:rgb(7, 96, 122)">{{Auth::user()->name}}</a>'
                 html += '<p style="display: inline-block; float: right;margin-top: 10px">just now</p>'
                 html += '<div style="font-size: 20px; margin-left: 35px;margin-top: 20px">'
                 html += request
@@ -362,12 +346,6 @@
     });
     CKEDITOR.config.width = '98.5%';
     CKEDITOR.config.height = '100px';
-    function showsc(id){
-        if( document.getElementById(id).style.display == 'none')
-            document.getElementById(id).style.display = 'block';
-        else 
-        document.getElementById(id).style.display = 'none';
-        return false;
-    }
+    
 </script>
 @stop

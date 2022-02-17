@@ -42,7 +42,7 @@ Route::get('dashboard',function(){
  Route::get('/chiase',['as'=>'chiase','uses'=>'App\Http\Controllers\PostController@getChiaSe']);
  Route::get('/hoidap',['as'=>'hoidap','uses'=>'App\Http\Controllers\PostController@getHoiDap']);
 //dangbai
- Route::post('',['as'=>'insert','uses'=>'App\Http\Controllers\PostController@insertPost']);
+ Route::post('',['as'=>'insert','uses'=>'App\Http\Controllers\PostController@insertPost'])->middleware('role');
 //bai dang
  Route::get('/baidang/{id}',['as' => 'viewPost','uses'=>'App\Http\Controllers\PostController@viewPost']);
  Route::delete('delete/{id}',['as' => 'delete','uses'=>'App\Http\Controllers\PostController@delete'])->middleware('auth');
@@ -72,10 +72,12 @@ Route::get('dashboard',function(){
  Route::get('/dangbai',['as'=>'dangbai','uses'=>'App\Http\Controllers\TopicController@addPost'])->middleware('role');
 //role admin
  route::get('/quantri',['as'=>'viewQT','uses'=>'App\Http\Controllers\UserController@viewQT'])->middleware('roleAdmin');
+
  Route::get('kiembai',['as' => 'checkPost','uses' => 'App\Http\Controllers\PostController@checkPost'])->middleware('roleAdmin');
- Route::post('save/role/{id}',['as' => 'saveRole','uses' => 'App\Http\Controllers\UserController@setRole'])->middleware('roleAdmin');
- Route::get('deleteforadmin/{id}',['as' => 'deletePAdmin','uses'=>'App\Http\Controllers\PostController@deleteforAdmin'])->middleware('roleAdmin');
  Route::get('allow/post/{id}',['as' => 'allowP','uses'=>'App\Http\Controllers\PostController@allowPost'])->middleware('roleAdmin');
+ Route::get('deleteforadmin/{id}',['as' => 'deletePAdmin','uses'=>'App\Http\Controllers\PostController@deleteforAdmin'])->middleware('roleAdmin');
+
+ Route::post('save/role/{id}',['as' => 'saveRole','uses' => 'App\Http\Controllers\UserController@setRole'])->middleware('roleAdmin');
  Route::post('insertnews', ['as'=>'insertnew', 'uses'=>'App\Http\Controllers\NewsController@insertNews'])->middleware('roleAdmin');
  Route::get('/dangtin',['as'=>'dangtin','uses'=>'App\Http\Controllers\NewsController@addNews'])->middleware('roleAdmin');
  Route::get('newslist', ['as'=>'newslist', 'uses'=>'App\Http\Controllers\NewsController@listNews'])->middleware('roleAdmin');

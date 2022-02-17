@@ -34,9 +34,8 @@ class SubCommentController extends Controller
             if(Auth::user()->id == $comment->user_id)
                 return back();
             else{
-                $user = User::where('id',Auth::user()->id)->first();
                 $post = Post::where('id', $comment->post_id)->first();
-                $name = $user->name;
+                $name = Auth::user()->name;
                 $user1 = User::where('id',$post->user_id)->first();
                 $ctc = $name.' has reply your comment on '.$user1->name."'s post";
                 $l = $comment->post_id;

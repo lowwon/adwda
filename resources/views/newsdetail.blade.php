@@ -24,11 +24,11 @@
 @if(Auth::check())
     <div style="margin-top : -48px;margin-right:100px;float : right; width: 40px;height: 20px;">
         @if(count($noti) == 0)
-            <img id="show" style="float: right;display: inline-block;width: 30px;height:30px;" src="images/tb.jpg">
+            <img id="show" class="imgnoti" src="images/tb.jpg">
         @else
-            <img id="show" style="float: right;display: inline-block;width: 30px;height:30px;" src="images/tb1.jpg">
+            <img id="show" class="imgnoti" src="images/tb.jpg">
         @endif
-        <div id="content" style="float: right; font-size: 17px; border-radius:15px 15px 15px 15px; position: relative;display: none; width: 300px; max-height: 580px; margin-top: 20px;background: linear-gradient(to right, #e2ddf0, #a9ff9e);">
+        <div id="content" class="notibox">
             <div style="font-size:30px;margin-top: 10px;margin-left: 20px">
                 <strong >Thông báo</strong>
             </div>
@@ -91,8 +91,12 @@
         <b class="title">{!!$news->title!!}</b> <br>
         <b class="content">{!!$news->content!!}</b> <br>
         <img class="img-news" src="images/{{$news->img}}"> 
-        {!!$news->para!!}
-        <div style="float:right">
+        <br>
+        <div style=" text-align: justify">
+            {!!$news->para!!}
+        </div>
+        
+        <div style="float:right;">
             <b>Post by {{$news->User->name}}</b></br>
             <b>{{$news->create_at}}</b>
         </div>

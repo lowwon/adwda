@@ -22,7 +22,7 @@ class NotificationController extends Controller
      public function deleteNoti($id){
         if(Auth::user()->id != $id)
             return redirect()->route('dashboard');
-        $notix = Notification::where('user_id',$id)->delete();
+        Notification::where('user_id',$id)->delete();
         $noti = Notification::where('user_id',$id)->where('status',0)->get();
         $notiall = Notification::where('user_id',$id)->get();
         return view('thongbao',compact('noti','notiall'));
