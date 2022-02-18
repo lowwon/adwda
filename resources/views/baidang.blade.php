@@ -120,7 +120,12 @@
                 {{ csrf_field() }}
                 @csrf
                 <textarea class="textbinhluan"  name="areapostx" id="areapostx"></textarea>
-                <input id="commentButton" style="float: right; margin-top: 5px"  type="submit" class="btn btn-primary" value="Bình luận">
+                @if(Auth::check())
+                    <input id="commentButton" style="float: right; margin-top: 5px"  type="submit" class="btn btn-primary" value="Bình luận">
+                @else
+                    <button type="button" class="btn btn-primary" style="float: right; margin-top: 5px"><a style="color: white" href="{{route('login')}}">Bình luận</a></button>
+
+                @endif
             </form>
         </div>
         <div>
