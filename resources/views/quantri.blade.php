@@ -15,7 +15,7 @@
                     @if(count($noti) == 0)
                         <img id="show"  class="imgnoti" src="images/tb.jpg">
                     @else
-                        <img id="show"  class="imgnoti" src="images/tb.jpg">
+                        <img id="show"  class="imgnoti" src="images/tb1.jpg">
                     @endif
                     <div id="content" style="float: right; font-size: 17px; border-radius:15px 15px 15px 15px; position: relative;display: none; width: 300px; max-height: 580px; margin-top: 20px;background: linear-gradient(to right, #e2ddf0, #a9ff9e);">
                         <div style="font-size:30px;margin-top: 10px;margin-left: 20px">

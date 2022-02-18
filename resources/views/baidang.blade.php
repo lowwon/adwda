@@ -102,9 +102,9 @@
             </strong></p>
             <p style="font-size: 20px; display: inline; color:rgb(148, 128, 13) "> Người đăng : 
             <a  href="{{route('info',['id'=>$user_post->id])}}">{{$user_post->name}}</a>      
-            <img width="40px" height="40px" style="display: inline-block; border-radius: 5px 5px 5px 5px;margin-left: 10px;margin-top: -10px" src="images/{{$user_post->avatar}}">                  
+            <img width="40px" height="40px" class="avatarpost" src="images/{{$user_post->avatar}}">                  
             </p>
-            <p style="font-size: 20px;float: right; margin-top: 17px; display: inline;" >{{$post->Date}}</p>
+            <p class="datepost" >{{$post->Date}}</p>
             <hr style="margin-top: 5px ">
         </div>
         <div style="font-size:20px;margin-top: 10px">
@@ -119,7 +119,7 @@
             <form id="formxx" method="POST" action = "{{route('comment',['id'=>$post->id])}}">
                 {{ csrf_field() }}
                 @csrf
-                <textarea style="width:100%; height : 100px; border-radius: 5px 5px 5px 5px"  name="areapostx" id="areapostx"></textarea>
+                <textarea class="textbinhluan"  name="areapostx" id="areapostx"></textarea>
                 <input id="commentButton" style="float: right; margin-top: 5px"  type="submit" class="btn btn-primary" value="Bình luận">
             </form>
         </div>
@@ -127,18 +127,18 @@
             <p style="font-size:20px; margin-top: 20px; margin-bottom: 10px; margin-left: 3px">Các bình luận khác</p>
             <div class="binhluan">
                 @foreach ($comment as $c)
-                    <div id="{{$c->id}}" class="bltt" style=" margin-top : 10px;padding-bottom : 25px; font-size: 25px; height: auto; border: 2px solid gray;border-radius: 5px 5px 5px 5px">
+                    <div id="{{$c->id}}" class="bltt commentbox">
                         <div style="font-size: 20px; margin: 15px">   
                             @foreach ($user as $u)
                                     @if($u->id == $c->user_id)
-                                        <img width="40px" height="40px" style="display: inline-block; border-radius: 5px 5px 5px 5px;margin-right: 5px;margin-top: -5px" src="images/{{$u->avatar}}">
-                                        <a  href="{{route('info',['id'=>$u->id])}}" style="display: inline-block; font-size: 20px; ;margin-top: 10px; color:rgb(7, 96, 122)">{{$u->name}}</a>
+                                        <img width="40px" height="40px" class="imgcomment" src="images/{{$u->avatar}}">
+                                        <a  href="{{route('info',['id'=>$u->id])}}" class="usercomment">{{$u->name}}</a>
                                     @endif
                             @endforeach
-                            <p style="display: inline-block; float: right;margin-top: 10px">{{$c->date}}</p>
+                            <p class="datecomment">{{$c->date}}</p>
                         </div>
                         <div>
-                            <div style="font-size: 20px; margin-left: 35px;margin-top: 20px">@php
+                            <div class="cmtcontent">@php
                                 echo $c->Content
                             @endphp</div>
                             @if(Auth::check())
@@ -155,12 +155,12 @@
                                     @endif
                                 @endforeach
                             @endcan
-                            <div style="display: none ; margin-top : 30px; margin-left: 55px; margin-bottom: 50px"  id="A_{{$c->id}}" >
-                                <p class="errsubcmt" style="font-size: 18px; color:red; margin-top: -15;margin-bottom: 5px"></p>
+                            <div class="subcmtbox"  id="A_{{$c->id}}" >
+                                <p class="errsubcmt"></p>
                                 <form method="POST" action = "{{route('subcomment',['id'=>$c->id])}}">
                                     {{csrf_field()}}
                                     <input style="display: none" id="idcmt" name="idcmt" value="{{$c->id}}">
-                                    <textarea style="width: 98.5%; height: 100px; border-radius: 5px 5px 5px 5px" required name="subcomment" id="subcomment"></textarea>
+                                    <textarea class="textscmt" required name="subcomment" id="subcomment"></textarea>
                                     <input style="float: right; margin-top: 5px; margin-right: 10px" type="submit" class="btn btn-primary subbutton" value="Bình luận">
                                 </form>
                             </div>
@@ -172,8 +172,8 @@
                                     <div id="{{$sc->id}}">
                                         @foreach ($user_sc as $u)
                                             @if($u->id == $sc->user_id)
-                                                <img width="30px" height="30px" style="display: inline-block; border-radius: 5px 5px 5px 5px; margin-left: 75px;margin-right: 5px;margin-top: 5px" src="images/{{$u->avatar}}">
-                                                <a  href="{{route('info',['id'=>$u->id])}}" style="display: inline-block;font-size: 15px;margin-top: 10px; color:rgb(160, 24, 47)" >{{$u->name}}</a>
+                                                <img width="30px" height="30px" class="avtscmt" src="images/{{$u->avatar}}">
+                                                <a  href="{{route('info',['id'=>$u->id])}}" class="namescmt" >{{$u->name}}</a>
                                             @endif
                                         @endforeach
                                         <p style="font-size: 15px;display: inline-block; float: right;margin-top: 10px;margin-right: 15px">{{$sc->Date}}</p>

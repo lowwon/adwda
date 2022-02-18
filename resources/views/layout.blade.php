@@ -6,7 +6,8 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
         <link href='https://css.gg/eye.css' rel='stylesheet'>
-        <title>Laravel</title>
+        <link rel='shortcut icon' href='images/logo.png'/>
+        <title>Diễn Đàn CNTT</title>
         <script type="text/javascript"></script>
         <script type="text/javascript" src="https://code.jquery.com/jquery-latest.pack.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>

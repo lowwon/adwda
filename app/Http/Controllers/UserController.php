@@ -100,7 +100,7 @@ class UserController extends Controller
         return back();
     }
     public function viewQT(){
-        $user = User::orderBy('role_id','desc')->Paginate(3);
+        $user = User::orderBy('role_id','desc')->Paginate(10);
         $role = Role::all();
         if(Auth::check())
            $noti = Notification::where('user_id',Auth::user()->id)->where('status',0)->orderBy('date','desc')->Paginate(5);

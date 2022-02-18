@@ -1,6 +1,5 @@
 var i = 0;
 function showSearch(){
-    // if(document.getElementById('searchtext').style.display == 'none'){
     if(i == 0){
         document.getElementById('searchtext').style.display = 'inline-block';
         var w = 0;
@@ -28,8 +27,6 @@ function showSearch(){
             document.getElementById('searchtext').style.width = w+'px';
         }, 15);
         i--;
-        if(w < 0)
-            
         return;
     }
 }

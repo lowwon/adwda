@@ -22,11 +22,7 @@ class NewsController extends Controller
     public function addNews()
     {
         $news = News::all();
-        if(Auth::check())
-            $noti = Notification::where('user_id',Auth::user()->id)->where('status',0)->orderBy('date','desc')->Paginate(5);
-        else
-            $noti = null;
-        return view('addnews', compact('news','noti'));
+        return view('addnews', compact('news'));
     }
     public function insertNews(Request $request)
     {
@@ -35,10 +31,13 @@ class NewsController extends Controller
             'tieude.required'=>'Bạn phải nhập tiêu đề!',
             'hinh.required'=>'Bạn phải nhập hình tin tức!',
             'tomtat.required'=>'Bạn phải nhập bản tóm tắt của tin tức!',
+            'noidung.required'=>'Bạn phải nhập nội dung của tin tức!',
         ];
         $controls = [
             'tieude'=>'required',
             'tomtat'=>'required',
+            'hinh'=>'required',
+            'noidung'=>'required',
         ];
         Validator::make($request->all(),$controls, $messages)->validate();
         $filename = "";

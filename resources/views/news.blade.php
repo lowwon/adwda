@@ -1,14 +1,7 @@
 @extends('layout')
 @section('content')
-<style>
-    .card {
-        width: 500px;
-        height: 600px;
-    }
-</style>
-
 @if(Auth::check())
-    <div style="margin-top : -48px;margin-right:100px;float : right; width: 40px;height: 20px;">
+    <div style="margin-top : 1%;margin-right:1%;float : right; width: 40px;height: 20px;">
         @if(count($noti) == 0)
             <img id="show" style="float: right;display: inline-block;width: 30px;height:30px;" src="images/tb.jpg">
         @else

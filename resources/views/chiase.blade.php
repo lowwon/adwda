@@ -7,7 +7,7 @@
                     @if(count($noti) == 0)
                         <img id="show" class="imgnoti" src="images/tb.jpg">
                     @else
-                        <img id="show" class="imgnoti" src="images/tb.jpg">
+                        <img id="show" class="imgnoti" src="images/tb1.jpg">
                     @endif
                     <div id="content" class="notibox">
                         <div style="font-size:30px;margin-top: 10px;margin-left: 20px">
