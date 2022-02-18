@@ -66,7 +66,7 @@
 @endif  
 <div class="container-fluid row">
     <div class="col-2" style="padding-left: 6%; height: 700px">
-        <div style="margin-top: 210px; position: fixed">
+        <div style="margin-top: 15%; position: fixed">
             <p id="count_like" style="text-align: center; font-size: 25px">{{$post->number_like}}</p>
             @if(Auth::check())
                 @if($check == 1)

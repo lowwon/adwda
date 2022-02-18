@@ -111,7 +111,7 @@
                                     @endforeach
                                 </a>
                             </td>
-                            <td class="col-4"><a href="#">
+                            <td class="col-4">
                                 <a href="{{route('viewPost',['id'=>$a->id])}}"><?php
                                     if (strlen($a->Name)>40)
                                     {
@@ -122,8 +122,8 @@
                                         echo $a->Name;
                                     }
                                 ?></a>
-                            </a></td>
-                            <td style="" class="col-3">
+                            </td>
+                            <td class="col-3">
                                 <?php
                                     if (strlen($a->Date)>50)
                                     {
