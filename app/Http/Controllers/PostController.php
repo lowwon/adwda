@@ -30,7 +30,7 @@ class PostController extends Controller
         return view('trangchu', compact('post'));
     }
     public function getThaoLuan(){
-        $post = Post::where('topic_id',1)->where('status',1)->orderBy('Date','desc')->Paginate(10);
+        $post = Post::where('topic_id',1)->where('status',1)->orderBy('Date','desc')->Paginate(15);
         $topic = Topic::all();
         $user = DB::table('users')->get();
         $comment = Comment::all();
@@ -41,7 +41,7 @@ class PostController extends Controller
         return view('thaoluan', compact('post','topic','user','comment','noti'));
     }
     public function getChiaSe(){
-        $post = Post::where('topic_id',3)->where('status',1)->orderBy('Date','desc')->Paginate(10);
+        $post = Post::where('topic_id',3)->where('status',1)->orderBy('Date','desc')->Paginate(15);
         $topic = Topic::all();
         $user = DB::table('users')->get();
         $comment = Comment::all();
@@ -52,7 +52,7 @@ class PostController extends Controller
         return view('chiase', compact('post','topic','user','comment','noti'));
     }
     public function getHoiDap(){
-        $post = Post::where('topic_id',2)->where('status',1)->orderBy('Date','desc')->Paginate(10);
+        $post = Post::where('topic_id',2)->where('status',1)->orderBy('Date','desc')->Paginate(15);
         $topic = Topic::all();
         $user = DB::table('users')->get();
         $comment = Comment::all();
@@ -171,7 +171,7 @@ class PostController extends Controller
         return back();
     }
     public function checkPost(){
-        $post = Post::where('status',0)->Paginate(10);
+        $post = Post::where('status',0)->Paginate(15);
         $topic = Topic::all();
         $user = User::all();
         if(Auth::check())

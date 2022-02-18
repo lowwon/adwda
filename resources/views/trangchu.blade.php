@@ -91,7 +91,7 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                        <th class="col-2">Chủ để</th>
+                        <th class="col-2">Chủ đề</th>
                         <th class="col-4">Tiêu đề</th>
                         <th class="col-3">Ngày đăng</th>
                         <th class="col-2">Người đăng</th>
